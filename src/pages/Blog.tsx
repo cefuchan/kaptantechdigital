@@ -43,11 +43,99 @@ export const blogPosts = [
     date: "18 Eylül 2023",
     readTime: "8 dk okuma",
     excerpt: "Büyük dil modellerinin markanızı tavsiye etmesini sağlamak için uygulamanız gereken semantik stratejiler."
+  },
+  {
+    slug: "ankara-dijital-pazarlama-egitimi-ve-kursu",
+    title: "Ankara Dijital Pazarlama Eğitimi ve Sertifikalı Kursları",
+    category: "Eğitim",
+    date: "10 Ağustos 2024",
+    readTime: "10 dk okuma",
+    excerpt: "Dijital pazarlama kursu, digital marketing eğitimi ve pazarlama sertifikası almak isteyenler için Ankara dijital pazarlama eğitim rehberi."
+  },
+  {
+    slug: "kurumsal-web-tasarim-ankara-ajans",
+    title: "Ankara Kurumsal Web Tasarım, Yazılım ve Site Tasarımı",
+    category: "Web",
+    date: "15 Ağustos 2024",
+    readTime: "12 dk okuma",
+    excerpt: "Ankara web tasarım firmaları arasında öne çıkan çözümlerimizle web sitesi tasarımı, internet sitesi tasarımı ve ankara web yazılım hizmetleri."
+  },
+  {
+    slug: "seo-merkezi-ankara-google-ads",
+    title: "Ankara SEO Merkezi, Web Tasarım SEO ve Google Ads",
+    category: "SEO",
+    date: "20 Ağustos 2024",
+    readTime: "9 dk okuma",
+    excerpt: "Site web seo, seo marketing digital, adwords ads ve marketing google ads stratejileriyle ankara web tasarımı ve seo hizmeti."
+  },
+  {
+    slug: "sosyal-medya-ve-dijital-pazar-satis",
+    title: "Sosyal Medya ve Dijital Pazarlama: Satışları Artırmak",
+    category: "Pazarlama",
+    date: "25 Ağustos 2024",
+    readTime: "11 dk okuma",
+    excerpt: "Dijital medya ve pazarlama, dijital pazar, dijital pazarlama ve satış ile pazarlama eğitimleri sayesinde markanızı büyütün."
+  },
+  {
+    slug: "web-tasarim-fiyatlari-ankara-siteler",
+    title: "Web Sitesi Fiyatları Ankara: Siteler ve Altındağ Web Tasarım",
+    category: "Web",
+    date: "28 Ağustos 2024",
+    readTime: "8 dk okuma",
+    excerpt: "Ankara siteler web tasarım, ankara altındağ web tasarım ve web sayfası tasarımı fiyatlandırmaları hakkında detaylı yazılımcılık rehberi."
+  },
+  {
+    slug: "ankara-siteler-web-tasarim-ajansi",
+    title: "Ankara Siteler Web Tasarım ve Mobilya Sektörü Çözümleri",
+    category: "Web",
+    date: "01 Eylül 2024",
+    readTime: "7 dk okuma",
+    excerpt: "Ankara Siteler web tasarım ihtiyaçlarınız için mobilya sektörüne özel, yüksek dönüşüm sağlayan kurumsal web sitesi tasarımları."
+  },
+  {
+    slug: "ankara-saglik-turizmi-seo-hizmetleri",
+    title: "Ankara Sağlık Turizmi SEO Stratejileri ile Hasta Çekin",
+    category: "SEO",
+    date: "05 Eylül 2024",
+    readTime: "9 dk okuma",
+    excerpt: "Klinik ve hastaneler için Ankara Sağlık Turizmi SEO çalışmaları ile yurt dışından ve yurt içinden potansiyel hastaları hedefleyin."
+  },
+  {
+    slug: "ankara-seo-uzmani-ve-danismanligi",
+    title: "Ankara SEO Danışmanlığı: Organik Trafiğinizi Katlayın",
+    category: "SEO",
+    date: "10 Eylül 2024",
+    readTime: "11 dk okuma",
+    excerpt: "Profesyonel Ankara SEO hizmetleri ve veri odaklı stratejilerle Google sıralamalarınızı kalıcı olarak zirveye taşıyın."
+  },
+  {
+    slug: "ankara-geo-yapay-zeka-optimizasyonu",
+    title: "Ankara GEO: Yapay Zekâ Aramalarında Öne Çıkın",
+    category: "GEO",
+    date: "15 Eylül 2024",
+    readTime: "8 dk okuma",
+    excerpt: "Ankara GEO (Generative Engine Optimization) ajansı olarak yapay zekâ destekli arama motorlarında markanızı geleceğe hazırlıyoruz."
+  },
+  {
+    slug: "ankara-seo-firmalari-ile-dijitalde-zirveye-giden-yol",
+    title: "Ankara SEO Firmaları ile Dijitalde Zirveye Giden Yol",
+    category: "SEO",
+    date: "23 Temmuz 2026",
+    readTime: "4 dk okuma",
+    excerpt: "Başkent Ankara’nın hızla dijitalleşen ticari ekosisteminde var olmak, artık sadece bir web sitesine sahip olmaktan çok daha fazlasını gerektiriyor."
+  },
+  {
+    slug: "ankara-siteler-mobilya-ve-imalat-sektorune-ozel-dijital-rehber",
+    title: "Ankara Siteler Mobilya ve İmalat Sektörüne Özel Dijital Rehber",
+    category: "Web & SEO",
+    date: "23 Temmuz 2026",
+    readTime: "4 dk okuma",
+    excerpt: "Ankara’nın ve Türkiye’nin en köklü mobilya, ahşap ve imalat merkezlerinden biri olan Siteler (Altındağ), binlerce atölye ve mağazasıyla devasa bir üretim gücüne sahip."
   }
 ];
 
 export default function Blog() {
-  const categories = ["Tümü", "SEO", "GEO", "Reklam", "Web", "Video"];
+  const categories = ["Tümü", "SEO", "GEO", "Reklam", "Web", "Video", "Eğitim", "Pazarlama"];
 
   return (
     <>
