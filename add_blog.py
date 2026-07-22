@@ -26,7 +26,10 @@ def main():
     
     content_lines = []
     while True:
-        line = input()
+        try:
+            line = input()
+        except EOFError:
+            break
         if line.strip() == "BİTİR":
             break
         content_lines.append(line)
@@ -38,6 +41,9 @@ def main():
         return
 
     slug = slugify(title)
+    
+    # İçerikteki ters bölü ve backtick karakterlerini escape et (JS template literal patlamasını önlemek için)
+    content = content.replace('`', r'\`').replace('${', r'\${')
     
     # Tarihi Türkçe formatta al
     months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
@@ -68,10 +74,9 @@ def main():
     excerpt: "{excerpt}"
   }}"""
 
-    # array sonundaki '];' ifadesini bularak araya yeni objeyi ekle
-    if "];" in blog_content:
-        # Son elemandan sonra virgül koy ve yeni objeyi ekle
-        blog_content = re.sub(r'(\s*)\}(\s*)\];', r'\1},\n' + new_post_obj + r'\n];', blog_content)
+    # array sonundaki '];' ifadesini bularak araya yeni objeyi ekle (esnek boşluk kontrolüyle)
+    if re.search(r'\]\s*;', blog_content):
+        blog_content = re.sub(r'(\s*)\}(\s*)\]\s*;', r'\1},\n' + new_post_obj + r'\n];', blog_content, count=1)
         
         with open(blog_tsx_path, "w", encoding="utf-8") as f:
             f.write(blog_content)
@@ -96,9 +101,9 @@ def main():
       );
 """
 
-    if "default:" in post_content:
-        # default: case'inin hemen üstüne yeni case'i ekle
-        post_content = post_content.replace("    default:", new_case + "    default:")
+    # 'default:' ifadesini esnek boşluk ve regex ile bulup hemen önüne ekleyelim
+    if re.search(r'default\s*:', post_content):
+        post_content = re.sub(r'(\s*)(default\s*:)', r'\1' + new_case + r'\1\2', post_content, count=1)
         with open(blog_post_tsx_path, "w", encoding="utf-8") as f:
             f.write(post_content)
         print(f"[+] {blog_post_tsx_path} başarıyla güncellendi.")

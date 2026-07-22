@@ -131,6 +131,86 @@ export const blogPosts = [
     date: "23 Temmuz 2026",
     readTime: "4 dk okuma",
     excerpt: "Ankara’nın ve Türkiye’nin en köklü mobilya, ahşap ve imalat merkezlerinden biri olan Siteler (Altındağ), binlerce atölye ve mağazasıyla devasa bir üretim gücüne sahip."
+  },
+  {
+    slug: "ankara-seo-firmalarinin-en-cok-dikkat-ettigi-kurallar",
+    title: "Ankara Seo Firmalarının En Çok Dİkkat Ettiği Kurallar",
+    category: "Seo",
+    date: "23 Temmuz 2026",
+    readTime: "4 dk okuma",
+    excerpt: "Ankara Seo Firmalarının Dikkat Ettiği Unsurlar"
+  },
+  {
+    slug: "ankara-web-tasarim-ve-seo-rehberi-kurumsal-web-sitesi-fiyatlari-ve-ajans-secimi",
+    title: "Ankara Web Tasarım ve SEO Rehberi: Kurumsal Web Sitesi Fiyatları ve Ajans Seçimi",
+    category: "Web",
+    date: "23 Temmuz 2026",
+    readTime: "1 dk okuma",
+    excerpt: "Ankara'da kurumsal web sitesi yaptırmak isteyen işletmeler için web tasarım firmaları, SEO uyumlu site özellikleri ve 2026 web tasarım fiyatları rehberi."
+  },
+  {
+    slug: "ankara-seo-firmalari-ve-web-tasarim-rehberi-2026-dijital-buyume-ve-seo-fiyatlari",
+    title: "Ankara SEO Firmaları ve Web Tasarım Rehberi: 2026 Dijital Büyüme ve SEO Fiyatları",
+    category: "SEO",
+    date: "23 Temmuz 2026",
+    readTime: "9 dk okuma",
+    excerpt: "Ankara SEO firmaları, web tasarım ajansları ve Google Ads stratejileri ile işletmenizi üst sıralara taşıyın. 2026 SEO fiyatları ve kurumsal dijital pazarlama rehberi."
+  },
+  {
+    slug: "ostim-ve-ivedik-osb-firmalari-icin-ankara-web-tasarim-ve-seo-rehberi-sanayide-b2b-dijital-pazarlama",
+    title: "OSTİM ve İvedik OSB Firmaları İçin Ankara Web Tasarım ve SEO Rehberi: Sanayide B2B Dijital Pazarlama",
+    category: "B2B",
+    date: "23 Temmuz 2026",
+    readTime: "7 dk okuma",
+    excerpt: "Ankara OSTİM ve İvedik OSB'deki imalatçı ve sanayi firmaları için B2B web tasarımı, SEO stratejileri ve 2026 kurumsal web sitesi rehberi."
+  },
+  {
+    slug: "ankara-kurumsal-hizmet-sektoru-icin-web-tasarim-ve-seo-rehberi-cankaya-ve-kizilay-b2b-hizmet-odakli-dijital-buyume",
+    title: "Ankara Kurumsal Hizmet Sektörü İçin Web Tasarım ve SEO Rehberi: Çankaya ve Kızılay B2B & Hizmet Odaklı Dijital Büyüme",
+    category: "Kurumsal",
+    date: "23 Temmuz 2026",
+    readTime: "7 dk okuma",
+    excerpt: "Ankara Çankaya ve Kızılay merkezli hukuk, sağlık, danışmanlık ve kurumsal hizmet firmaları için web tasarımı, SEO stratejileri ve 2026 dijital pazarlama rehberi."
+  },
+  {
+    slug: "ankara-e-ticaret-ve-perakende-sektoru-icin-web-tasarim-ve-seo-rehberi-2026-e-ticaret-fiyatlari-ve-dijital-satis",
+    title: "Ankara E-Ticaret ve Perakende Sektörü İçin Web Tasarım ve SEO Rehberi: 2026 E-Ticaret Fiyatları ve Dijital Satış",
+    category: "E-Ticaret",
+    date: "23 Temmuz 2026",
+    readTime: "7 dk okuma",
+    excerpt: "Ankara merkezli mağazalar, üreticiler ve e-ticaret markaları için SEO uyumlu e-ticaret web tasarımı, Google Alışveriş reklamları ve 2026 satış artırma rehberi."
+  },
+  {
+    slug: "ankara-seo-calismalari-dijital-buyume-ve-arama-motoru-optimizasyonu-kapsamli-baskent-rehberi",
+    title: "Ankara SEO Çalışmaları, Dijital Büyüme ve Arama Motoru Optimizasyonu: Kapsamlı Başkent Rehberi",
+    category: "SEO",
+    date: "23 Temmuz 2026",
+    readTime: "4 dk okuma",
+    excerpt: "Ankara'daki işletmelerin dijital varlıklarını zirveye taşıyabileceği; yerel SEO, teknik altyapı ve GEO stratejilerini içeren kapsamlı başkent rehberi."
+  },
+  {
+    slug: "ankara-web-site-fiyatlari-2026-kurumsal-e-ticaret-ve-ozel-yazilim-maliyetleri",
+    title: "Ankara Web Site Fiyatları 2026: Kurumsal, E-Ticaret ve Özel Yazılım Maliyetleri",
+    category: "Web",
+    date: "23 Temmuz 2026",
+    readTime: "2 dk okuma",
+    excerpt: "Ankara'daki web tasarım ve yazılım ajanslarının güncel fiyat politikaları; kurumsal site, e-ticaret ve özel yazılım maliyetleri rehberi."
+  },
+  {
+    slug: "ankara-dijital-ajans-ve-buyume-studyolari-video-produksiyon-seo-ve-web-gelistirme-ile-kurumsal-olceklenme-rehberi",
+    title: "Ankara Dijital Ajans ve Büyüme Stüdyoları: Video Prodüksiyon, SEO ve Web Geliştirme ile Kurumsal Ölçeklenme Rehberi",
+    category: "Dijital Büyüme",
+    date: "23 Temmuz 2026",
+    readTime: "2 dk okuma",
+    excerpt: "Ankara'daki işletmelerin dijital ekosistemde ölçeklenmesi için video prodüksiyon, SEO, web tasarım ve yapay zeka destekli pazarlama stratejileri rehberi."
+  },
+  {
+    slug: "ankara-dijital-buyume-ve-web-yazilim-stratejileri-kapsamli-kurumsal-donusum-ve-seo-rehberi",
+    title: "Ankara Dijital Büyüme ve Web Yazılım Stratejileri: Kapsamlı Kurumsal Dönüşüm ve SEO Rehberi",
+    category: "Dijital Büyüme",
+    date: "23 Temmuz 2026",
+    readTime: "2 dk okuma",
+    excerpt: "Ankara'daki işletmelerin dijital ekosistemde ölçeklenmesi için video prodüksiyon, ileri düzey SEO, Next.js web geliştirme ve yapay zeka entegrasyonları rehberi."
   }
 ];
 
