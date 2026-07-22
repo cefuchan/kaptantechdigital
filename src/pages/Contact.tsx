@@ -5,6 +5,16 @@ import { SEO } from '../components/SEO';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { MapPin, Phone, Mail, MessageSquare } from 'lucide-react';
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18340260321"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18340260321');
+</script>
+
 export default function Contact() {
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
 
