@@ -3,6 +3,16 @@ import { SEO } from '../components/SEO';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight, Search, Globe, PenTool, Video, TrendingUp } from 'lucide-react';
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18340260321"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18340260321');
+</script>
+
 export default function Services() {
   const services = [
     {
