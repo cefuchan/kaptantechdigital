@@ -822,6 +822,25 @@ Bitir` }} />
 
 
 
+        case 'ankara-video-cekimi':
+      return (
+        <>
+          <h2>Ankara Video Çekimi</h2>
+          <div dangerouslySetInnerHTML={{ __html: `Ankara'da markanızı, ürünlerinizi veya özel anlarınızı dijital dünyada en etkili şekilde öne çıkarmanın yolu profesyonel video çekim hizmetlerinden geçer. Günümüzde görsel içerikler, hedef kitlenizle samimi ve güçlü bir bağ kurmanın en hızlı ve akılda kalıcı yöntemidir.
+
+Kurumsal tanıtım filmlerinden sosyal medya video içeriklerine, etkinlik ve fuar çekimlerinden havadan drone görüntülerine kadar geniş bir yelpazede profesyonel çözümler sunuyoruz. Ankara'nın hem tarihi hem de modern dokusunu projelerinize entegre ederek, son teknoloji 4K ekipmanlarımız ve uzman ekibimizle markanızın hikayesini büyüleyici bir görsel anlatıya dönüştürüyoruz.
+
+Doğru kurgu, profesyonel renk düzenlemesi (color grading), kaliteli ses tasarımı ve etkileyici senaryo yönetimi sayesinde videolarınız sadece izlenmekle kalmaz; aynı zamanda markanıza prestij katarak dönüşüm oranlarınızı artırır.
+
+Siz de Ankara video çekim hizmetlerimizle markanızın dijital varlığını güçlendirmek ve rakiplerinizin bir adım önüne geçmek için profesyonel ekibimizle hemen iletişime geçebilirsiniz.
+` }} />
+        </>
+      );
+
+
+
+
+
     default:
       return (
         <>

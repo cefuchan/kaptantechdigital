@@ -211,6 +211,14 @@ export const blogPosts = [
     date: "23 Temmuz 2026",
     readTime: "2 dk okuma",
     excerpt: "Ankara'daki işletmelerin dijital ekosistemde ölçeklenmesi için video prodüksiyon, ileri düzey SEO, Next.js web geliştirme ve yapay zeka entegrasyonları rehberi."
+  },
+  {
+    slug: "ankara-video-cekimi",
+    title: "Ankara Video Çekimi",
+    category: "Video",
+    date: "28 Temmuz 2026",
+    readTime: "1 dk okuma",
+    excerpt: "Ankara video çekim hizmetlerimiz hakkında detaylı bilgi alın."
   }
 ];
 
