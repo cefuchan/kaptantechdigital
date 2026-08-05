@@ -5,20 +5,24 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { lazy, Suspense } from 'react';
 import { Layout } from './components/Layout';
 import { ScrollToTop } from './components/ScrollToTop';
 
 // Pages
 import Home from './pages/Home';
-import Contact from './pages/Contact';
-import Services from './pages/Services';
-import ServiceDetail from './pages/ServiceDetail';
-import CaseStudies from './pages/CaseStudies';
-import CaseStudyDetail from './pages/CaseStudyDetail';
-import References from './pages/References';
-import About from './pages/About';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
+const Contact = lazy(() => import('./pages/Contact'));
+const Services = lazy(() => import('./pages/Services'));
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
+const CaseStudies = lazy(() => import('./pages/CaseStudies'));
+const CaseStudyDetail = lazy(() => import('./pages/CaseStudyDetail'));
+const References = lazy(() => import('./pages/References'));
+const About = lazy(() => import('./pages/About'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const Siteler = lazy(() => import('./pages/Siteler'));
+const AnkaraSeo = lazy(() => import('./pages/AnkaraSeo'));
+const AnkaraWebTasarim = lazy(() => import('./pages/AnkaraWebTasarim'));
 
 export default function App() {
   return (
@@ -26,7 +30,8 @@ export default function App() {
       <Router>
         <ScrollToTop />
         <Layout>
-          <Routes>
+          <Suspense fallback={<div className="min-h-screen bg-bg" />}>
+            <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/hizmetler" element={<Services />} />
             <Route path="/hizmetler/:slug" element={<ServiceDetail />} />
@@ -36,8 +41,12 @@ export default function App() {
             <Route path="/hakkimizda" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/siteler" element={<Siteler />} />
+            <Route path="/ankara-seo" element={<AnkaraSeo />} />
+            <Route path="/ankara-web-tasarim" element={<AnkaraWebTasarim />} />
             <Route path="/iletisim" element={<Contact />} />
-          </Routes>
+            </Routes>
+          </Suspense>
         </Layout>
       </Router>
     </HelmetProvider>

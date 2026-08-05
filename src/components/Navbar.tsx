@@ -32,10 +32,13 @@ export function Navbar() {
 
   const services = [
     { name: 'SEO', path: '/hizmetler/seo' },
+    { name: 'Ankara SEO', path: '/ankara-seo' },
+    { name: 'Ankara Web Tasarım', path: '/ankara-web-tasarim' },
     { name: 'GEO / Yapay Zekâ Aramaları', path: '/hizmetler/geo' },
     { name: 'Web Tasarım', path: '/hizmetler/web-tasarim' },
     { name: 'Google & Meta Reklam Yönetimi', path: '/hizmetler/reklam' },
     { name: 'Video Prodüksiyon', path: '/hizmetler/video-produksiyon' },
+    { name: 'Siteler Dijital Hizmetleri', path: '/siteler' },
   ];
 
   return (

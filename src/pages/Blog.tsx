@@ -93,6 +93,22 @@ export const blogPosts = [
     excerpt: "Ankara Siteler web tasarım ihtiyaçlarınız için mobilya sektörüne özel, yüksek dönüşüm sağlayan kurumsal web sitesi tasarımları."
   },
   {
+    slug: "ankara-siteler-dijital-pazarlama",
+    title: "Ankara Siteler Dijital Pazarlama ile Nitelikli Müşteri Adaylarına Ulaşın",
+    category: "Pazarlama",
+    date: "05 Ağustos 2026",
+    readTime: "6 dk okuma",
+    excerpt: "Ankara Siteler dijital pazarlama stratejisinde SEO, reklam ve içerik kanallarını ortak bir büyüme hedefinde birleştirin."
+  },
+  {
+    slug: "ankara-siteler-reklam-ajansi",
+    title: "Ankara Siteler Reklam Ajansı Seçerken Nelere Dikkat Etmelisiniz?",
+    category: "Reklam",
+    date: "05 Ağustos 2026",
+    readTime: "6 dk okuma",
+    excerpt: "Ankara Siteler reklam ajansı seçiminde yaratıcı fikirleri, ölçülebilir performansı ve marka stratejisini birlikte değerlendirin."
+  },
+  {
     slug: "ankara-saglik-turizmi-seo-hizmetleri",
     title: "Ankara Sağlık Turizmi SEO Stratejileri ile Hasta Çekin",
     category: "SEO",
@@ -219,6 +235,30 @@ export const blogPosts = [
     date: "28 Temmuz 2026",
     readTime: "1 dk okuma",
     excerpt: "Ankara video çekim hizmetlerimiz hakkında detaylı bilgi alın."
+  },
+  {
+    slug: "ankara-reels-cekimi-ile-sosyal-medyada-one-cikin",
+    title: "Ankara Reels Çekimi ile Sosyal Medyada Öne Çıkın",
+    category: "Video",
+    date: "28 Temmuz 2026",
+    readTime: "1 dk okuma",
+    excerpt: "Ankara reels çekim hizmetlerimizle Instagram ve TikTok'ta markanızın erişimini artırın. Trend içerikler ve profesyonel kurgu çözümleri."
+  },
+  {
+    slug: "ankara-video-produksiyon-hizmetleri-ve-kurumsal-cozumler",
+    title: "Ankara Video Prodüksiyon Hizmetleri ve Kurumsal Çözümler",
+    category: "Video",
+    date: "28 Temmuz 2026",
+    readTime: "1 dk okuma",
+    excerpt: "Ankara video prodüksiyon hizmetlerimizle markanızın hikayesini yüksek kaliteli sinematik içeriklere dönüştürün. Profesyonel ekipman ve uzman kurgu çözümleri."
+  },
+  {
+    slug: "ankara-kurumsal-tanitim-filmi-cekimi-ile-markanizi-buyutun",
+    title: "Ankara Kurumsal Tanıtım Filmi Çekimi ile Markanızı Büyütün",
+    category: "Video",
+    date: "28 Temmuz 2026",
+    readTime: "1 dk okuma",
+    excerpt: "Ankara kurumsal tanıtım filmi çekimi hizmetlerimizle şirketinizin vizyonunu, tesislerini ve hizmetlerini profesyonel sinematik çekimlerle anlatın."
   }
 ];
 

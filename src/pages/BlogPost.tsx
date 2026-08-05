@@ -92,7 +92,36 @@ const renderContent = (slug?: string) => {
       return (
         <>
           <h2>Ankara Siteler Web Tasarım: Mobilya Sektörüne Özel Çözümler</h2>
-          <div dangerouslySetInnerHTML={{ __html: massiveSeoFluff }} />
+          <p>Ankara Siteler web tasarım hizmeti arayan mobilya üreticileri, mağazalar ve atölyeler için web sitesi yalnızca bir vitrin değildir; ürün kalitesini, üretim gücünü ve güvenilirliği dijitalde anlatan satış noktasıdır. Ziyaretçi, ilk saniyelerde ne sunduğunuzu anlamalı; koleksiyonları rahatça inceleyebilmeli ve size kolayca ulaşabilmelidir.</p>
+          <h3>Güven veren ürün sunumu ve kullanıcı deneyimi</h3>
+          <p>Mobilya sektöründe görseller, ölçüler, malzeme detayları ve teslimat bilgileri karar sürecini doğrudan etkiler. Mobil öncelikli bir arayüz, anlaşılır kategori yapısı ve güçlü iletişim alanları; Siteler bölgesindeki işletmelerin kurumsal müşterilerden son kullanıcıya kadar farklı talepleri doğru biçimde karşılamasına yardımcı olur.</p>
+          <h3>SEO uyumlu dijital vitrin</h3>
+          <p>İyi bir Ankara Siteler web tasarım projesi, tasarım ile teknik altyapıyı birlikte ele alır. Hızlı açılan sayfalar, hizmet ve ürün odaklı içerikler, açık başlık yapısı ve yerel arama sinyalleri; sitenizin Google'da doğru sorgularla eşleşmesini destekler. Böylece dijital vitrininiz hem daha görünür olur hem de daha nitelikli teklif talepleri üretir.</p>
+          <p>KAPTAN olarak marka hikâyenizi, kullanıcı akışlarını ve dönüşüm noktalarını proje başında planlar; yayına alınan sitenin ölçümleme altyapısını da kurarız. Hedefimiz yalnızca şık bir site hazırlamak değil, büyümenizi destekleyen sürdürülebilir bir dijital varlık oluşturmaktır.</p>
+        </>
+      );
+    case 'ankara-siteler-dijital-pazarlama':
+      return (
+        <>
+          <h2>Ankara Siteler Dijital Pazarlama: Kanalları Ortak Hedefte Birleştirin</h2>
+          <p>Ankara Siteler dijital pazarlama çalışması, tek bir reklama ya da sosyal medya paylaşımına indirgenemez. Hedef kitlenizin hangi sorularla arama yaptığını, hangi kanalda karar verdiğini ve hangi mesajlara güven duyduğunu anlamakla başlar. SEO, reklam ve içerik kanalları birlikte kurgulandığında daha tutarlı bir müşteri yolculuğu oluşur.</p>
+          <h3>Yerel hedefleme ve ölçülebilir sonuçlar</h3>
+          <p>Siteler ve çevresindeki potansiyel müşterilere ulaşmak için konum, hizmet alanı ve arama niyeti birlikte değerlendirilmelidir. Yerel açılış sayfaları, Google İşletme Profili optimizasyonu ve bölge odaklı reklam metinleri, markanızın doğru kişilere ulaşmasını güçlendirir.</p>
+          <p>Başarıyı yalnızca görüntülenme sayısıyla ölçmeyiz. Telefon aramaları, form talepleri, WhatsApp görüşmeleri ve satışa dönüşen fırsatları izleyen bir raporlama yapısı kurarız. Böylece Ankara Siteler dijital pazarlama bütçeniz tahmine değil veriye dayanır.</p>
+          <h3>Sürdürülebilir büyüme planı</h3>
+          <p>Mevcut dijital varlıkları ve rakipleri analiz eder; hızlı kazanımları uzun vadeli içerik, SEO ve reklam fırsatlarıyla dengeleriz. Hedef daha çok trafik değil, işletmeniz için daha nitelikli müşteri adayları üretmektir.</p>
+        </>
+      );
+    case 'ankara-siteler-reklam-ajansi':
+      return (
+        <>
+          <h2>Ankara Siteler Reklam Ajansı Seçiminde Strateji ve Performans</h2>
+          <p>Ankara Siteler reklam ajansı arayan işletmeler için doğru iş ortağı, yalnızca görsel hazırlayan bir ekip değildir. Markanızın hangi sorunu çözdüğünü, hangi müşteriye ulaşacağını ve teklifinizin neden tercih edileceğini anlayan bir strateji ortağıdır.</p>
+          <h3>Yaratıcılık, hedefleme ve dönüşüm</h3>
+          <p>Etkili reklam; dikkat çeken yaratıcı fikri doğru hedefleme ve net bir teklif ile birleştirir. Google arama reklamları yüksek niyetli kullanıcılara ulaşırken Meta kampanyaları farkındalık ve yeniden pazarlama için güçlü fırsatlar sunar. Her kanalın mesajı, görsel dili ve açılış sayfası kampanyadaki rolüne göre planlanmalıdır.</p>
+          <h3>Şeffaf optimizasyon yaklaşımı</h3>
+          <p>Kampanya yayına alındıktan sonra çalışma bitmez. Reklam metinleri, hedef kitleler, açılış sayfaları ve bütçe dağılımı düzenli olarak test edilir. Telefon, form ve mesaj taleplerini izleyen raporlama sayesinde hangi harcamanın hangi sonucu ürettiği görünür olur.</p>
+          <p>KAPTAN, kreatif üretimi ölçümleme ve dönüşüm altyapısından ayrı düşünmez. Bu sayede Ankara Siteler reklam ajansı iş birliği, geçici görünürlük yerine sürdürülebilir ticari sonuçlara odaklanır.</p>
         </>
       );
     case 'ankara-saglik-turizmi-seo-hizmetleri':
@@ -836,6 +865,69 @@ Siz de Ankara video çekim hizmetlerimizle markanızın dijital varlığını g�
 ` }} />
         </>
       );
+
+
+
+
+
+        case 'ankara-reels-cekimi-ile-sosyal-medyada-one-cikin':
+      return (
+        <>
+          <h2>Ankara Reels Çekimi ile Sosyal Medyada Öne Çıkın</h2>
+          <div dangerouslySetInnerHTML={{ __html: `<p>Sosyal medya platformlarında organik erişimin ve yüksek etkileşimin anahtarı artık dikey formatlı kısa videolardır. Instagram Reels, TikTok ve YouTube Shorts gibi platformlar, markaların hedef kitleleriyle doğrudan etkileşime geçebileceği en güçlü pazarlama kanallarına dönüştü. Ankara'da işletmenizi, ürünlerinizi veya hizmetlerinizi sosyal medyada öne çıkarmak için profesyonel Ankara Reels çekim çözümleri sunuyoruz.</p>
+
+<p>Sosyal medyada ilk 3 saniye, izleyicinin dikkatini çekmek ve videoda tutmak için kritiktir. Çekimlerimizde dikkat çekici başlangıç stratejileri (hook), trend müzikler/sesler, akıcı kurgu teknikleri ve kaliteli ışık-ses ekipmanları kullanarak videolarınızın keşfet algoritmalarında öne çıkmasını sağlıyoruz.</p>
+
+<p>Restoranlar, klinikler, e-ticaret markaları, gayrimenkul firmaları ve kurumsal şirketler için sektöre özel senaryo planlaması yapıyoruz. Çekim gününden dinamik montaja, renk düzenlemesinden (color grading) alt yazı ve grafik eklemelerine kadar tüm kurgu sürecini profesyonelce yönetiyoruz.</p>
+
+<p>Siz de markanızın sosyal medya varlığını güçlendirmek ve potansiyel müşterilerinize estetik, dönüşüm odaklı videolarla ulaşmak için Ankara Reels çekim paketlerimizi inceleyebilirsiniz.</p>
+` }} />
+        </>
+      );
+
+
+
+
+
+
+        case 'ankara-video-produksiyon-hizmetleri-ve-kurumsal-cozumler':
+      return (
+        <>
+          <h2>Ankara Video Prodüksiyon Hizmetleri ve Kurumsal Çözümler</h2>
+          <div dangerouslySetInnerHTML={{ __html: `<p>Dijital pazarlamada ve marka iletişiminde öne çıkmanın en etkili yolu yüksek kaliteli video prodüksiyon süreçlerinden geçer. Etkileyici bir visual hikaye anlatımı, markanızın güvenilirliğini artırır, hedef kitlenizle duygusal bir bağ kurar ve rakipleriniz arasından sıyrılmanızı sağlar. Ankara video prodüksiyon hizmetlerimizle, fikirden son kurguya kadar olan tüm aşamaları profesyonel standartlarda yürütüyoruz.</p>
+
+<p>Başarılı bir video prodüksiyonu üç temel aşamadan oluşur: Prodüksiyon öncesi (Pre-production) planlama ve senaryo yazımı, Prodüksiyon (Production) aşamasında son teknoloji sinema kameraları, profesyonel ışık/ses sistemleri ve drone çekimleri ile gerçekleştirilen çekimler, ve Prodüksiyon sonrası (Post-production) aşamasındaki kurgu, renk düzenlemesi (color grading), ses tasarımı ve görsel efektler.</p>
+
+<p>Kurumsal tanıtım filmlerinden reklam filmlerine, fabrika ve tesis çekimlerinden röportaj ve etkinlik videolarına kadar geniş bir yelpazede hizmet sunuyoruz. Ankara'nın stratejik ve sanayi dinamiklerine hakim ekibimizle, markanızın kurumsal kimliğine ve pazarlama hedeflerine en uygun video projelerini hayata geçiriyoruz.</p>
+
+<p>Siz de markanız için profesyonel, akılda kalıcı ve dönüşüm odaklı bir video prodüksiyon hizmeti almak istiyorsanız uzman ekibimizle iletişime geçebilir, projeleriniz için teklif alabilirsiniz.</p>
+` }} />
+        </>
+      );
+
+
+
+
+
+
+
+        case 'ankara-kurumsal-tanitim-filmi-cekimi-ile-markanizi-buyutun':
+      return (
+        <>
+          <h2>Ankara Kurumsal Tanıtım Filmi Çekimi ile Markanızı Büyütün</h2>
+          <div dangerouslySetInnerHTML={{ __html: `<p>Kurumsal tanıtım filmleri, bir şirketin vizyonunu, değerlerini, üretim gücünü ve ekibini potansiyel müşterilerine ve iş ortaklarına aktarmasının en prestijli yoludur. Ankara'da faaliyet gösteren firmalar için hazırladığımız kurumsal tanıtım filmleri, markanızın güvenilirliğini artırırken ticari imajınıza güç katar.</p>
+
+<p>Profesyonel bir kurumsal video çalışması; fabrika ve ofis çekimlerinden çalışan röportajlarına, tesislerin havadan drone ile görüntülenmesinden seslendirme (voice-over) ve 2D/3D grafik animasyon entegrasyonlarına kadar kapsamlı bir süreci içerir. Ankara'nın sanayi bölgelerinden teknokentlerine kadar pek çok farklı sektördeki firmaya özel konsept tasarımlar sunuyoruz.</p>
+
+<p>Doğru kurgulanmış bir tanıtım filmi; web sitenizde, fuarlarda, yatırımcı sunumlarında ve sosyal medya mecralarında markanızın en güçlü kartviziti haline gelir. Etkileyici bir senaryo ve yüksek prodüksiyon kalitesiyle hedef kitlenizin zihninde kalıcı bir yer edinebilirsiniz.</p>
+
+<p>Siz de şirketinizin gücünü ve kurumsal hikayesini profesyonel bir tanıtım filmiyle taçlandırmak için Ankara kurumsal tanıtım filmi çekim ekibimizle iletişime geçebilirsiniz.</p>
+` }} />
+        </>
+      );
+
+
+
 
 
 

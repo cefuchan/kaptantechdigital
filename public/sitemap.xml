@@ -190,4 +190,25 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <!-- Yeni Eklenen Video & Prodüksiyon Blogları -->
+  <url>
+    <loc>https://kaptantechdigital.com/blog/ankara-video-cekimi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kaptantechdigital.com/blog/ankara-reels-cekimi-ile-sosyal-medyada-one-cikin</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kaptantechdigital.com/blog/ankara-video-produksiyon-hizmetleri-ve-kurumsal-cozumler</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kaptantechdigital.com/blog/ankara-kurumsal-tanitim-filmi-cekimi-ile-markanizi-buyutun</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
