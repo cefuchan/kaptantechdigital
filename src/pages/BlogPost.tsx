@@ -774,7 +774,7 @@ Bitir` }} />
         case 'ankara-dijital-ajans-ve-buyume-studyolari-video-produksiyon-seo-ve-web-gelistirme-ile-kurumsal-olceklenme-rehberi':
       return (
         <>
-          <h2>Ankara Dijital Ajans ve Büyüme Stüdyoları: Video Prodüksiyon, SEO ve Web Geliştirme ile Kurumsal Ölçeklenme Rehberi</h2>
+          <h2>Ankara Dijital Ajans ve Büyüme Stüdyoları: Video Prodüksiyon, SEO ve Web Geliştirme ile Kurumsal Ölçeklenme Rehberii</h2>
           <div dangerouslySetInnerHTML={{ __html: `<p>Günümüzün dijital dünyasında işletmelerin hayatta kalması ve sürdürülebilir büyüme yakalaması, fiziksel sınırların çok ötesine geçen kapsamlı bir dijital varlık yönetimiyle mümkündür. Ankara gibi stratejik öneme sahip, kamu kurumlarından savunma sanayi devlerine, köklü holdinglerden dinamik girişimlere kadar geniş bir ekonomik skalaya ev sahipliği yapan bir pazarda, standart pazarlama taktikleri yetersiz kalmaktadır. Ankara'daki işletmelerin hedef kitlelerine güven vermesi, rakiplerinden sıyrılması ve nitelikli müşteri (lead) akışı sağlaması için bütüncül bir dijital büyüme stratejisine ihtiyacı vardır.</p>
 <p>Bu kapsamlı rehberde; video prodüksiyonun marka kimliğindeki dönüştürücü gücünden arama motoru optimizasyonuna (SEO), modern web yazılım mimarilerinden yapay zeka destekli pazarlama otomasyonlarına kadar dijital ajans hizmetlerinin tüm katmanlarını inceleyeceğiz.</p>
 
