@@ -1,0 +1,45 @@
+<h2>Teknik Şema (Schema.org) Nedir ve Neden Hayatidir?</h2>
+<p>Teknik şema işaretlemesi (Schema.org / JSON-LD), web sitenizin içeriğini arama motorlarının ve yapay zekâ botlarının tam olarak anlayabileceği evrensel bir veri diline dönüştürme yöntemidir. İnsanlar bir web sayfasını görsel olarak okurken, Googlebot ve LLM'ler sayfanın arka planındaki yapılandırılmış veriyi (Structured Data) okuyarak kim olduğunuzu, ne sunduğunuzu ve hangi bölgede hizmet verdiğinizi matematiksel olarak çözer.</p>
+
+<p>Doğru kurgulanmış bir Schema.org mimarisi hem Google'da yıldızlı/zengin sonuçlar (Rich Snippets) elde etmenizi sağlar hem de ChatGPT, Gemini ve Perplexity gibi yapay zekâ motorlarının sitenizi doğrudan bilgi kaynağı olarak kullanmasını mümkün kılar.</p>
+
+<h3>Bir Web Sitesinde Bulunması Gereken Temel Şema Türleri</h3>
+
+<h4>1. Organization & LocalBusiness Şeması</h4>
+<p>Şirketinizin adı, resmi logosu, açık adresi, telefon numarası, çalışma saatleri, kurucu bilgileri ve sosyal medya profillerini (sameAs) tanımlar. Yerel aramalarda ve harita sinyallerinde en kritik şemadır.</p>
+
+<h4>2. Service Şeması</h4>
+<p>Sunduğunuz her hizmet (Örn: SEO, Kurumsal Web Tasarım, Video Prodüksiyon) için ayrı ayrı tanımlanır. Hizmetin adı, kapsamı, sağlayıcı şirket ve hizmet verilen bölge (Ankara, Türkiye) açıkça belirtilir.</p>
+
+<h4>3. BlogPosting / Article Şeması</h4>
+<p>Rehber ve makaleleriniz için yazar, yayınlanma tarihi (datePublished), güncellenme tarihi (dateModified), ana başlık ve kapak görseli meta verilerini sunar. Google News ve AI Overviews için zorunludur.</p>
+
+<h4>4. BreadcrumbList (Sayfa Yolu) Şeması</h4>
+<p>Ziyaretçinin ve botların sitenin neresinde olduğunu gösteren hiyerarşik yapıdır (Örn: Ana Sayfa > Blog > Teknik Şema Rehberi). Arama sonuçlarında URL yerine okunaklı sayfa yolu görünmesini sağlar.</p>
+
+<h4>5. FAQPage (Sıkça Sorulan Sorular) Şeması</h4>
+<p>Sektörünüzle ilgili en sık sorulan soruları ve yanıtlarını doğrudan arama motoru sonucuna taşır; organik tıklama oranlarını (CTR) önemli ölçüde artırır.</p>
+
+<h3>Örnek JSON-LD Şema Yapısı</h3>
+<p>KAPTAN'da uyguladığımız modern ve iç içe geçmiş (graph) JSON-LD mimarisi:</p>
+<pre><code>{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://kaptantechdigital.com/#organization",
+      "name": "KAPTAN Dijital Büyüme Stüdyosu",
+      "url": "https://kaptantechdigital.com",
+      "telephone": "+905511367634",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Güneşevler 71. Cadde No:1",
+        "addressLocality": "Ankara",
+        "addressCountry": "TR"
+      }
+    }
+  ]
+}</code></pre>
+
+<h3>Şema Testi ve Doğrulama</h3>
+<p>Yapılandırılmış verilerinizin geçerliliğini Google'ın resmi <strong>Rich Results Test</strong> ve <strong>Schema.org Validator</strong> araçlarıyla düzenli olarak test etmelisiniz. KAPTAN olarak geliştirdiğimiz tüm web projelerinde hatasız ve tam uyumlu şema altyapısını standart olarak uyguluyoruz.</p>

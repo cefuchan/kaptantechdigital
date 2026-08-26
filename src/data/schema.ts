@@ -25,7 +25,7 @@ export function personSchema(): Json | null {
     url: absoluteUrl('/hakkimizda'),
     worksFor: { '@id': ORGANIZATION_ID },
     knowsAbout: [...expertise],
-    ...(founder.linkedin ? { sameAs: [founder.linkedin] } : {})
+    sameAs: [founder.linkedin, founder.github].filter(Boolean)
   };
 }
 

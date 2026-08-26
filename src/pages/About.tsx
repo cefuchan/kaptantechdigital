@@ -4,7 +4,7 @@ import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight, Compass, Target, LineChart } from 'lucide-react';
 import { breadcrumbSchema, graph, organizationSchema, personSchema } from '../data/schema';
-import { absoluteUrl, site } from '../data/site';
+import { absoluteUrl, founder, site } from '../data/site';
 
 const crumbs = [
   { name: 'Ana Sayfa', path: '/' },
@@ -74,6 +74,46 @@ export default function About() {
               </div>
             </div>
           </div>
+
+          {/*
+            Person şemasıyla beyan edilen kurucu, sayfada da görünür olmalı.
+            Arama motorları ve dil modelleri yalnızca şemada geçen, sayfada
+            karşılığı olmayan bilgiye güvenmez.
+          */}
+          {founder.name && (
+            <section className="mb-24 border-t border-white/10 pt-16">
+              <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Kurucu</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+                <div>
+                  <h2 className="text-3xl font-display font-semibold mb-2">{founder.name}</h2>
+                  <p className="text-muted">{founder.jobTitle}</p>
+                  <div className="flex flex-wrap gap-4 mt-5 text-sm">
+                    {founder.linkedin && (
+                      <a
+                        href={founder.linkedin}
+                        target="_blank"
+                        rel="me noopener noreferrer"
+                        className="text-gold hover:text-white transition-colors"
+                      >
+                        LinkedIn
+                      </a>
+                    )}
+                    {founder.github && (
+                      <a
+                        href={founder.github}
+                        target="_blank"
+                        rel="me noopener noreferrer"
+                        className="text-gold hover:text-white transition-colors"
+                      >
+                        GitHub
+                      </a>
+                    )}
+                  </div>
+                </div>
+                <p className="md:col-span-2 text-muted text-lg leading-relaxed">{founder.bio}</p>
+              </div>
+            </section>
+          )}
 
           <div className="bg-surface border border-white/5 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-64 bg-gold/5 blur-[100px] pointer-events-none" />

@@ -18,6 +18,33 @@ export interface BlogPostMeta {
 
 export const blogPosts: BlogPostMeta[] = [
   {
+    slug: "google-ai-overviews-ve-arama-deneyimi-rehberi",
+    title: "Google AI Overviews Nedir? Markalar Yapay Zekâ Özetlerinde Nasıl Kaynak Gösterilir?",
+    category: "GEO",
+    date: "27 Ağustos 2026",
+    datePublished: "2026-08-27",
+    readTime: "3 dk okuma",
+    excerpt: "Google AI Overviews (SGE) yapay zekâ özetlerinde markanızı kaynak kartı olarak öne çıkarmanın ve organik görünürlüğü artırmanın stratejileri."
+  },
+  {
+    slug: "llm-seo-yapay-zeka-aramalarinda-marka-tavsiyesi",
+    title: "LLM SEO: ChatGPT, Gemini ve Perplexity'de Markanızı Tavsiye Ettirmenin Yolları",
+    category: "GEO",
+    date: "27 Ağustos 2026",
+    datePublished: "2026-08-27",
+    readTime: "3 dk okuma",
+    excerpt: "Büyük dil modellerinin (LLM) arama ve tavsiye mekanizması nasıl çalışır? ChatGPT ve Gemini'da ilk önerilen ajans olma rehberi."
+  },
+  {
+    slug: "teknik-sema-ve-schema-org-yapilandirilmis-veri-rehberi",
+    title: "Teknik Şema (Schema.org) Rehberi: Yapay Zekâ ve Google İçin Yapılandırılmış Veri",
+    category: "SEO",
+    date: "27 Ağustos 2026",
+    datePublished: "2026-08-27",
+    readTime: "3 dk okuma",
+    excerpt: "JSON-LD ve Schema.org mimarisiyle web sitenizi hem Google zengin sonuçlarına hem de yapay zekâ botlarına tam uyumlu hale getirin."
+  },
+  {
     slug: "geo-nedir-neden-onemli",
     title: "GEO nedir, neden önemli?",
     category: "GEO",

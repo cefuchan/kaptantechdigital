@@ -3,7 +3,7 @@ import { SEO } from '../components/SEO';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight } from 'lucide-react';
-import { findCaseStudy, isCaseStudyComplete } from '../data/caseStudies';
+import { findCaseStudy, isCaseStudyComplete, metricSizeClass } from '../data/caseStudies';
 import { breadcrumbSchema, caseStudySchema, graph } from '../data/schema';
 
 export default function CaseStudyDetail() {
@@ -80,7 +80,7 @@ export default function CaseStudyDetail() {
           <div className="bg-surface border border-white/5 rounded-3xl p-8 md:p-12 mb-16 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 blur-[100px] pointer-events-none" />
             <p className="text-xs text-muted uppercase tracking-wider mb-2">Öne Çıkan Sonuç</p>
-            <p className="text-6xl md:text-8xl font-display font-light text-white mb-6">{study.metric}</p>
+            <p className={`${metricSizeClass(study.metric, 'hero')} font-display font-light text-white mb-6 leading-tight`}>{study.metric}</p>
             <p className="text-xl md:text-2xl text-text-primary/90 max-w-2xl leading-relaxed">
               {study.description}
             </p>

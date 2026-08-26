@@ -5,7 +5,7 @@ import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight } from 'lucide-react';
 import { breadcrumbSchema, graph } from '../data/schema';
 import { absoluteUrl } from '../data/site';
-import { caseStudiesData } from '../data/caseStudies';
+import { caseStudiesData, metricSizeClass } from '../data/caseStudies';
 
 const crumbs = [
   { name: 'Ana Sayfa', path: '/' },
@@ -74,7 +74,7 @@ export default function CaseStudies() {
                 <div className="mt-8 relative z-10 flex items-end justify-between">
                   <div>
                     <p className="text-xs text-muted uppercase tracking-wider mb-1">Öne Çıkan Sonuç</p>
-                    <p className="text-5xl font-light text-white">{study.metric}</p>
+                    <p className={`${metricSizeClass(study.metric, 'card')} font-light text-white leading-tight`}>{study.metric}</p>
                   </div>
                   <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-gold transition-colors">
                     <ArrowUpRight className="w-5 h-5 text-white group-hover:text-bg transition-colors" />

@@ -13,19 +13,21 @@ export const SITE_URL = 'https://kaptantechdigital.com';
  * Boş bırakıldığı sürece hiçbir kişi bilgisi yayınlanmaz.
  */
 export const founder = {
-  name: '',
-  jobTitle: 'Kurucu & Dijital Büyüme Stratejisti',
+  name: 'Cafer İhsan Arpacı',
+  jobTitle: 'Kurucu & SEO / GEO Uzmanı',
   /** Kişisel LinkedIn profili — varlık doğrulaması için önemli. */
-  linkedin: '',
+  linkedin: 'https://www.linkedin.com/in/cefuchan/',
+  github: 'https://github.com/cefuchan',
   bio:
-    'Ankara merkezli KAPTAN Dijital Büyüme Stüdyosu’nun kurucusu. SEO, GEO ve ' +
-    'performans pazarlaması alanlarında kurumsal markalara danışmanlık veriyor.'
+    'KAPTAN Dijital Büyüme Stüdyosu’nun kurucusu. Ankara merkezli olarak SEO, ' +
+    'GEO ve performans pazarlaması alanlarında kurumsal markalara danışmanlık veriyor.'
 };
 
 /** Footer'da görünen ve sameAs olarak beyan edilen profiller. */
 export const socialProfiles = [
   { label: 'Instagram', url: 'https://instagram.com/kaptantechdigital' },
-  { label: 'LinkedIn', url: 'https://linkedin.com/company/kaptantechdigital' }
+  { label: 'LinkedIn', url: 'https://linkedin.com/company/kaptantechdigital' },
+  { label: 'GitHub', url: 'https://github.com/cefuchan' }
 ];
 
 /** Hizmet verilen Ankara bölgeleri — LocalBusiness.areaServed için. */
@@ -83,8 +85,13 @@ export const site = {
     longitude: 32.893593472347014
   },
   /** Doğrulanabilir profiller. Yeni profil eklerken socialProfiles'ı güncelleyin. */
-  sameAs: [...socialProfiles.map((profile) => profile.url), founder.linkedin].filter(Boolean),
-  openingHours: 'Mo-Fr 09:00-18:00',
+  sameAs: [
+    ...socialProfiles.map((profile) => profile.url),
+    founder.linkedin,
+    founder.github
+  ].filter(Boolean),
+  /** Cumartesi de açık. Farklı saat uygulanıyorsa ikinci bir satır ekleyin. */
+  openingHours: 'Mo-Sa 09:00-18:00',
   foundingDate: '2017',
   defaultImage: `${SITE_URL}/og-image.png`,
   imageWidth: 1200,
