@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight, Search, Globe, PenTool, Video, TrendingUp } from 'lucide-react';
+import { breadcrumbSchema, graph, serviceSchema } from '../data/schema';
+import { absoluteUrl } from '../data/site';
 
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Hizmetler', path: '/hizmetler' }
+];
 
 export default function Services() {
   const services = [
@@ -43,17 +50,49 @@ export default function Services() {
     }
   ];
 
+  const schema = graph(
+    {
+      '@type': 'CollectionPage',
+      '@id': `${absoluteUrl('/hizmetler')}#collection`,
+      url: absoluteUrl('/hizmetler'),
+      name: 'Hizmetlerimiz',
+      description:
+        'SEO, GEO, web tasarım, Google & Meta reklam yönetimi ve video prodüksiyon hizmetleri.',
+      inLanguage: 'tr',
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: services.map((service, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: service.title,
+          url: absoluteUrl(service.link)
+        }))
+      }
+    },
+    ...services.map((service) =>
+      serviceSchema({
+        name: service.title,
+        description: service.description,
+        path: service.link
+      })
+    ),
+    breadcrumbSchema(crumbs)
+  );
+
   return (
     <>
-      <SEO 
-        title="Hizmetlerimiz | KAPTAN — Ankara Dijital Büyüme Stüdyosu" 
+      <SEO
+        title="Hizmetlerimiz | KAPTAN — Ankara Dijital Büyüme Stüdyosu"
         description="SEO, GEO, Web Tasarım, Reklam Yönetimi ve Video Prodüksiyon hizmetleriyle işinizi şansa değil rotaya bırakın."
+        url="/hizmetler"
+        schema={schema}
       />
-      
+
       <div className="pt-32 pb-24 bg-bg relative min-h-screen">
         <VerticalLine />
         <div className="max-w-7xl mx-auto px-6">
           <HorizontalLine />
+          <Breadcrumbs items={crumbs} />
           <h1 className="text-4xl md:text-6xl font-display font-semibold mb-6">Hizmetlerimiz</h1>
           <p className="text-muted max-w-2xl text-lg mb-16">
             Bütünsel dijital büyüme stratejileriyle, markanızı hedeflerine ulaştıracak uçtan uca çözümler sunuyoruz.

@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { SEO } from '../components/SEO';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
+import { breadcrumbSchema, faqSchema, graph, serviceSchema } from '../data/schema';
 
 const services = [
   ['Kurumsal Web Tasarım', 'Marka hikâyenizi, hizmetlerinizi ve uzmanlığınızı açık biçimde anlatan; güven oluşturan, hızlı ve mobil uyumlu kurumsal web siteleri tasarlarız.'],
@@ -18,16 +19,34 @@ const faqs = [
   ['Ankara’daki işletmeler için yerel web tasarımın avantajı nedir?', 'Yerel pazarın dilini, hizmet bölgelerini ve müşteri beklentilerini yansıtan sayfalar; ilgili aramalarda daha anlaşılır bir deneyim ve daha nitelikli iletişim talebi oluşturabilir.']
 ];
 
-const schema = { '@context': 'https://schema.org', '@graph': [
-  { '@type': 'Service', name: 'Ankara Web Tasarım Hizmeti', description: 'Ankara işletmeleri için SEO uyumlu, hızlı ve dönüşüm odaklı web tasarım ve geliştirme hizmeti.', url: 'https://kaptantechdigital.com/ankara-web-tasarim', areaServed: { '@type': 'City', name: 'Ankara' }, provider: { '@type': 'Organization', name: 'KAPTAN', url: 'https://kaptantechdigital.com' } },
-  { '@type': 'FAQPage', mainEntity: faqs.map(([question, answer]) => ({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } })) }
-] };
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Ankara Web Tasarım', path: '/ankara-web-tasarim' }
+];
+
+const schema = graph(
+  serviceSchema({
+    name: 'Ankara Web Tasarım Hizmeti',
+    description:
+      'Ankara işletmeleri için SEO uyumlu, hızlı ve dönüşüm odaklı web tasarım ve geliştirme hizmeti.',
+    path: '/ankara-web-tasarim',
+    serviceType: 'Web Tasarım ve Geliştirme',
+    offers: services.map(([title]) => title)
+  }),
+  faqSchema(faqs.map(([question, answer]) => ({ question, answer }))),
+  breadcrumbSchema(crumbs)
+);
 
 export default function AnkaraWebTasarim() {
   return <>
-    <SEO title="Ankara Web Tasarım | SEO Uyumlu Kurumsal Web Sitesi | KAPTAN" description="Ankara web tasarım hizmetiyle hızlı, mobil uyumlu, SEO altyapısı güçlü ve dönüşüm odaklı kurumsal web sitenizi oluşturun." url="https://kaptantechdigital.com/ankara-web-tasarim" />
-    <Helmet><script type="application/ld+json">{JSON.stringify(schema)}</script></Helmet>
+    <SEO
+      title="Ankara Web Tasarım | SEO Uyumlu Kurumsal Web Sitesi | KAPTAN"
+      description="Ankara web tasarım hizmetiyle hızlı, mobil uyumlu, SEO altyapısı güçlü ve dönüşüm odaklı kurumsal web sitenizi oluşturun."
+      url="/ankara-web-tasarim"
+      schema={schema}
+    />
     <main className="pt-32 pb-24 bg-bg relative min-h-screen"><VerticalLine /><div className="max-w-7xl mx-auto px-6"><HorizontalLine />
+      <Breadcrumbs items={crumbs} />
       <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Ankara Web Tasarım</p>
       <h1 className="text-4xl md:text-6xl font-display font-semibold max-w-4xl mb-8">Markanızı anlatan, müşteriyi harekete geçiren web siteleri.</h1>
       <div className="max-w-3xl text-muted text-lg leading-relaxed space-y-5 mb-10"><p>Ankara web tasarım hizmetimizde estetik ile iş hedeflerini birlikte ele alırız. Web siteniz, dijital kartvizitten öte; hedef kitlenizin sizi tanıdığı, hizmetlerinizi karşılaştırdığı ve iletişim kurmaya karar verdiği güçlü bir satış noktasıdır.</p><p>Kurumsal web sitesi, e-ticaret deneyimi veya özel dijital platform ihtiyacınız için; marka kimliğinize uygun, hızlı, güvenli ve SEO uyumlu bir temel oluştururuz.</p></div>

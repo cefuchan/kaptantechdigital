@@ -1,20 +1,41 @@
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight, Compass, Target, LineChart } from 'lucide-react';
+import { breadcrumbSchema, graph, organizationSchema } from '../data/schema';
+import { absoluteUrl, site } from '../data/site';
+
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Hakkımızda', path: '/hakkimizda' }
+];
+
+const aboutSchema = graph(organizationSchema(), breadcrumbSchema(crumbs), {
+  '@type': 'AboutPage',
+  '@id': `${absoluteUrl('/hakkimizda')}#about`,
+  url: absoluteUrl('/hakkimizda'),
+  name: 'Hakkımızda',
+  description: 'Şansa değil, rotaya inanan dijital büyüme stüdyosu KAPTAN ile tanışın.',
+  inLanguage: site.language,
+  mainEntity: { '@id': `${site.url}/#organization` }
+});
 
 export default function About() {
   return (
     <>
-      <SEO 
-        title="Hakkımızda | KAPTAN — Ankara Dijital Büyüme Stüdyosu" 
-        description="Şansa değil, rotaya inanan dijital büyüme stüdyosu KAPTAN ile tanışın."
+      <SEO
+        title="Hakkımızda | KAPTAN — Ankara Dijital Büyüme Stüdyosu"
+        description="Şansa değil, rotaya inanan Ankara merkezli dijital büyüme stüdyosu KAPTAN ile tanışın. Felsefemiz, çalışma yöntemimiz ve ekibimiz."
+        url="/hakkimizda"
+        schema={aboutSchema}
       />
-      
+
       <div className="pt-32 pb-24 bg-bg relative min-h-screen">
         <VerticalLine />
         <div className="max-w-7xl mx-auto px-6">
           <HorizontalLine />
+          <Breadcrumbs items={crumbs} />
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-semibold mb-6">Biz <span className="font-logo italic text-gold font-normal pr-2">Kaptan</span>'ız.</h1>
           <p className="text-muted max-w-3xl text-xl md:text-2xl leading-relaxed mb-20">
             Dijital okyanusta pusulasız ilerleyen markalara, ölçülebilir ve veriye dayalı bir büyüme rotası çiziyoruz.

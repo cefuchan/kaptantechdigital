@@ -1,10 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
 import { SEO } from '../components/SEO';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight } from 'lucide-react';
+import { graph, localBusinessSchema, organizationSchema, webSiteSchema } from '../data/schema';
+
+/** Ana sayfa şeması: kurum kimliği + yerel işletme + site içi arama kutusu. */
+const homeSchema = graph(organizationSchema(), localBusinessSchema(), webSiteSchema(), {
+  '@type': 'WebPage',
+  '@id': 'https://kaptantechdigital.com/#webpage',
+  url: 'https://kaptantechdigital.com/',
+  name: 'KAPTAN | Ankara Dijital Büyüme Stüdyosu',
+  isPartOf: { '@id': 'https://kaptantechdigital.com/#website' },
+  about: { '@id': 'https://kaptantechdigital.com/#organization' },
+  inLanguage: 'tr'
+});
 
 export default function Home() {
   const services = ["SEO", "GEO", "WEB", "ADS", "Video Prodüksiyon"];
@@ -19,40 +30,12 @@ export default function Home() {
 
   return (
     <>
-      <SEO 
-        title="KAPTAN | Ankara Dijital Büyüme Stüdyosu" 
-        description="İşinizi şansa değil, rotayı bilen bir KAPTAN'a bırakın. SEO, GEO, Web Tasarım ve Reklam Yönetimi."
+      <SEO
+        title="KAPTAN | Ankara Dijital Büyüme Stüdyosu"
+        description="İşinizi şansa değil, rotayı bilen bir KAPTAN'a bırakın. Ankara'da SEO, GEO, web tasarım, Google & Meta reklam yönetimi ve video prodüksiyon."
+        url="/"
+        schema={homeSchema}
       />
-      <Helmet>
-        <script type="application/ld+json">
-          {`
-          {
-            "@context": "https://schema.org",
-            "@type": "ProfessionalService",
-            "name": "KAPTAN",
-            "description": "Ankara merkezli dijital büyüme stüdyosu — SEO, GEO, Web Tasarım, Google & Meta Reklam Yönetimi ve Video Prodüksiyon.",
-            "telephone": "+90 551 136 76 34",
-            "email": "merhaba@kaptantechdigital.com",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "Güneşevler 71. Cadde No:1",
-              "addressLocality": "Ankara",
-              "addressCountry": "TR"
-            },
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": 39.97067346786774,
-              "longitude": 32.893593472347014
-            },
-            "url": "https://kaptantechdigital.com",
-            "sameAs": [
-              "https://instagram.com/kaptantechdigital",
-              "https://linkedin.com/company/kaptantechdigital"
-            ]
-          }
-          `}
-        </script>
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">

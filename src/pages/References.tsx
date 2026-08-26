@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight } from 'lucide-react';
-import { caseStudiesData } from './CaseStudies';
+import { caseStudiesData } from '../data/caseStudies';
+import { breadcrumbSchema, graph } from '../data/schema';
+import { absoluteUrl } from '../data/site';
+
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Referanslar', path: '/referanslar' }
+];
 
 export default function References() {
   const clients = [
@@ -11,17 +19,40 @@ export default function References() {
     "İklim Danışmanlık", "MK Psikoloji", "Torun İnşaat"
   ];
 
+  const schema = graph(
+    {
+      '@type': 'CollectionPage',
+      '@id': `${absoluteUrl('/referanslar')}#collection`,
+      url: absoluteUrl('/referanslar'),
+      name: 'Referanslar',
+      description: 'Büyüme rotasını birlikte çizdiğimiz müşterilerimiz ve iş ortaklarımız.',
+      inLanguage: 'tr',
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: clients.map((client, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: { '@type': 'Organization', name: client }
+        }))
+      }
+    },
+    breadcrumbSchema(crumbs)
+  );
+
   return (
     <>
-      <SEO 
-        title="Referanslar | KAPTAN — Ankara Dijital Büyüme Stüdyosu" 
-        description="Büyüme rotasını birlikte çizdiğimiz müşterilerimiz ve iş ortaklarımız."
+      <SEO
+        title="Referanslar | KAPTAN — Ankara Dijital Büyüme Stüdyosu"
+        description="Büyüme rotasını birlikte çizdiğimiz müşterilerimiz ve iş ortaklarımız. Farklı sektörlerden markalarla yürüttüğümüz dijital projeler."
+        url="/referanslar"
+        schema={schema}
       />
-      
+
       <div className="pt-32 pb-24 bg-bg relative min-h-screen">
         <VerticalLine />
         <div className="max-w-7xl mx-auto px-6">
           <HorizontalLine />
+          <Breadcrumbs items={crumbs} />
           <h1 className="text-4xl md:text-6xl font-display font-semibold mb-6">Müşterilerimiz</h1>
           <p className="text-muted max-w-2xl text-lg mb-16">
             Farklı sektörlerden, büyümeye ve optimizasyona inanan iş ortaklarımızla birlikte çalışmaktan gurur duyuyoruz.

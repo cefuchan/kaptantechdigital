@@ -1,37 +1,68 @@
 import { useParams, Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight } from 'lucide-react';
-import { caseStudiesData } from './CaseStudies';
+import { findCaseStudy } from '../data/caseStudies';
+import { breadcrumbSchema, caseStudySchema, graph } from '../data/schema';
 
 export default function CaseStudyDetail() {
   const { slug } = useParams();
-  const study = caseStudiesData.find(s => s.id === slug);
+  const study = findCaseStudy(slug);
 
   if (!study) {
     return (
-      <div className="pt-32 pb-24 text-center min-h-screen flex items-center justify-center">
-        <h1 className="text-4xl font-display">Vaka çalışması bulunamadı.</h1>
-      </div>
+      <>
+        <SEO
+          title="Vaka çalışması bulunamadı | KAPTAN"
+          description="Aradığınız vaka çalışması bulunamadı. Tüm çalışmalarımızı inceleyebilirsiniz."
+          url="/vaka-calismalari"
+          noindex
+        />
+        <div className="pt-32 pb-24 text-center min-h-screen flex flex-col items-center justify-center gap-6">
+          <h1 className="text-4xl font-display">Vaka çalışması bulunamadı.</h1>
+          <Link to="/vaka-calismalari" className="text-gold hover:text-white transition-colors">
+            Tüm vaka çalışmalarına dön
+          </Link>
+        </div>
+      </>
     );
   }
 
+  const path = `/vaka-calismalari/${study.id}`;
+  const crumbs = [
+    { name: 'Ana Sayfa', path: '/' },
+    { name: 'Vaka Çalışmaları', path: '/vaka-calismalari' },
+    { name: study.client, path }
+  ];
+
+  const schema = graph(
+    caseStudySchema({
+      title: `${study.client} — ${study.service} Vaka Çalışması`,
+      description: study.description,
+      path,
+      about: study.service
+    }),
+    breadcrumbSchema(crumbs)
+  );
+
   return (
     <>
-      <SEO 
-        title={`${study.client} Vaka Çalışması | KAPTAN`} 
+      <SEO
+        title={`${study.client} Vaka Çalışması | KAPTAN`}
         description={study.description}
+        url={path}
+        type="article"
+        schema={schema}
       />
-      
+
       <div className="pt-32 pb-24 bg-bg relative min-h-screen">
         <VerticalLine />
-        
+
         <div className="max-w-4xl mx-auto px-6 mb-20">
           <HorizontalLine />
-          <Link to="/vaka-calismalari" className="text-sm text-muted hover:text-white transition-colors mb-8 inline-block">
-            ← Tüm Vaka Çalışmaları
-          </Link>
-          
+          <Breadcrumbs items={crumbs} />
+
           <div className="mb-8">
             <span className="inline-block px-3 py-1 rounded-full border border-gold/30 text-gold text-xs font-medium tracking-widest uppercase mb-6">
               {study.service}

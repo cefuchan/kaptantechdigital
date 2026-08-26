@@ -1,4 +1,32 @@
+[build]
+  # Bu komut sırasıyla: site haritasını üretir, istemci paketini derler,
+  # sunucu paketini derler ve tüm rotaları statik HTML'e ön render eder.
+  command = "npm run build"
+  publish = "dist"
+
+# Tüm rotalar build sırasında statik HTML olarak üretildiği için (npm run build
+# -> prerender), her adres kendi dosyasından sunulur. Bu nedenle SPA'lardaki
+# "her şeyi index.html'e yönlendir" kuralına ihtiyaç yok; o kural bilinmeyen
+# adreslere de 200 döndürerek arama motorlarında "soft 404" oluşturuyordu.
+#
+# Statik bir dosyayla eşleşmeyen adresler artık gerçek 404 durum koduyla
+# ön render edilmiş 404 sayfasını alır.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

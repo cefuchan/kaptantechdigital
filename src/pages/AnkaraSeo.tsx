@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { SEO } from '../components/SEO';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
+import { breadcrumbSchema, faqSchema, graph, serviceSchema } from '../data/schema';
 
 const pillars = [
   ['Teknik SEO', 'Tarama, indeksleme, sayfa hızı, mobil deneyim, yapılandırılmış veri ve Core Web Vitals kontrolleriyle sitenizin arama motorları için güçlü bir temel üzerinde çalışmasını sağlarız.'],
@@ -18,22 +19,37 @@ const faqs = [
   ['Yerel SEO Siteler gibi bölgelerde neden önemlidir?', 'Bölgesel arama yapan kullanıcılar genellikle hizmet alma niyetindedir. Konum, hizmet ve güven bilgilerini doğru sunmak; ilgili yerel aramalarda bulunabilirliği ve nitelikli talep potansiyelini artırır.']
 ];
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    { '@type': 'Service', name: 'Ankara SEO Hizmeti', description: 'Ankara işletmeleri için teknik SEO, yerel SEO, içerik stratejisi ve organik büyüme hizmetleri.', url: 'https://kaptantechdigital.com/ankara-seo', areaServed: { '@type': 'City', name: 'Ankara' }, provider: { '@type': 'Organization', name: 'KAPTAN', url: 'https://kaptantechdigital.com' } },
-    { '@type': 'FAQPage', mainEntity: faqs.map(([question, answer]) => ({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } })) }
-  ]
-};
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Ankara SEO', path: '/ankara-seo' }
+];
+
+const schema = graph(
+  serviceSchema({
+    name: 'Ankara SEO Hizmeti',
+    description:
+      'Ankara işletmeleri için teknik SEO, yerel SEO, içerik stratejisi ve organik büyüme hizmetleri.',
+    path: '/ankara-seo',
+    serviceType: 'Arama Motoru Optimizasyonu',
+    offers: pillars.map(([title]) => title)
+  }),
+  faqSchema(faqs.map(([question, answer]) => ({ question, answer }))),
+  breadcrumbSchema(crumbs)
+);
 
 export default function AnkaraSeo() {
   return <>
-    <SEO title="Ankara SEO Hizmeti | Teknik, Yerel ve İçerik SEO | KAPTAN" description="Ankara SEO hizmetiyle teknik altyapınızı, yerel görünürlüğünüzü ve organik müşteri edinme kanalınızı güçlendirin." url="https://kaptantechdigital.com/ankara-seo" />
-    <Helmet><script type="application/ld+json">{JSON.stringify(schema)}</script></Helmet>
+    <SEO
+      title="Ankara SEO Hizmeti | Teknik, Yerel ve İçerik SEO | KAPTAN"
+      description="Ankara SEO hizmetiyle teknik altyapınızı, yerel görünürlüğünüzü ve organik müşteri edinme kanalınızı güçlendirin."
+      url="/ankara-seo"
+      schema={schema}
+    />
     <main className="pt-32 pb-24 bg-bg relative min-h-screen">
       <VerticalLine />
       <div className="max-w-7xl mx-auto px-6">
         <HorizontalLine />
+        <Breadcrumbs items={crumbs} />
         <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Ankara SEO Hizmeti</p>
         <h1 className="text-4xl md:text-6xl font-display font-semibold max-w-4xl mb-8">Ankara’da organik görünürlüğü gerçek iş fırsatlarına dönüştürün.</h1>
         <div className="max-w-3xl text-muted text-lg leading-relaxed space-y-5 mb-10">

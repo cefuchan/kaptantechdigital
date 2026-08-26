@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import { breadcrumbSchema, faqSchema, graph, serviceSchema } from '../data/schema';
+import { absoluteUrl, site } from '../data/site';
 
 const services = [
   { title: 'Siteler Web Tasarım', text: 'Hızlı, mobil uyumlu ve teklif toplamaya odaklanan kurumsal siteler; ürünlerinizi, üretim gücünüzü ve hizmetlerinizi anlaşılır biçimde sunar.' },
@@ -18,33 +20,57 @@ const faqs = [
   ['Reklam çekimi ve drone çekimi dijital pazarlamaya nasıl katkı sağlar?', 'Özgün görsel içerikler, markanın güven etkisini artırır. Bu içerikleri web sitenizde, sosyal medyada ve performans reklamlarında farklı formatlarda değerlendirerek yatırımın kullanım alanını genişletiriz.']
 ];
 
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'ProfessionalService',
-      name: 'KAPTAN',
-      url: 'https://kaptantechdigital.com/siteler',
-      areaServed: { '@type': 'Place', name: 'Siteler, Ankara' },
-      serviceType: ['Siteler web tasarım', 'Siteler dijital pazarlama', 'Siteler reklam', 'Siteler reklam çekimi', 'Siteler drone çekimi']
-    },
-    {
-      '@type': 'FAQPage',
-      mainEntity: faqs.map(([question, answer]) => ({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } }))
-    }
-  ]
-};
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Siteler', path: '/siteler' }
+];
+
+const structuredData = graph(
+  {
+    '@type': ['ProfessionalService', 'LocalBusiness'],
+    '@id': `${absoluteUrl('/siteler')}#service-area`,
+    name: site.name,
+    description:
+      'Siteler bölgesindeki mobilya, imalat ve perakende işletmeleri için web tasarım, dijital pazarlama, reklam yönetimi ve içerik üretimi.',
+    url: absoluteUrl('/siteler'),
+    telephone: site.telephone,
+    email: site.email,
+    image: site.defaultImage,
+    parentOrganization: { '@id': `${site.url}/#organization` },
+    areaServed: { '@type': 'Place', name: 'Siteler, Altındağ, Ankara' },
+    serviceType: [
+      'Siteler web tasarım',
+      'Siteler dijital pazarlama',
+      'Siteler reklam',
+      'Siteler reklam çekimi',
+      'Siteler drone çekimi'
+    ]
+  },
+  ...services.map((service) =>
+    serviceSchema({
+      name: service.title,
+      description: service.text,
+      path: '/siteler',
+      serviceType: service.title
+    })
+  ),
+  faqSchema(faqs.map(([question, answer]) => ({ question, answer }))),
+  breadcrumbSchema(crumbs)
+);
 
 export default function Siteler() {
   return <>
-    <SEO title="Siteler Web Tasarım, Reklam ve Dijital Pazarlama | KAPTAN" description="Siteler web tasarım, dijital pazarlama, reklam yönetimi, reklam çekimi ve drone çekimi hizmetleriyle markanızı büyütün." url="https://kaptantechdigital.com/siteler" />
-    <Helmet>
-      <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
-    </Helmet>
+    <SEO
+      title="Siteler Web Tasarım, Reklam ve Dijital Pazarlama | KAPTAN"
+      description="Siteler web tasarım, dijital pazarlama, reklam yönetimi, reklam çekimi ve drone çekimi hizmetleriyle markanızı büyütün."
+      url="/siteler"
+      schema={structuredData}
+    />
     <main className="pt-32 pb-24 bg-bg relative min-h-screen">
       <VerticalLine />
       <div className="max-w-7xl mx-auto px-6">
         <HorizontalLine />
+        <Breadcrumbs items={crumbs} />
         <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Ankara · Siteler</p>
         <h1 className="text-4xl md:text-6xl font-display font-semibold max-w-4xl mb-8">Siteler’de dijital büyümeniz için tek ekip.</h1>
         <div className="max-w-3xl text-muted text-lg leading-relaxed space-y-5 mb-12">

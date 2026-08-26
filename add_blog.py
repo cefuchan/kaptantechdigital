@@ -1,117 +1,255 @@
+#!/usr/bin/env python3
+"""
+KAPTANTECH - Otomatik blog ekleme botu.
+
+Yeni bir yazı eklendiğinde üç yeri birden günceller:
+  1. src/content/blog/<slug>.html   -> yazının gövdesi (ayrı dosya, talebe göre yüklenir)
+  2. src/data/blog.ts               -> yazının meta verisi (ISO tarih dahil)
+  3. public/sitemap.xml             -> yeni URL + <lastmod> tarihi
+
+Eski sürümde içerik doğrudan BlogPost.tsx içindeki dev switch-case bloğuna
+yazılıyordu; artık her yazı kendi dosyasında durur ve sayfa bileşeni
+değiştirilmez.
+
+Kullanım:
+    python add_blog.py                 # etkileşimli
+    python add_blog.py --sitemap-only  # yalnızca site haritasını yeniden üret
+"""
+
+import datetime
 import os
 import re
-import datetime
+import subprocess
+import sys
 import unicodedata
 
-def slugify(text):
-    # Türkçe karakterleri İngilizce'ye çevir ve slug formatına getir
-    text = text.replace('ı', 'i').replace('İ', 'i').replace('ş', 's').replace('Ş', 's')
-    text = text.replace('ğ', 'g').replace('Ğ', 'g').replace('ü', 'u').replace('Ü', 'u')
-    text = text.replace('ö', 'o').replace('Ö', 'o').replace('ç', 'c').replace('Ç', 'c')
-    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('utf-8')
-    text = text.lower()
-    text = re.sub(r'[^a-z0-9\s-]', '', text)
-    text = re.sub(r'[-\s]+', '-', text).strip('-')
-    return text
+ROOT = os.path.dirname(os.path.abspath(__file__))
+CONTENT_DIR = os.path.join(ROOT, "src", "content", "blog")
+BLOG_DATA = os.path.join(ROOT, "src", "data", "blog.ts")
+SITEMAP = os.path.join(ROOT, "public", "sitemap.xml")
+SITE_URL = "https://kaptantechdigital.com"
 
-def main():
-    print("="*40)
-    print(" KAPTANTECH - OTOMATİK BLOG EKLEME BOTU ")
-    print("="*40)
-    
-    title = input("1. Blog Başlığı: ").strip()
-    category = input("2. Kategori (Örn: SEO, Web, Eğitim vb.): ").strip()
-    excerpt = input("3. Kısa Açıklama (Google'da ve kartta görünecek): ").strip()
-    print("4. Blog Metni (İçeriği yazın veya yapıştırın. Birden fazla paragraf için <p> kullanabilirsiniz. Bitirmek için boş bir satırda 'BİTİR' yazıp Enter'a basın):")
-    
-    content_lines = []
+MONTHS = [
+    "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+    "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık",
+]
+
+BLOCK_TAGS = (
+    "p", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li",
+    "table", "thead", "tbody", "tr", "td", "th", "blockquote",
+    "figure", "div", "section", "hr", "img",
+)
+
+
+def slugify(text: str) -> str:
+    """Türkçe başlığı URL'de kullanılabilir bir slug'a çevirir."""
+    replacements = {
+        "ı": "i", "İ": "i", "ş": "s", "Ş": "s", "ğ": "g", "Ğ": "g",
+        "ü": "u", "Ü": "u", "ö": "o", "Ö": "o", "ç": "c", "Ç": "c",
+    }
+    for source, target in replacements.items():
+        text = text.replace(source, target)
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("utf-8")
+    text = text.lower()
+    text = re.sub(r"[^a-z0-9\s-]", "", text)
+    return re.sub(r"[-\s]+", "-", text).strip("-")
+
+
+def js_string(value: str) -> str:
+    """Değeri güvenli bir JS/TS string literaline çevirir."""
+    escaped = value.replace("\\", "\\\\").replace('"', '\\"')
+    escaped = escaped.replace("\n", "\\n").replace("\r", "")
+    return f'"{escaped}"'
+
+
+def normalize_content(raw: str) -> str:
+    """Etiketsiz düz metin satırlarını <p> ile sarar, boş satırları temizler."""
+    lines = []
+    for line in raw.replace("\r\n", "\n").split("\n"):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if stripped.startswith("<"):
+            lines.append(stripped)
+        else:
+            lines.append(f"<p>{stripped}</p>")
+    return "\n".join(lines)
+
+
+def word_count(html: str) -> int:
+    return len(re.sub(r"<[^>]+>", " ", html).split())
+
+
+def read_multiline(prompt: str) -> str:
+    print(prompt)
+    collected = []
     while True:
         try:
             line = input()
         except EOFError:
             break
-        if line.strip() == "BİTİR":
+        if line.strip().upper() in ("BİTİR", "BITIR"):
             break
-        content_lines.append(line)
-        
-    content = "\n".join(content_lines)
-    
-    if not title or not content:
-        print("Hata: Başlık ve içerik boş olamaz!")
+        collected.append(line)
+    return "\n".join(collected)
+
+
+def insert_post_metadata(slug, title, category, date_str, iso_date, read_time, excerpt) -> bool:
+    """Yeni yazıyı src/data/blog.ts içindeki blogPosts dizisinin başına ekler."""
+    if not os.path.exists(BLOG_DATA):
+        print(f"Hata: {BLOG_DATA} bulunamadı.")
+        return False
+
+    with open(BLOG_DATA, "r", encoding="utf-8") as handle:
+        source = handle.read()
+
+    if f'slug: "{slug}"' in source:
+        print(f"Hata: '{slug}' zaten kayıtlı. Farklı bir başlık kullanın.")
+        return False
+
+    anchor = "export const blogPosts: BlogPostMeta[] = [\n"
+    index = source.find(anchor)
+    if index == -1:
+        print("Hata: blogPosts dizisi bulunamadı. src/data/blog.ts biçimi değişmiş olabilir.")
+        return False
+
+    entry = (
+        "  {\n"
+        f"    slug: {js_string(slug)},\n"
+        f"    title: {js_string(title)},\n"
+        f"    category: {js_string(category)},\n"
+        f"    date: {js_string(date_str)},\n"
+        f"    datePublished: {js_string(iso_date)},\n"
+        f"    readTime: {js_string(read_time)},\n"
+        f"    excerpt: {js_string(excerpt)}\n"
+        "  },\n"
+    )
+
+    cut = index + len(anchor)
+    with open(BLOG_DATA, "w", encoding="utf-8") as handle:
+        handle.write(source[:cut] + entry + source[cut:])
+
+    print(f"[+] {os.path.relpath(BLOG_DATA, ROOT)} güncellendi.")
+    return True
+
+
+def regenerate_sitemap() -> bool:
+    """Site haritasını rota listesinden yeniden üretir (tercih edilen yol)."""
+    try:
+        result = subprocess.run(
+            ["node", os.path.join("scripts", "generate-sitemap.mjs")],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except FileNotFoundError:
+        return False
+
+    if result.returncode != 0:
+        print("[!] Site haritası üreteci hata verdi:")
+        print((result.stderr or result.stdout).strip())
+        return False
+
+    print((result.stdout or "").strip())
+    return True
+
+
+def append_sitemap_url(slug: str, iso_date: str) -> None:
+    """Node çalıştırılamazsa yeni URL'i doğrudan sitemap.xml'e ekler."""
+    if not os.path.exists(SITEMAP):
+        print(f"[!] {SITEMAP} bulunamadı, site haritası güncellenemedi.")
         return
+
+    with open(SITEMAP, "r", encoding="utf-8") as handle:
+        xml = handle.read()
+
+    loc = f"{SITE_URL}/blog/{slug}"
+    if loc in xml:
+        print("[=] URL zaten site haritasında.")
+        return
+
+    entry = (
+        "  <url>\n"
+        f"    <loc>{loc}</loc>\n"
+        f"    <lastmod>{iso_date}</lastmod>\n"
+        "    <changefreq>monthly</changefreq>\n"
+        "    <priority>0.7</priority>\n"
+        "  </url>\n"
+    )
+
+    xml = xml.replace("</urlset>", entry + "</urlset>")
+    with open(SITEMAP, "w", encoding="utf-8") as handle:
+        handle.write(xml)
+
+    print(f"[+] {os.path.relpath(SITEMAP, ROOT)} güncellendi (lastmod: {iso_date}).")
+
+
+def main() -> int:
+    if "--sitemap-only" in sys.argv:
+        if not regenerate_sitemap():
+            print("Hata: site haritası üretilemedi (node bulunamadı mı?).")
+            return 1
+        return 0
+
+    print("=" * 44)
+    print(" KAPTANTECH - OTOMATİK BLOG EKLEME BOTU ")
+    print("=" * 44)
+
+    title = input("1. Blog Başlığı: ").strip()
+    category = input("2. Kategori (SEO, GEO, Web, Reklam, Video, Eğitim...): ").strip()
+    excerpt = input("3. Kısa Açıklama (Google'da ve kartta görünür, 120-160 karakter): ").strip()
+    content = read_multiline(
+        "4. Blog Metni (HTML kullanabilirsiniz; düz satırlar otomatik <p> ile sarılır.\n"
+        "   Bitirmek için boş bir satırda 'BİTİR' yazıp Enter'a basın):"
+    )
+
+    if not title or not content.strip():
+        print("Hata: Başlık ve içerik boş olamaz!")
+        return 1
+    if not category:
+        category = "Genel"
+    if not excerpt:
+        excerpt = title
 
     slug = slugify(title)
-    
-    # İçerikteki ters bölü ve backtick karakterlerini escape et (JS template literal patlamasını önlemek için)
-    content = content.replace('`', r'\`').replace('${', r'\${')
-    
-    # Tarihi Türkçe formatta al
-    months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
+    if not slug:
+        print("Hata: Başlıktan geçerli bir slug üretilemedi.")
+        return 1
+
     now = datetime.datetime.now()
-    date_str = f"{now.day:02d} {months[now.month-1]} {now.year}"
-    
-    # Okuma süresini kabaca hesapla
-    word_count = len(content.split())
-    read_time = str(max(1, word_count // 200)) + " dk okuma"
+    date_str = f"{now.day:02d} {MONTHS[now.month - 1]} {now.year}"
+    iso_date = now.strftime("%Y-%m-%d")
 
-    blog_tsx_path = os.path.join("src", "pages", "Blog.tsx")
-    blog_post_tsx_path = os.path.join("src", "pages", "BlogPost.tsx")
+    html = normalize_content(content)
+    read_time = f"{max(1, round(word_count(html) / 200))} dk okuma"
 
-    # 1. Blog.tsx Güncellemesi
-    if not os.path.exists(blog_tsx_path):
-        print(f"Hata: {blog_tsx_path} bulunamadı. Lütfen scripti proje ana dizininde çalıştırın.")
-        return
+    # 1. İçerik dosyası
+    os.makedirs(CONTENT_DIR, exist_ok=True)
+    content_path = os.path.join(CONTENT_DIR, f"{slug}.html")
+    if os.path.exists(content_path):
+        print(f"Hata: {content_path} zaten var. Farklı bir başlık kullanın.")
+        return 1
+    with open(content_path, "w", encoding="utf-8") as handle:
+        handle.write(html + "\n")
+    print(f"\n[+] {os.path.relpath(content_path, ROOT)} oluşturuldu.")
 
-    with open(blog_tsx_path, "r", encoding="utf-8") as f:
-        blog_content = f.read()
+    # 2. Meta veri
+    if not insert_post_metadata(slug, title, category, date_str, iso_date, read_time, excerpt):
+        os.remove(content_path)
+        return 1
 
-    new_post_obj = f"""  {{
-    slug: "{slug}",
-    title: "{title}",
-    category: "{category}",
-    date: "{date_str}",
-    readTime: "{read_time}",
-    excerpt: "{excerpt}"
-  }}"""
+    # 3. Site haritası
+    if not regenerate_sitemap():
+        append_sitemap_url(slug, iso_date)
 
-    # array sonundaki '];' ifadesini bularak araya yeni objeyi ekle (esnek boşluk kontrolüyle)
-    if re.search(r'\]\s*;', blog_content):
-        blog_content = re.sub(r'(\s*)\}(\s*)\]\s*;', r'\1},\n' + new_post_obj + r'\n];', blog_content, count=1)
-        
-        with open(blog_tsx_path, "w", encoding="utf-8") as f:
-            f.write(blog_content)
-        print(f"\n[+] {blog_tsx_path} başarıyla güncellendi.")
-    else:
-        print("Hata: Blog.tsx içinde array sonu (];) bulunamadı.")
+    print(f"\n🎉 '{title}' yayına hazır.")
+    print(f"   Link      : /blog/{slug}")
+    print(f"   Okuma     : {read_time}")
+    print("   Sonraki adım: npm run build (statik HTML ve site haritası yenilenir)")
+    return 0
 
-    # 2. BlogPost.tsx Güncellemesi
-    if not os.path.exists(blog_post_tsx_path):
-        print(f"Hata: {blog_post_tsx_path} bulunamadı.")
-        return
-        
-    with open(blog_post_tsx_path, "r", encoding="utf-8") as f:
-        post_content = f.read()
-        
-    new_case = f"""    case '{slug}':
-      return (
-        <>
-          <h2>{title}</h2>
-          <div dangerouslySetInnerHTML={{{{ __html: `{content}` }}}} />
-        </>
-      );
-"""
-
-    # 'default:' ifadesini esnek boşluk ve regex ile bulup hemen önüne ekleyelim
-    if re.search(r'default\s*:', post_content):
-        post_content = re.sub(r'(\s*)(default\s*:)', r'\1' + new_case + r'\1\2', post_content, count=1)
-        with open(blog_post_tsx_path, "w", encoding="utf-8") as f:
-            f.write(post_content)
-        print(f"[+] {blog_post_tsx_path} başarıyla güncellendi.")
-    else:
-        print("Hata: BlogPost.tsx içinde 'default:' bulunamadı.")
-
-    print(f"\n🎉 İşlem tamamlandı! '{title}' isimli blog yazısı eklendi.")
-    print(f"Oluşturulan link: /blog/{slug}")
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

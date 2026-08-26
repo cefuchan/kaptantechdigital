@@ -1,4 +1,23 @@
 User-agent: *
 Allow: /
 
+# Filtre parametreleri ayrı bir sayfa değildir; kanonik sürüm taransın.
+Disallow: /*?q=
+
+# Yapay zekâ tabanlı arama motorları (GEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
 Sitemap: https://kaptantechdigital.com/sitemap.xml

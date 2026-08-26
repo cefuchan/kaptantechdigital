@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
 import { SEO } from '../components/SEO';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { MapPin, Phone, Mail, MessageSquare } from 'lucide-react';
+import { breadcrumbSchema, graph, localBusinessSchema } from '../data/schema';
+import { absoluteUrl, site } from '../data/site';
 
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'İletişim', path: '/iletisim' }
+];
+
+const contactSchema = graph(localBusinessSchema(), breadcrumbSchema(crumbs), {
+  '@type': 'ContactPage',
+  '@id': `${absoluteUrl('/iletisim')}#contact`,
+  url: absoluteUrl('/iletisim'),
+  name: 'İletişim',
+  description: 'Projeleriniz için teklif alın. Rotanızı birlikte çizelim.',
+  inLanguage: site.language,
+  mainEntity: { '@id': `${site.url}/#localbusiness` }
+});
 
 
 export default function Contact() {
@@ -41,46 +57,18 @@ export default function Contact() {
 
   return (
     <>
-      <SEO 
-        title="İletişim | KAPTAN — Ankara Dijital Büyüme Stüdyosu" 
-        description="Projeleriniz için teklif alın. Rotanızı birlikte çizelim."
-        url="https://kaptantechdigital.com/iletisim"
+      <SEO
+        title="İletişim | KAPTAN — Ankara Dijital Büyüme Stüdyosu"
+        description="Projeleriniz için teklif alın. Ankara merkezli dijital büyüme stüdyosu KAPTAN ile rotanızı birlikte çizelim."
+        url="/iletisim"
+        schema={contactSchema}
       />
-      <Helmet>
-        <script type="application/ld+json">
-          {`
-          {
-            "@context": "https://schema.org",
-            "@type": "ProfessionalService",
-            "name": "KAPTAN",
-            "description": "Ankara merkezli dijital büyüme stüdyosu — SEO, GEO, Web Tasarım, Google & Meta Reklam Yönetimi ve Video Prodüksiyon.",
-            "telephone": "+90 551 136 76 34",
-            "email": "merhaba@kaptantechdigital.com",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "Güneşevler 71. Cadde No:1",
-              "addressLocality": "Ankara",
-              "addressCountry": "TR"
-            },
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": 39.97067346786774,
-              "longitude": 32.893593472347014
-            },
-            "url": "https://kaptantechdigital.com",
-            "sameAs": [
-              "https://instagram.com/kaptantechdigital",
-              "https://linkedin.com/company/kaptantechdigital"
-            ]
-          }
-          `}
-        </script>
-      </Helmet>
       
       <div className="pt-32 pb-24 bg-bg relative min-h-screen">
         <VerticalLine />
         <div className="max-w-7xl mx-auto px-6">
           <HorizontalLine />
+          <Breadcrumbs items={crumbs} />
           <h1 className="text-4xl md:text-6xl font-display font-semibold mb-6">Rotanızı birlikte çizelim.</h1>
           <p className="text-muted max-w-2xl text-lg mb-16">
             Yeni bir proje başlatmak veya mevcut dijital varlıklarınızı optimize etmek için bizimle iletişime geçin.
