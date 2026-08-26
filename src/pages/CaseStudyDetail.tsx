@@ -3,7 +3,7 @@ import { SEO } from '../components/SEO';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight } from 'lucide-react';
-import { findCaseStudy } from '../data/caseStudies';
+import { findCaseStudy, isCaseStudyComplete } from '../data/caseStudies';
 import { breadcrumbSchema, caseStudySchema, graph } from '../data/schema';
 
 export default function CaseStudyDetail() {
@@ -36,15 +36,21 @@ export default function CaseStudyDetail() {
     { name: study.client, path }
   ];
 
-  const schema = graph(
-    caseStudySchema({
-      title: `${study.client} — ${study.service} Vaka Çalışması`,
-      description: study.description,
-      path,
-      about: study.service
-    }),
-    breadcrumbSchema(crumbs)
-  );
+  // Gerçek anlatı verisi girilmemiş vakalar "ince içerik" sayılır; arama
+  // motorlarına sunmak yerine hazır olana kadar indeks dışında tutuyoruz.
+  const complete = isCaseStudyComplete(study);
+
+  const schema = complete
+    ? graph(
+        caseStudySchema({
+          title: `${study.client} — ${study.service} Vaka Çalışması`,
+          description: study.description,
+          path,
+          about: study.industry ?? study.service
+        }),
+        breadcrumbSchema(crumbs)
+      )
+    : graph(breadcrumbSchema(crumbs));
 
   return (
     <>
@@ -53,6 +59,7 @@ export default function CaseStudyDetail() {
         description={study.description}
         url={path}
         type="article"
+        noindex={!complete}
         schema={schema}
       />
 
@@ -79,44 +86,43 @@ export default function CaseStudyDetail() {
             </p>
           </div>
 
-          {/* Narrative Sections */}
-          <div className="space-y-16">
-            <section>
-              <h2 className="text-2xl font-display font-semibold mb-4 flex items-center text-gold">
-                <span className="w-1.5 h-6 bg-gold mr-3" />
-                Zorluk
-              </h2>
-              <p className="text-muted text-lg leading-relaxed">
-                {study.client} markası, dijital varlıklarını hedeflerine uygun şekilde ölçeklendirme konusunda zorluk yaşıyordu. Mevcut stratejiler yeterli dönüşüm sağlamıyor ve hedef kitleye ulaşmakta eksik kalıyordu.
-                <br /><br />
-                <em className="text-sm opacity-50">(Bu bölüm projeye özel gerçek verilerle güncellenecektir.)</em>
-              </p>
-            </section>
+          {/*
+            Anlatı bölümleri yalnızca gerçek proje verisi girildiğinde görünür.
+            Veri yoksa uydurma metin göstermek yerine hiçbir şey göstermiyoruz;
+            sayfa da bu durumda noindex olarak yayınlanıyor.
+          */}
+          {study.narrative && (
+            <div className="space-y-16">
+              {[
+                { heading: 'Zorluk', body: study.narrative.challenge },
+                { heading: 'KAPTAN Yaklaşımı', body: study.narrative.approach },
+                { heading: 'Sonuç', body: study.narrative.result }
+              ].map((section) => (
+                <section key={section.heading}>
+                  <h2 className="text-2xl font-display font-semibold mb-4 flex items-center text-gold">
+                    <span className="w-1.5 h-6 bg-gold mr-3" />
+                    {section.heading}
+                  </h2>
+                  <p className="text-muted text-lg leading-relaxed whitespace-pre-line">
+                    {section.body}
+                  </p>
+                </section>
+              ))}
+            </div>
+          )}
 
-            <section>
-              <h2 className="text-2xl font-display font-semibold mb-4 flex items-center text-gold">
-                <span className="w-1.5 h-6 bg-gold mr-3" />
-                KAPTAN Yaklaşımı
-              </h2>
-              <p className="text-muted text-lg leading-relaxed mb-6">
-                Markanın dijital ayak izini baştan aşağı analiz ettik. "Şansa değil, rotaya" felsefemizle veriye dayalı bir aksiyon planı çıkardık. Kullanıcı deneyimini merkeze alan ve arama motoru/yapay zeka görünürlüğünü maksimize eden teknik iyileştirmeler uygulandı.
-                <br /><br />
-                <em className="text-sm opacity-50">(Bu bölüm projeye özel gerçek verilerle güncellenecektir.)</em>
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-display font-semibold mb-4 flex items-center text-gold">
-                <span className="w-1.5 h-6 bg-gold mr-3" />
-                Sonuç
-              </h2>
-              <p className="text-muted text-lg leading-relaxed">
-                Stratejik optimizasyonlar sonucunda organik görünürlükte ve hedef kitle etkileşiminde büyük bir sıçrama yaşandı. Belirlenen KPI'lara öngörülen süreden daha kısa bir zamanda ulaşıldı.
-                <br /><br />
-                <em className="text-sm opacity-50">(Bu bölüm projeye özel gerçek verilerle güncellenecektir.)</em>
-              </p>
-            </section>
-          </div>
+          {study.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-16">
+              {study.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs text-muted border border-white/10 rounded-full px-3 py-1"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
 
           <div className="mt-20 pt-10 border-t border-white/10 text-center">
             <h3 className="text-3xl font-display font-semibold mb-6">Sizin için de aynısını yapalım.</h3>

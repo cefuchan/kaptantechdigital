@@ -5,8 +5,8 @@ import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { findBlogPost, relatedBlogPosts } from '../data/blog';
 import { getCachedBlogContent, loadBlogContent } from '../content/blog';
-import { blogPostingSchema, breadcrumbSchema, graph } from '../data/schema';
-import { site } from '../data/site';
+import { blogPostingSchema, breadcrumbSchema, graph, personSchema } from '../data/schema';
+import { founder, site } from '../data/site';
 
 /** Yalnızca ilgili yazının gövdesini indiren, istek anında yükleme kancası. */
 function useBlogContent(slug?: string) {
@@ -70,13 +70,14 @@ export default function BlogPost() {
   const related = relatedBlogPosts(post.slug);
 
   const schema = graph(
+    personSchema(),
     blogPostingSchema({
       title: post.title,
       description: post.excerpt,
       path,
       datePublished: post.datePublished,
-      section: post.category,
-      author: site.name
+      section: post.category
+      // author verilmiyor: kurucu tanımlıysa Person, değilse kurum otomatik seçilir.
     }),
     breadcrumbSchema(crumbs)
   );
@@ -90,7 +91,7 @@ export default function BlogPost() {
         type="article"
         article={{
           publishedTime: post.datePublished,
-          author: site.name,
+          author: founder.name || site.name,
           section: post.category,
           tags: [post.category]
         }}

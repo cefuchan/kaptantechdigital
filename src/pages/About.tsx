@@ -3,7 +3,7 @@ import { SEO } from '../components/SEO';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight, Compass, Target, LineChart } from 'lucide-react';
-import { breadcrumbSchema, graph, organizationSchema } from '../data/schema';
+import { breadcrumbSchema, graph, organizationSchema, personSchema } from '../data/schema';
 import { absoluteUrl, site } from '../data/site';
 
 const crumbs = [
@@ -11,7 +11,7 @@ const crumbs = [
   { name: 'Hakkımızda', path: '/hakkimizda' }
 ];
 
-const aboutSchema = graph(organizationSchema(), breadcrumbSchema(crumbs), {
+const aboutSchema = graph(organizationSchema(), personSchema(), breadcrumbSchema(crumbs), {
   '@type': 'AboutPage',
   '@id': `${absoluteUrl('/hakkimizda')}#about`,
   url: absoluteUrl('/hakkimizda'),

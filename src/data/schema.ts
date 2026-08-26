@@ -4,12 +4,37 @@
  * Sayfalar bu yardımcıları çağırıp sonucu <SEO schema={...} /> ile enjekte eder.
  * Böylece yapılandırılmış veri tek yerde tanımlanır ve sayfalar arasında tutarlı kalır.
  */
-import { site, absoluteUrl, SITE_URL } from './site';
+import { site, absoluteUrl, SITE_URL, founder, servedDistricts, expertise } from './site';
 
 type Json = Record<string, unknown>;
 
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const PERSON_ID = `${SITE_URL}/#founder`;
+
+/** Kurucu bilgisi girilmişse Person şeması üretilir, aksi halde hiçbir şey. */
+export function personSchema(): Json | null {
+  if (!founder.name) return null;
+
+  return {
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: founder.name,
+    jobTitle: founder.jobTitle,
+    description: founder.bio,
+    url: absoluteUrl('/hakkimizda'),
+    worksFor: { '@id': ORGANIZATION_ID },
+    knowsAbout: [...expertise],
+    ...(founder.linkedin ? { sameAs: [founder.linkedin] } : {})
+  };
+}
+
+/** Yazar referansı: kurucu tanımlıysa kişi, değilse kurum. */
+function authorReference(): Json {
+  return founder.name
+    ? { '@id': PERSON_ID }
+    : { '@type': 'Organization', name: site.name, url: SITE_URL };
+}
 
 const postalAddress = {
   '@type': 'PostalAddress',
@@ -27,13 +52,19 @@ export function organizationSchema(): Json {
     '@id': ORGANIZATION_ID,
     name: site.name,
     legalName: site.legalName,
+    alternateName: site.alternateName,
     url: SITE_URL,
     description: site.description,
     foundingDate: site.foundingDate,
     email: site.email,
     telephone: site.telephone,
     address: postalAddress,
-    areaServed: { '@type': 'City', name: site.address.city },
+    areaServed: [
+      { '@type': 'City', name: site.address.city },
+      ...servedDistricts.map((name) => ({ '@type': 'Place', name: `${name}, Ankara` }))
+    ],
+    knowsAbout: [...expertise],
+    ...(founder.name ? { founder: { '@id': PERSON_ID } } : {}),
     logo: {
       '@type': 'ImageObject',
       url: absoluteUrl('/icon-512.png'),
@@ -77,8 +108,10 @@ export function localBusinessSchema(): Json {
     openingHours: site.openingHours,
     areaServed: [
       { '@type': 'City', name: 'Ankara' },
+      ...servedDistricts.map((name) => ({ '@type': 'Place', name: `${name}, Ankara` })),
       { '@type': 'Country', name: 'Türkiye' }
     ],
+    knowsAbout: [...expertise],
     sameAs: [...site.sameAs],
     parentOrganization: { '@id': ORGANIZATION_ID },
     hasOfferCatalog: {
@@ -219,7 +252,9 @@ export function blogPostingSchema(input: {
       width: site.imageWidth,
       height: site.imageHeight
     },
-    author: { '@type': 'Organization', name: input.author ?? site.name, url: SITE_URL },
+    author: input.author
+      ? { '@type': 'Organization', name: input.author, url: SITE_URL }
+      : authorReference(),
     publisher: { '@id': ORGANIZATION_ID }
   };
 }

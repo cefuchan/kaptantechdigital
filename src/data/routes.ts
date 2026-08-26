@@ -6,7 +6,7 @@
  * güncellemek gerekmez.
  */
 import { blogPosts } from './blog';
-import { caseStudySlugs } from './caseStudies';
+import { caseStudiesData, isCaseStudyComplete } from './caseStudies';
 import { serviceSlugs } from './services';
 
 export interface RouteEntry {
@@ -17,6 +17,14 @@ export interface RouteEntry {
   priority: number;
   /** sitemap.xml <lastmod>. Verilmezse üretim tarihi kullanılır. */
   lastmod?: string;
+  /**
+   * Sayfa arama motorlarına sunuluyor mu?
+   *
+   * false olan rotalar yine ön render edilir ve siteden erişilebilir kalır —
+   * yalnızca sitemap.xml dışında tutulur. Sayfanın kendisi `noindex` meta
+   * etiketini SEO bileşeni üzerinden verir.
+   */
+  index?: boolean;
 }
 
 const staticRoutes: RouteEntry[] = [
@@ -29,7 +37,11 @@ const staticRoutes: RouteEntry[] = [
   { path: '/iletisim', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-seo', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-web-tasarim', changefreq: 'monthly', priority: 0.8 },
-  { path: '/siteler', changefreq: 'monthly', priority: 0.8 }
+  { path: '/siteler', changefreq: 'monthly', priority: 0.8 },
+  { path: '/ostim-ivedik', changefreq: 'monthly', priority: 0.8 },
+  { path: '/saglik-turizmi-seo', changefreq: 'monthly', priority: 0.8 },
+  { path: '/ankara-video-produksiyon', changefreq: 'monthly', priority: 0.8 },
+  { path: '/is-talebi', changefreq: 'monthly', priority: 0.5 }
 ];
 
 export function allRoutes(): RouteEntry[] {
@@ -42,11 +54,14 @@ export function allRoutes(): RouteEntry[] {
         priority: 0.8
       })
     ),
-    ...caseStudySlugs.map(
-      (slug): RouteEntry => ({
-        path: `/vaka-calismalari/${slug}`,
+    // Anlatısı tamamlanmamış vakalar noindex yayınlanır ve site haritasına
+    // girmez; sayfa yine ön render edilip listeden erişilebilir kalır.
+    ...caseStudiesData.map(
+      (study): RouteEntry => ({
+        path: `/vaka-calismalari/${study.id}`,
         changefreq: 'monthly',
-        priority: 0.6
+        priority: 0.6,
+        index: isCaseStudyComplete(study)
       })
     ),
     ...blogPosts.map(
@@ -60,7 +75,12 @@ export function allRoutes(): RouteEntry[] {
   ];
 }
 
-/** Ön render için sade yol listesi. */
+/** Ön render için sade yol listesi — indekslenmeyenler dahil. */
 export function allPaths(): string[] {
   return allRoutes().map((route) => route.path);
+}
+
+/** sitemap.xml'e girecek rotalar. */
+export function indexableRoutes(): RouteEntry[] {
+  return allRoutes().filter((route) => route.index !== false);
 }

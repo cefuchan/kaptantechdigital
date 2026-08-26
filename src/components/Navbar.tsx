@@ -63,6 +63,9 @@ export function Navbar() {
     { name: 'Google & Meta Reklam Yönetimi', path: '/hizmetler/reklam' },
     { name: 'Video Prodüksiyon', path: '/hizmetler/video-produksiyon' },
     { name: 'Siteler Dijital Hizmetleri', path: '/siteler' },
+    { name: 'OSTİM & İvedik OSB', path: '/ostim-ivedik' },
+    { name: 'Sağlık Turizmi SEO', path: '/saglik-turizmi-seo' },
+    { name: 'Ankara Video Prodüksiyon', path: '/ankara-video-produksiyon' },
   ];
 
   return (

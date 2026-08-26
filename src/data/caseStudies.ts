@@ -9,6 +9,31 @@ export interface CaseStudy {
   metric: string;
   description: string;
   tags: string[];
+  /** Sektör — vaka sayfasının Article şemasındaki `about` alanı. */
+  industry?: string;
+  /** Çalışmanın yürütüldüğü dönem, örn. "2024". */
+  period?: string;
+  /**
+   * Anlatı bölümleri. Üçü birden doldurulduğunda vaka sayfası tam içerikli
+   * ve indekslenebilir olur; eksikse sayfa `noindex` yayınlanır.
+   *
+   * Buraya yalnızca gerçek proje verisi yazın — uydurma rakam, arama
+   * motorlarında olduğu kadar potansiyel müşteride de güven kaybettirir.
+   */
+  narrative?: {
+    challenge: string;
+    approach: string;
+    result: string;
+  };
+}
+
+/** Anlatısı tamamlanmış vakalar indekslenir, diğerleri noindex kalır. */
+export function isCaseStudyComplete(study: CaseStudy): boolean {
+  return Boolean(
+    study.narrative?.challenge?.trim() &&
+      study.narrative?.approach?.trim() &&
+      study.narrative?.result?.trim()
+  );
 }
 
 export const caseStudiesData: CaseStudy[] = [

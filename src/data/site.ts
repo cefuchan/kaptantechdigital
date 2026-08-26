@@ -4,16 +4,71 @@
  */
 export const SITE_URL = 'https://kaptantechdigital.com';
 
+/**
+ * Kurucu / sorumlu uzman.
+ *
+ * Yapay zekâ motorları uzmanlığı kuruma değil kişiye bağlamayı tercih eder.
+ * `name` doldurulduğu anda Person şeması devreye girer, Organization'a
+ * `founder` olarak bağlanır ve blog yazılarının yazarı bu kişi olur.
+ * Boş bırakıldığı sürece hiçbir kişi bilgisi yayınlanmaz.
+ */
+export const founder = {
+  name: '',
+  jobTitle: 'Kurucu & Dijital Büyüme Stratejisti',
+  /** Kişisel LinkedIn profili — varlık doğrulaması için önemli. */
+  linkedin: '',
+  bio:
+    'Ankara merkezli KAPTAN Dijital Büyüme Stüdyosu’nun kurucusu. SEO, GEO ve ' +
+    'performans pazarlaması alanlarında kurumsal markalara danışmanlık veriyor.'
+};
+
+/** Footer'da görünen ve sameAs olarak beyan edilen profiller. */
+export const socialProfiles = [
+  { label: 'Instagram', url: 'https://instagram.com/kaptantechdigital' },
+  { label: 'LinkedIn', url: 'https://linkedin.com/company/kaptantechdigital' }
+];
+
+/** Hizmet verilen Ankara bölgeleri — LocalBusiness.areaServed için. */
+export const servedDistricts = [
+  'Altındağ',
+  'Siteler',
+  'Ostim',
+  'İvedik OSB',
+  'Çankaya',
+  'Yenimahalle',
+  'Keçiören'
+];
+
+/** Organization.knowsAbout — hangi konularda yetkin olduğumuzun açık beyanı. */
+export const expertise = [
+  'Arama Motoru Optimizasyonu (SEO)',
+  'Generative Engine Optimization (GEO)',
+  'Yerel SEO ve Google İşletme Profili Yönetimi',
+  'Teknik SEO ve Core Web Vitals',
+  'Kurumsal Web Tasarımı',
+  'E-ticaret Web Geliştirme',
+  'Google Ads Kampanya Yönetimi',
+  'Meta (Facebook & Instagram) Reklamcılığı',
+  'Kurumsal Video Prodüksiyon',
+  'B2B Sanayi Dijital Pazarlaması',
+  'Sağlık Turizmi Dijital Pazarlaması'
+];
+
+const telephone = '+90 551 136 76 34';
+
 export const site = {
   url: SITE_URL,
   name: 'KAPTAN',
   legalName: 'KAPTAN Dijital Büyüme Stüdyosu',
+  alternateName: 'KaptanTech Digital',
   tagline: 'Ankara Dijital Büyüme Stüdyosu',
   description:
     'Ankara merkezli dijital büyüme stüdyosu — SEO, GEO, Web Tasarım, Google & Meta Reklam Yönetimi ve Video Prodüksiyon.',
   locale: 'tr_TR',
   language: 'tr',
-  telephone: '+90 551 136 76 34',
+  telephone,
+  /** wa.me biçimi: sadece rakam, ülke koduyla birlikte. */
+  whatsapp: telephone.replace(/\D/g, ''),
   email: 'merhaba@kaptantechdigital.com',
   address: {
     street: 'Güneşevler 71. Cadde No:1',
@@ -27,16 +82,14 @@ export const site = {
     latitude: 39.97067346786774,
     longitude: 32.893593472347014
   },
-  sameAs: [
-    'https://instagram.com/kaptantechdigital',
-    'https://linkedin.com/company/kaptantechdigital'
-  ],
+  /** Doğrulanabilir profiller. Yeni profil eklerken socialProfiles'ı güncelleyin. */
+  sameAs: [...socialProfiles.map((profile) => profile.url), founder.linkedin].filter(Boolean),
   openingHours: 'Mo-Fr 09:00-18:00',
   foundingDate: '2017',
   defaultImage: `${SITE_URL}/og-image.png`,
   imageWidth: 1200,
   imageHeight: 630
-} as const;
+};
 
 /** Göreli yolu her zaman mutlak ve tekrarsız bir kanonik URL'e çevirir. */
 export function absoluteUrl(path = '/'): string {

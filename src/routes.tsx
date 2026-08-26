@@ -20,9 +20,13 @@ export const pageLoaders = {
   Blog: () => import('./pages/Blog'),
   BlogPost: () => import('./pages/BlogPost'),
   Siteler: () => import('./pages/Siteler'),
+  OstimIvedik: () => import('./pages/OstimIvedik'),
+  SaglikTurizmiSeo: () => import('./pages/SaglikTurizmiSeo'),
+  AnkaraVideoProduksiyon: () => import('./pages/AnkaraVideoProduksiyon'),
   AnkaraSeo: () => import('./pages/AnkaraSeo'),
   AnkaraWebTasarim: () => import('./pages/AnkaraWebTasarim'),
   Contact: () => import('./pages/Contact'),
+  JobPost: () => import('./pages/JobPost'),
   NotFound: () => import('./pages/NotFound')
 } as const;
 
@@ -41,9 +45,13 @@ export const routeTable: Array<{ path: string; page: PageName }> = [
   { path: '/blog', page: 'Blog' },
   { path: '/blog/:slug', page: 'BlogPost' },
   { path: '/siteler', page: 'Siteler' },
+  { path: '/ostim-ivedik', page: 'OstimIvedik' },
+  { path: '/saglik-turizmi-seo', page: 'SaglikTurizmiSeo' },
+  { path: '/ankara-video-produksiyon', page: 'AnkaraVideoProduksiyon' },
   { path: '/ankara-seo', page: 'AnkaraSeo' },
   { path: '/ankara-web-tasarim', page: 'AnkaraWebTasarim' },
   { path: '/iletisim', page: 'Contact' },
+  { path: '/is-talebi', page: 'JobPost' },
   { path: '*', page: 'NotFound' }
 ];
 

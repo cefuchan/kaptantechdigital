@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 import { SEO } from '../components/SEO';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { ArrowUpRight } from 'lucide-react';
-import { graph, localBusinessSchema, organizationSchema, webSiteSchema } from '../data/schema';
+import { graph, localBusinessSchema, organizationSchema, personSchema, webSiteSchema } from '../data/schema';
 
 /** Ana sayfa şeması: kurum kimliği + yerel işletme + site içi arama kutusu. */
-const homeSchema = graph(organizationSchema(), localBusinessSchema(), webSiteSchema(), {
+const homeSchema = graph(organizationSchema(), personSchema(), localBusinessSchema(), webSiteSchema(), {
   '@type': 'WebPage',
   '@id': 'https://kaptantechdigital.com/#webpage',
   url: 'https://kaptantechdigital.com/',

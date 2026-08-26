@@ -30,8 +30,8 @@ try {
     logLevel: 'silent'
   });
 
-  const { allRoutes } = await import(pathToFileURL(bundlePath).href);
-  const routes = allRoutes();
+  const { indexableRoutes } = await import(pathToFileURL(bundlePath).href);
+  const routes = indexableRoutes();
 
   const body = routes
     .map((route) => {

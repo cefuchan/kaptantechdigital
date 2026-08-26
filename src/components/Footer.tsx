@@ -1,7 +1,18 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { site, socialProfiles } from '../data/site';
 
 export function Footer() {
+  /**
+   * Profil bağlantıları site.ts'ten gelir; aynı liste JSON-LD'deki sameAs
+   * alanını da besler. rel="me" ile bağlantı, varlık doğrulaması için
+   * "bu profil bize ait" beyanı taşır.
+   */
+  const profiles = [
+    ...socialProfiles,
+    { label: 'WhatsApp', url: `https://wa.me/${site.whatsapp}` }
+  ];
+
   return (
     <footer className="bg-bg pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden relative">
       {/* Background Video Placeholder */}
@@ -60,12 +71,19 @@ export function Footer() {
 
           {/* Bottom Bar */}
           <div className="w-full flex flex-col md:flex-row justify-between items-center mt-12 pt-6 border-t border-white/5 text-sm">
-            <div className="flex space-x-6 text-muted mb-4 md:mb-0">
-              <a href="#" className="hover:text-gold transition-colors">Instagram</a>
-              <a href="#" className="hover:text-gold transition-colors">LinkedIn</a>
-              <a href="#" className="hover:text-gold transition-colors">Behance</a>
-              <a href="#" className="hover:text-gold transition-colors">WhatsApp</a>
-            </div>
+            <nav aria-label="Sosyal medya" className="flex flex-wrap gap-x-6 gap-y-2 text-muted mb-4 md:mb-0">
+              {profiles.map((profile) => (
+                <a
+                  key={profile.label}
+                  href={profile.url}
+                  target="_blank"
+                  rel="me noopener noreferrer"
+                  className="hover:text-gold transition-colors"
+                >
+                  {profile.label}
+                </a>
+              ))}
+            </nav>
             
             <div className="flex items-center text-muted">
               <div className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse-dot" />

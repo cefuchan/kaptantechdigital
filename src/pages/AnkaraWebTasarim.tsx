@@ -40,8 +40,8 @@ const schema = graph(
 export default function AnkaraWebTasarim() {
   return <>
     <SEO
-      title="Ankara Web Tasarım | SEO Uyumlu Kurumsal Web Sitesi | KAPTAN"
-      description="Ankara web tasarım hizmetiyle hızlı, mobil uyumlu, SEO altyapısı güçlü ve dönüşüm odaklı kurumsal web sitenizi oluşturun."
+      title="Ankara Web Tasarım | Bölge ve Sektöre Özel Kurumsal Site | KAPTAN"
+      description="Ankara web tasarım: Siteler, OSTİM, İvedik ve Çankaya'daki işletmeler için bölgesine ve sektörüne göre kurgulanmış kurumsal web siteleri."
       url="/ankara-web-tasarim"
       schema={schema}
     />
@@ -52,7 +52,38 @@ export default function AnkaraWebTasarim() {
       <div className="max-w-3xl text-muted text-lg leading-relaxed space-y-5 mb-10"><p>Ankara web tasarım hizmetimizde estetik ile iş hedeflerini birlikte ele alırız. Web siteniz, dijital kartvizitten öte; hedef kitlenizin sizi tanıdığı, hizmetlerinizi karşılaştırdığı ve iletişim kurmaya karar verdiği güçlü bir satış noktasıdır.</p><p>Kurumsal web sitesi, e-ticaret deneyimi veya özel dijital platform ihtiyacınız için; marka kimliğinize uygun, hızlı, güvenli ve SEO uyumlu bir temel oluştururuz.</p></div>
       <Link to="/iletisim" className="inline-flex items-center px-6 py-3 rounded-full bg-gold text-bg font-medium hover:bg-gold-light transition-colors">Web tasarım teklifi alın <ArrowUpRight className="w-5 h-5 ml-2" /></Link>
       <section className="mt-24 grid grid-cols-1 md:grid-cols-2 gap-6">{services.map(([title, text], index) => <article key={title} className="bg-surface p-8 rounded-2xl border border-white/5"><span className="text-gold font-mono text-xs">0{index + 1}</span><h2 className="text-2xl font-display font-semibold mt-4 mb-3">{title}</h2><p className="text-muted leading-relaxed">{text}</p></article>)}</section>
-      <section className="mt-24 max-w-4xl"><p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Süreç</p><h2 className="text-3xl md:text-4xl font-display font-semibold mb-8">Fikirden yayına, ölçülebilir bir dijital deneyim.</h2><div className="space-y-5 text-muted text-lg leading-relaxed"><p>Önce müşterinizin karar yolculuğunu anlarız. Hangi bilgiye ihtiyaç duyuyor, hangi sayfada güven kazanıyor ve hangi noktada iletişime geçiyor? Bu sorular; site haritasını, metinleri, görsel yönlendirmeleri ve tasarım kararlarını belirler.</p><p>Geliştirme aşamasında her ekran için mobil deneyimi, hız ve erişilebilirliği kontrol ederiz. Yayına alındıktan sonra da ziyaretçi davranışlarını ve dönüşüm noktalarını ölçerek sitenizi iyileştirmeye açık tutarız.</p><ul className="space-y-3 pt-2">{['Keşif, hedef kitle ve içerik planı', 'UX/UI tasarım ve onay süreci', 'Performans odaklı geliştirme ve SEO teknik kontrolü', 'Yayın sonrası ölçümleme ve dönüşüm iyileştirmesi'].map(item => <li key={item} className="flex items-start"><CheckCircle2 className="w-5 h-5 text-gold mr-3 shrink-0 mt-1" />{item}</li>)}</ul></div></section>
+      {/*
+        Bu sayfa bölgesel sorguları karşılar: Ankara'da kim için, hangi semtte.
+        Tasarım ve geliştirme sürecinin kendisi /hizmetler/web-tasarim
+        sayfasında anlatılır — iki sayfanın aynı kelimeyi hedeflememesi için
+        bu ayrım korunmalıdır.
+      */}
+      <section className="mt-24 max-w-4xl">
+        <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Kimlerle çalışıyoruz</p>
+        <h2 className="text-3xl md:text-4xl font-display font-semibold mb-8">Ankara’da her bölgenin kendi ticari dili var.</h2>
+        <div className="space-y-5 text-muted text-lg leading-relaxed">
+          <p>Aynı web tasarım yaklaşımı Ankara’nın her semtinde işe yaramaz. Siteler’deki bir mobilya üreticisinin ihtiyacı ürün sunumu ve görsel kaliteyken, OSTİM’deki bir imalatçının ihtiyacı teknik veri ve teklif akışıdır. Çankaya’daki bir danışmanlık ofisi ise güven ve uzmanlık kanıtı arar.</p>
+          <p>Bu yüzden bölge ve sektör bazlı ayrı sayfalar hazırlıyoruz. Projenize en yakın başlıktan devam edebilirsiniz:</p>
+          <ul className="space-y-3 pt-2">
+            <li className="flex items-start">
+              <CheckCircle2 className="w-5 h-5 text-gold mr-3 shrink-0 mt-1" />
+              <span><Link to="/siteler" className="text-gold hover:text-white transition-colors">Siteler</Link> — mobilya, ahşap ve imalat: ürün odaklı dijital vitrin</span>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle2 className="w-5 h-5 text-gold mr-3 shrink-0 mt-1" />
+              <span><Link to="/ostim-ivedik" className="text-gold hover:text-white transition-colors">OSTİM &amp; İvedik OSB</Link> — B2B sanayi: teknik katalog ve ihracat altyapısı</span>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle2 className="w-5 h-5 text-gold mr-3 shrink-0 mt-1" />
+              <span><Link to="/saglik-turizmi-seo" className="text-gold hover:text-white transition-colors">Klinikler ve sağlık turizmi</Link> — çok dilli yapı ve güven sinyalleri</span>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle2 className="w-5 h-5 text-gold mr-3 shrink-0 mt-1" />
+              <span><Link to="/hizmetler/web-tasarim" className="text-gold hover:text-white transition-colors">Tasarım ve geliştirme süreci</Link> — aşamalar, teslim edilenler ve çalışma biçimi</span>
+            </li>
+          </ul>
+        </div>
+      </section>
       <section className="mt-24 max-w-4xl"><p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Sık sorulanlar</p><div className="space-y-4">{faqs.map(([question, answer]) => <article key={question} className="bg-surface p-7 rounded-2xl border border-white/5"><h2 className="text-xl font-display font-semibold mb-3">{question}</h2><p className="text-muted leading-relaxed">{answer}</p></article>)}</div></section>
     </div></main>
   </>;
