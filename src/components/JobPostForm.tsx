@@ -13,9 +13,9 @@ import { useCallback, useEffect, useRef, useState, type ChangeEvent, type FormEv
  */
 
 /**
- * Google Apps Script Web App adresi (Google Sheets Entegrasyonu).
+ * SheetDB API adresi (Google Sheets Entegrasyonu).
  */
-const DEFAULT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxwJGT9m_Pev_YIV5Trmo9wesK6cvGxfn9pFA56QjacTrQ_Y60iKpXD1VOv736Az_ze/exec';
+const DEFAULT_ENDPOINT = 'https://sheetdb.io/api/v1/4fptt41pnlx4a';
 
 const STORAGE_KEY = 'kaptan:is-talepleri';
 const MAX_SAVED = 30;
@@ -204,7 +204,7 @@ function CopyButton({
 /* --------------------------------------------------------------- ana form -- */
 
 export interface JobPostFormProps {
-  /** Taleplerin gönderileceği webhook / Google Apps Script adresi. */
+  /** Taleplerin gönderileceği webhook / SheetDB adresi. */
   endpoint?: string;
   /** Servis gönderimini tamamen kapatmak için false verin. */
   submitToService?: boolean;
@@ -276,27 +276,38 @@ export default function JobPostForm({
 
     setSendState('sending');
     const payload = JSON.stringify({
-      _subject: `Yeni iş talebi: ${values.title.trim()}`,
-      baslik: values.title.trim(),
-      kategori: values.category,
-      konum: values.location.trim(),
-      butce: values.budget.trim(),
-      detaylar: values.details.trim(),
-      isim: values.name.trim(),
-      telefon: formatPhoneForDisplay(values.phone),
-      whatsapp: `https://wa.me/${normalizePhone(values.phone)}`,
-      whatsapp_mesaji: text
+      data: [
+        {
+          Tarih: new Date().toLocaleString('tr-TR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          }),
+          Baslik: values.title.trim(),
+          Kategori: values.category,
+          Musteri: values.name.trim(),
+          Telefon: formatPhoneForDisplay(values.phone),
+          WhatsApp: `https://wa.me/${normalizePhone(values.phone)}`,
+          Butce: values.budget.trim() || 'Belirtilmedi',
+          Konum: values.location.trim() || 'Belirtilmedi',
+          Detaylar: values.details.trim(),
+          Ilan_Metni: text
+        }
+      ]
     });
 
     try {
-      // Google Apps Script CORS preflight sorununu önlemek için text/plain ile gönderilir
-      await fetch(endpoint, {
+      const response = await fetch(endpoint, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
         body: payload
       });
-      setSendState('sent');
+      setSendState(response.ok ? 'sent' : 'failed');
     } catch {
       setSendState('failed');
     }
