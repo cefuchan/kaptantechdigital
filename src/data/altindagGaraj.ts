@@ -21,11 +21,27 @@ export const garageContact = {
   instagramHandle: '@ankaragizliozellikgaraj',
   district: 'Altındağ',
   city: 'Ankara',
-  /** Açık sokak adresi girildiğinde LocalBusiness şemasına da yansır. */
+  /** Açık sokak adresi — LocalBusiness şemasına ve İşletme Profili eşleşmesine yansır. */
   streetAddress: 'Güneşevler 71. Cadde No:1',
+  postalCode: '06105',
   openingHours: 'Mo-Sa 09:00-19:00',
-  /** Randevu formunun gönderileceği ücretsiz form servisi. */
-  formEndpoint: 'https://formspree.io/f/xaqrbqyl'
+  /**
+   * Randevu talepleri Google E-Tablo'ya SheetDB üzerinden düşer.
+   *
+   * `?sheet=Garaj` kayıtları aynı dosyadaki "Garaj" sekmesine yazar; iş ilanı
+   * kayıtlarıyla karışmaz. Bu sekme henüz açılmadığı için SheetDB şu an 404
+   * dönüyor — o yüzden aşağıdaki yedek adres devrede.
+   *
+   * Sekmeyi açarken başlık satırı şu sırayla olmalı:
+   * tarih · isim · telefon · arac · ilce · talep · kaynak
+   */
+  formEndpoint: 'https://sheetdb.io/api/v1/4fptt41pnlx4a?sheet=Garaj',
+  /**
+   * SheetDB'ye yazılamazsa talep buraya gönderilir; böylece sekme açılana
+   * kadar hiçbir müşteri talebi kaybolmaz. Sekme açıldıktan sonra bu satır
+   * kaldırılabilir.
+   */
+  formFallbackEndpoint: 'https://formspree.io/f/xaqrbqyl'
 };
 
 export interface VehicleGroup {
@@ -123,6 +139,54 @@ export const vehicleGroups: VehicleGroup[] = [
     ]
   }
 ];
+
+/**
+ * Garaj alt sayfaları — çapraz geçiş kaydı.
+ *
+ * Her araç ekosistemi kendi URL adresinde yayınlanıyor; bu liste sayfaların
+ * birbirine ve hub sayfasına link verebilmesi için tek kaynaktır. Yeni bir alt
+ * sayfa açtığınızda buraya bir satır eklemek yeterli: tüm sayfalardaki
+ * "Diğer araçlar" bölümü kendiliğinden güncellenir.
+ */
+export interface GaragePage {
+  /** vehicleGroups içindeki grup kimliğiyle eşleşir. */
+  id: string;
+  path: string;
+  label: string;
+  models: string;
+}
+
+export const garagePages: GaragePage[] = [
+  {
+    id: 'fiat-egea',
+    path: '/ankara-gizli-ozellik/egea',
+    label: 'Fiat Egea',
+    models: 'Sedan · Hatchback · Cross'
+  },
+  {
+    id: 'vag-group',
+    path: '/ankara-gizli-ozellik/vag-grubu',
+    label: 'VAG Grubu',
+    models: 'Golf · Passat · Polo · Leon · Octavia'
+  },
+  {
+    id: 'chery',
+    path: '/ankara-gizli-ozellik/chery-multimedya',
+    label: 'Chery Multimedya',
+    models: 'Omoda 5 · Tiggo 7 · Tiggo 8'
+  },
+  {
+    id: 'elektrikli',
+    path: '/ankara-gizli-ozellik/ev-batarya-soh',
+    label: 'Elektrikli Araç SoH Testi',
+    models: 'Togg · Tesla · MG · Zoe'
+  }
+];
+
+/** Bir araç grubunun kendi alt sayfası var mı? */
+export function garagePageFor(groupId: string): GaragePage | undefined {
+  return garagePages.find((page) => page.id === groupId);
+}
 
 export interface GarageService {
   title: string;

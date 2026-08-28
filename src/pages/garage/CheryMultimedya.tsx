@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { SEO } from '../../components/SEO';
 import { absoluteUrl } from '../../data/site';
 import { garageContact, whatsappLink } from '../../data/altindagGaraj';
+import { CaprazGecis } from '../../components/garage/CaprazGecis';
 
 const PATH = '/ankara-gizli-ozellik/chery-multimedya';
 
@@ -260,6 +261,10 @@ export default function CheryMultimedya() {
             )}
           </div>
         </section>
+
+        <div className="mx-auto max-w-4xl px-5 pb-16">
+          <CaprazGecis current="chery" />
+        </div>
       </div>
     </>
   );

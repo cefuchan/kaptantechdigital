@@ -25,6 +25,7 @@ import {
   guaranteeFaqs,
   serviceDistricts,
   vehicleGroups,
+  garagePageFor,
   whatsappLink
 } from '../data/altindagGaraj';
 
@@ -145,12 +146,34 @@ export default function AltindagGaraj() {
     setFormState('submitting');
 
     try {
-      const response = await fetch(garageContact.formEndpoint, {
+      const fd = new FormData(form);
+      const row = {
+        tarih: new Date().toLocaleString('tr-TR'),
+        isim: String(fd.get('isim') ?? ''),
+        telefon: String(fd.get('telefon') ?? ''),
+        arac: String(fd.get('arac') ?? ''),
+        ilce: String(fd.get('ilce') ?? ''),
+        talep: String(fd.get('talep') ?? ''),
+        kaynak: 'Altındağ Garaj — randevu formu'
+      };
+
+      // SheetDB satır bazlı JSON bekler; alan adları e-tablo başlıklarıyla eşleşmeli.
+      let response = await fetch(garageContact.formEndpoint, {
         method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' }
-      });
-      if (response.ok) {
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: [row] })
+      }).catch(() => null);
+
+      // E-tabloya yazılamazsa talebi kaybetmemek için yedek servise düşüyoruz.
+      if (!response?.ok && garageContact.formFallbackEndpoint) {
+        response = await fetch(garageContact.formFallbackEndpoint, {
+          method: 'POST',
+          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify(row)
+        }).catch(() => null);
+      }
+
+      if (response?.ok) {
         setFormState('success');
         form.reset();
       } else {
@@ -360,9 +383,18 @@ export default function AltindagGaraj() {
               </ul>
 
               <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm text-[#E0E6ED]/55">
-                  Liste donanım seviyesine ve model yılına göre değişebilir.
-                </p>
+                <div className="text-sm text-[#E0E6ED]/55">
+                  <p>Liste donanım seviyesine ve model yılına göre değişebilir.</p>
+                  {garagePageFor(vehicle.id) && (
+                    <Link
+                      to={garagePageFor(vehicle.id)!.path}
+                      className="mt-1.5 inline-flex items-center gap-1.5 font-medium text-[#00E5FF] transition-colors hover:text-white"
+                    >
+                      {vehicle.brand} sayfasının tamamını görün
+                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                    </Link>
+                  )}
+                </div>
                 <ActionButton
                   message={`Merhaba, ${vehicle.brand} ${vehicle.models} için gizli özellik fiyatı öğrenmek istiyorum.`}
                   className="shrink-0"
