@@ -42,6 +42,10 @@ const staticRoutes: RouteEntry[] = [
   { path: '/saglik-turizmi-seo', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-video-produksiyon', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-gizli-ozellik', changefreq: 'monthly', priority: 0.8 },
+  { path: '/ankara-gizli-ozellik/egea', changefreq: 'monthly', priority: 0.8 },
+  { path: '/ankara-gizli-ozellik/vag-grubu', changefreq: 'monthly', priority: 0.8 },
+  { path: '/ankara-gizli-ozellik/chery-multimedya', changefreq: 'monthly', priority: 0.8 },
+  { path: '/ankara-gizli-ozellik/ev-batarya-soh', changefreq: 'monthly', priority: 0.8 },
   { path: '/is-talebi', changefreq: 'monthly', priority: 0.5 }
 ];
 
@@ -76,12 +80,13 @@ export function allRoutes(): RouteEntry[] {
   ];
 }
 
-/** Ön render için sade yol listesi — indekslenmeyenler dahil. */
+/** Ön render için sade yol listesi. */
 export function allPaths(): string[] {
   return allRoutes().map((route) => route.path);
 }
 
-/** sitemap.xml'e girecek rotalar. */
+/** Yalnızca index: true (veya tanımlanmamış) rotalar sitemap'e girer. */
 export function indexableRoutes(): RouteEntry[] {
   return allRoutes().filter((route) => route.index !== false);
 }
+

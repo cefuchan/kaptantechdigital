@@ -1,5 +1,6 @@
 import { useMemo, useState, type FormEvent, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   BatteryCharging,
   Cpu,
@@ -12,7 +13,8 @@ import {
   Check,
   ChevronDown,
   Truck,
-  MonitorSmartphone
+  MonitorSmartphone,
+  ArrowRight
 } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { absoluteUrl } from '../data/site';
@@ -370,6 +372,67 @@ export default function AltindagGaraj() {
                 </ActionButton>
               </div>
             </motion.div>
+
+            {/* Model ve Hizmet Odak Sayfaları */}
+            <div className="mt-16 pt-12 border-t border-white/5">
+              <div className="mb-8 text-center sm:text-left">
+                <p className="text-[11px] font-semibold tracking-[0.2em] text-[#00E5FF]">
+                  ÖZEL ARAÇ &amp; HİZMET REHBERLERİ
+                </p>
+                <h3 className="mt-2 text-2xl font-bold text-white">
+                  Modelinize Özel Detaylı Kodlama Sayfaları
+                </h3>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {[
+                  {
+                    title: 'Fiat Egea Gizli Özellik',
+                    desc: 'Kadran selamlama, viraj aydınlatma, anlık tork/güç göstergesi.',
+                    link: '/ankara-gizli-ozellik/egea',
+                    tag: 'Fiat Egea'
+                  },
+                  {
+                    title: 'VAG Grubu Kodlama',
+                    desc: 'Golf, Passat, Leon, Octavia Amerikan park, ayna tilt ve lap timer.',
+                    link: '/ankara-gizli-ozellik/vag-grubu',
+                    tag: 'VW · Seat · Skoda'
+                  },
+                  {
+                    title: 'Chery Android Box',
+                    desc: 'Omoda 5 & Tiggo trim sökmeden YouTube, Netflix ve CarPlay.',
+                    link: '/ankara-gizli-ozellik/chery-multimedya',
+                    tag: 'Chery Tak-Çalıştır'
+                  },
+                  {
+                    title: 'EV Batarya (SoH) Testi',
+                    desc: 'Togg, Tesla ve MG için 2. el bağımsız batarya ekspertiz raporu.',
+                    link: '/ankara-gizli-ozellik/ev-batarya-soh',
+                    tag: 'Elektrikli Araç'
+                  }
+                ].map((item) => (
+                  <Link
+                    key={item.link}
+                    to={item.link}
+                    className="group rounded-2xl border border-white/10 bg-[#1E293B]/30 p-5 transition-all hover:border-[#00E5FF]/50 hover:bg-[#1E293B]/60"
+                  >
+                    <span className="inline-block rounded-full bg-[#00E5FF]/10 px-2.5 py-1 text-[11px] font-medium text-[#00E5FF] mb-3">
+                      {item.tag}
+                    </span>
+                    <h4 className="text-base font-semibold text-white group-hover:text-[#00E5FF] transition-colors">
+                      {item.title}
+                    </h4>
+                    <p className="mt-1.5 text-xs text-[#E0E6ED]/60 leading-relaxed">
+                      {item.desc}
+                    </p>
+                    <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-[#00E5FF]">
+                      <span>İncele</span>
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 

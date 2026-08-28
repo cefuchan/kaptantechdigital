@@ -24,6 +24,10 @@ export const pageLoaders = {
   SaglikTurizmiSeo: () => import('./pages/SaglikTurizmiSeo'),
   AnkaraVideoProduksiyon: () => import('./pages/AnkaraVideoProduksiyon'),
   AltindagGaraj: () => import('./pages/AltindagGaraj'),
+  EgeaGizliOzellik: () => import('./pages/garage/EgeaGizliOzellik'),
+  VagGizliOzellik: () => import('./pages/garage/VagGizliOzellik'),
+  CheryMultimedya: () => import('./pages/garage/CheryMultimedya'),
+  EvBataryaSoh: () => import('./pages/garage/EvBataryaSoh'),
   AnkaraSeo: () => import('./pages/AnkaraSeo'),
   AnkaraWebTasarim: () => import('./pages/AnkaraWebTasarim'),
   Contact: () => import('./pages/Contact'),
@@ -39,7 +43,13 @@ export type PageMap = Record<PageName, ComponentType>;
  * render edilen sayfalar. Site içinde barınan ama ayrı marka kimliği taşıyan
  * açılış sayfaları için.
  */
-export const standalonePaths = new Set<string>(['/ankara-gizli-ozellik']);
+export const standalonePaths = new Set<string>([
+  '/ankara-gizli-ozellik',
+  '/ankara-gizli-ozellik/egea',
+  '/ankara-gizli-ozellik/vag-grubu',
+  '/ankara-gizli-ozellik/chery-multimedya',
+  '/ankara-gizli-ozellik/ev-batarya-soh'
+]);
 
 export function isStandalonePath(pathname: string): boolean {
   return standalonePaths.has(pathname.replace(/\/+$/, '') || '/');
@@ -61,6 +71,10 @@ export const routeTable: Array<{ path: string; page: PageName }> = [
   { path: '/saglik-turizmi-seo', page: 'SaglikTurizmiSeo' },
   { path: '/ankara-video-produksiyon', page: 'AnkaraVideoProduksiyon' },
   { path: '/ankara-gizli-ozellik', page: 'AltindagGaraj' },
+  { path: '/ankara-gizli-ozellik/egea', page: 'EgeaGizliOzellik' },
+  { path: '/ankara-gizli-ozellik/vag-grubu', page: 'VagGizliOzellik' },
+  { path: '/ankara-gizli-ozellik/chery-multimedya', page: 'CheryMultimedya' },
+  { path: '/ankara-gizli-ozellik/ev-batarya-soh', page: 'EvBataryaSoh' },
   { path: '/ankara-seo', page: 'AnkaraSeo' },
   { path: '/ankara-web-tasarim', page: 'AnkaraWebTasarim' },
   { path: '/iletisim', page: 'Contact' },

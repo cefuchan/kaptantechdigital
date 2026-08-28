@@ -15,14 +15,14 @@
  * Biçim: ülke koduyla, yalnızca rakam. Örn: '905XXXXXXXXX'
  */
 export const garageContact = {
-  whatsapp: '',
-  phoneDisplay: '',
+  whatsapp: '905511367634',
+  phoneDisplay: '0551 136 76 34',
   instagram: 'https://instagram.com/ankaragizliozellikgaraj',
   instagramHandle: '@ankaragizliozellikgaraj',
   district: 'Altındağ',
   city: 'Ankara',
   /** Açık sokak adresi girildiğinde LocalBusiness şemasına da yansır. */
-  streetAddress: '',
+  streetAddress: 'Güneşevler 71. Cadde No:1',
   openingHours: 'Mo-Sa 09:00-19:00',
   /** Randevu formunun gönderileceği ücretsiz form servisi. */
   formEndpoint: 'https://formspree.io/f/xaqrbqyl'
