@@ -1,10 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Jost:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-body: 'Jost', sans-serif;
   --font-display: 'Jost', sans-serif;
   --font-logo: 'Syncopate', sans-serif;
+  /* Altındağ Garaj açılış sayfasının kendi tipografisi */
+  --font-garage: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --color-bg: hsl(0, 0%, 4%);
   --color-surface: hsl(0, 0%, 8%);
@@ -43,6 +45,28 @@
   p {
     font-weight: 300;
   }
+}
+
+/*
+ * Altındağ Garaj açılış sayfası kendi tipografisini kullanır.
+ * @layer base içindeki başlık ve paragraf kuralları katmanlı olduğu için
+ * bu blok katmansız yazıldı; yalnızca .garage-scope altında geçerli.
+ */
+/* Sayfa kendi zeminini boyar; aksi halde overscroll alanında KAPTAN'ın
+   siyahı görünürdü. */
+body:has(.garage-scope) {
+  background-color: #0b192c;
+}
+
+.garage-scope :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-garage);
+}
+
+.garage-scope p,
+.garage-scope li,
+.garage-scope dd,
+.garage-scope blockquote {
+  font-weight: 400;
 }
 
 @keyframes scroll-down {

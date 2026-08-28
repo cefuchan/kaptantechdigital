@@ -23,6 +23,7 @@ export const pageLoaders = {
   OstimIvedik: () => import('./pages/OstimIvedik'),
   SaglikTurizmiSeo: () => import('./pages/SaglikTurizmiSeo'),
   AnkaraVideoProduksiyon: () => import('./pages/AnkaraVideoProduksiyon'),
+  AltindagGaraj: () => import('./pages/AltindagGaraj'),
   AnkaraSeo: () => import('./pages/AnkaraSeo'),
   AnkaraWebTasarim: () => import('./pages/AnkaraWebTasarim'),
   Contact: () => import('./pages/Contact'),
@@ -32,6 +33,17 @@ export const pageLoaders = {
 
 export type PageName = keyof typeof pageLoaders;
 export type PageMap = Record<PageName, ComponentType>;
+
+/**
+ * Kendi başlık ve alt bilgisine sahip, KAPTAN kabuğu (Navbar / Footer) olmadan
+ * render edilen sayfalar. Site içinde barınan ama ayrı marka kimliği taşıyan
+ * açılış sayfaları için.
+ */
+export const standalonePaths = new Set<string>(['/ankara-gizli-ozellik']);
+
+export function isStandalonePath(pathname: string): boolean {
+  return standalonePaths.has(pathname.replace(/\/+$/, '') || '/');
+}
 
 /** Rota yolu -> sayfa bileşeni eşlemesi. Sitemap ve ön render bunu okur. */
 export const routeTable: Array<{ path: string; page: PageName }> = [
@@ -48,6 +60,7 @@ export const routeTable: Array<{ path: string; page: PageName }> = [
   { path: '/ostim-ivedik', page: 'OstimIvedik' },
   { path: '/saglik-turizmi-seo', page: 'SaglikTurizmiSeo' },
   { path: '/ankara-video-produksiyon', page: 'AnkaraVideoProduksiyon' },
+  { path: '/ankara-gizli-ozellik', page: 'AltindagGaraj' },
   { path: '/ankara-seo', page: 'AnkaraSeo' },
   { path: '/ankara-web-tasarim', page: 'AnkaraWebTasarim' },
   { path: '/iletisim', page: 'Contact' },

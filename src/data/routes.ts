@@ -41,6 +41,7 @@ const staticRoutes: RouteEntry[] = [
   { path: '/ostim-ivedik', changefreq: 'monthly', priority: 0.8 },
   { path: '/saglik-turizmi-seo', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-video-produksiyon', changefreq: 'monthly', priority: 0.8 },
+  { path: '/ankara-gizli-ozellik', changefreq: 'monthly', priority: 0.8 },
   { path: '/is-talebi', changefreq: 'monthly', priority: 0.5 }
 ];
 
