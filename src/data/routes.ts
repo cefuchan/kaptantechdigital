@@ -42,6 +42,7 @@ const staticRoutes: RouteEntry[] = [
   { path: '/saglik-turizmi-seo', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-video-produksiyon', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-gizli-ozellik', changefreq: 'monthly', priority: 0.8 },
+  { path: '/kaloheal', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-gizli-ozellik/egea', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-gizli-ozellik/vag-grubu', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-gizli-ozellik/chery-multimedya', changefreq: 'monthly', priority: 0.8 },

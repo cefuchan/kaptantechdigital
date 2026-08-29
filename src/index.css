@@ -7,6 +7,8 @@
   --font-logo: 'Syncopate', sans-serif;
   /* Altındağ Garaj açılış sayfasının kendi tipografisi */
   --font-garage: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* KaloHeal — SF Pro varsa onu, yoksa Inter kullanır */
+  --font-kaloheal: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
 
   --color-bg: hsl(0, 0%, 4%);
   --color-surface: hsl(0, 0%, 8%);
@@ -109,4 +111,68 @@ body:has(.garage-scope) {
 
 .mobile-menu-in {
   animation: mobile-menu-in 0.2s ease-out;
+}
+
+/*
+ * Giriş animasyonları — CSS tabanlı.
+ *
+ * Framer Motion'ın initial={{opacity:0}} yaklaşımı ön render edilmiş HTML'e
+ * inline `opacity:0` yazıyor; JavaScript çalışmayan istemcilerde içerik
+ * görünmez kalıyordu. CSS animasyonu ise elemanı normal render eder, animasyon
+ * yalnızca tarayıcıda oynar. Ön render çıktısı her zaman görünür.
+ */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal      { animation: reveal-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reveal-d1   { animation-delay: 0.08s; }
+.reveal-d2   { animation-delay: 0.16s; }
+.reveal-d3   { animation-delay: 0.24s; }
+.reveal-d4   { animation-delay: 0.32s; }
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+
+.float-slow { animation: float-y 6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .float-slow { animation: none; }
+}
+
+/* --------------------------------------------------- KaloHeal açılış sayfası */
+/* Kendi tipografisini ve zeminini kullanır; @layer base'deki başlık kuralları
+   katmanlı olduğu için bu blok katmansız yazıldı. */
+body:has(.kaloheal-scope) {
+  background-color: #0a0b0e;
+}
+
+.kaloheal-scope :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-kaloheal);
+}
+
+.kaloheal-scope p,
+.kaloheal-scope li,
+.kaloheal-scope span {
+  font-weight: inherit;
+}
+
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.kaloheal-scope .marquee-track {
+  animation: marquee-x 42s linear infinite;
+}
+
+.kaloheal-scope .marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kaloheal-scope .marquee-track { animation: none; }
 }

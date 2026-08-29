@@ -1,5 +1,4 @@
 import { useMemo, useState, type FormEvent, type ReactNode } from 'react';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   BatteryCharging,
@@ -242,11 +241,9 @@ export default function AltindagGaraj() {
             className="pointer-events-none absolute inset-x-0 -top-40 h-[520px] bg-[radial-gradient(60%_60%_at_50%_40%,#00B4D8_0%,transparent_70%)] opacity-[0.18] blur-2xl"
           />
           <div className="relative mx-auto max-w-5xl px-5 pt-20 pb-16 text-center md:pt-28 md:pb-24">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
+            {/* CSS animasyonu: ön render çıktısı görünür kalır, Framer Motion'ın
+                inline opacity:0 sorunu oluşmaz. */}
+            <div className="reveal">
               <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#00E5FF]/25 bg-[#00E5FF]/5 px-4 py-1.5 text-[11px] font-medium tracking-[0.16em] text-[#00E5FF]">
                 <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
                 ALTINDAĞ · ANKARA GENELİ MOBİL SERVİS
@@ -290,7 +287,7 @@ export default function AltindagGaraj() {
                   <ChevronDown className="h-4 w-4" aria-hidden="true" />
                 </a>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -346,15 +343,12 @@ export default function AltindagGaraj() {
             </div>
 
             {/* Özellik paneli */}
-            <motion.div
+            <div
               key={vehicle.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25 }}
               role="tabpanel"
               id={`panel-${vehicle.id}`}
               aria-labelledby={`tab-${vehicle.id}`}
-              className="rounded-2xl border border-white/10 bg-[#1E293B]/45 p-6 md:p-9"
+              className="reveal rounded-2xl border border-white/10 bg-[#1E293B]/45 p-6 md:p-9"
             >
               <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
                 <div>
@@ -403,7 +397,7 @@ export default function AltindagGaraj() {
                   Bu Özellikler İçin Fiyat Al
                 </ActionButton>
               </div>
-            </motion.div>
+            </div>
 
             {/* Model ve Hizmet Odak Sayfaları */}
             <div className="mt-16 pt-12 border-t border-white/5">

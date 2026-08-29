@@ -24,6 +24,7 @@ export const pageLoaders = {
   SaglikTurizmiSeo: () => import('./pages/SaglikTurizmiSeo'),
   AnkaraVideoProduksiyon: () => import('./pages/AnkaraVideoProduksiyon'),
   AltindagGaraj: () => import('./pages/AltindagGaraj'),
+  KaloHeal: () => import('./pages/KaloHeal'),
   EgeaGizliOzellik: () => import('./pages/garage/EgeaGizliOzellik'),
   VagGizliOzellik: () => import('./pages/garage/VagGizliOzellik'),
   CheryMultimedya: () => import('./pages/garage/CheryMultimedya'),
@@ -45,6 +46,7 @@ export type PageMap = Record<PageName, ComponentType>;
  */
 export const standalonePaths = new Set<string>([
   '/ankara-gizli-ozellik',
+  '/kaloheal',
   '/ankara-gizli-ozellik/egea',
   '/ankara-gizli-ozellik/vag-grubu',
   '/ankara-gizli-ozellik/chery-multimedya',
@@ -71,6 +73,7 @@ export const routeTable: Array<{ path: string; page: PageName }> = [
   { path: '/saglik-turizmi-seo', page: 'SaglikTurizmiSeo' },
   { path: '/ankara-video-produksiyon', page: 'AnkaraVideoProduksiyon' },
   { path: '/ankara-gizli-ozellik', page: 'AltindagGaraj' },
+  { path: '/kaloheal', page: 'KaloHeal' },
   { path: '/ankara-gizli-ozellik/egea', page: 'EgeaGizliOzellik' },
   { path: '/ankara-gizli-ozellik/vag-grubu', page: 'VagGizliOzellik' },
   { path: '/ankara-gizli-ozellik/chery-multimedya', page: 'CheryMultimedya' },
