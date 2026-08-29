@@ -50,6 +50,7 @@ export function Navbar() {
     { name: 'Hizmetler', path: '/hizmetler', hasDropdown: true },
     { name: 'Referanslar', path: '/referanslar' },
     { name: 'Vaka Çalışmaları', path: '/vaka-calismalari' },
+    { name: 'Hakkımızda', path: '/hakkimizda' },
     { name: 'Blog', path: '/blog' },
     { name: 'İletişim', path: '/iletisim' },
   ];

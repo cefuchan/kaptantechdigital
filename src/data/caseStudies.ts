@@ -82,7 +82,7 @@ export const caseStudiesData: CaseStudy[] = [
     metric: "Ayda 2.500 TL tasarruf",
     description:
       "Her yeni proje için ayda 2.500 TL baskı gideri çıkaran basılı portfolyo yerine, ekibin kendi güncellediği hızlı bir web sitesi kurduk.",
-    industry: "Mimarlık",
+    industry: "İç Mimarlık",
     tags: ["Web Tasarım", "Portfolyo"],
     narrative: {
       challenge:
@@ -99,6 +99,7 @@ export const caseStudiesData: CaseStudy[] = [
     service: "Google Ads & Meta",
     metric: "2.5x",
     description: "Yeniden yapılandırılan kampanya mimarisi ve sürekli optimizasyonla reklam bütçesi aynı kalırken nitelikli lead sayısı 2.5 kat arttı.",
+    industry: "Gayrimenkul",
     tags: ["Reklam", "Lead Generation"]
   },
   {
@@ -108,7 +109,7 @@ export const caseStudiesData: CaseStudy[] = [
     metric: "30+ müşteri adayı",
     description:
       "Rastgele içerik üretimi yerine kurumsal odaklı bir sosyal medya planı kurduk; planlı akış 30'un üzerinde potansiyel müşteri adayı üretti.",
-    industry: "Psikoloji Danışmanlık",
+    industry: "Klinik Psikoloji",
     tags: ["Sosyal Medya", "İçerik Prodüksiyon"],
     narrative: {
       challenge:
@@ -125,6 +126,7 @@ export const caseStudiesData: CaseStudy[] = [
     service: "Web Tasarım & Reklam",
     metric: "3x",
     description: "Kurumsal kimlikle uyumlu yeni web sitesi ve hedefli reklam kampanyalarıyla ilk ayda potansiyel müşteri formları katlanarak arttı.",
+    industry: "İnşaat & Taahhüt",
     tags: ["Web Tasarım", "Reklam"]
   },
   {
@@ -134,6 +136,7 @@ export const caseStudiesData: CaseStudy[] = [
     metric: "10x hız",
     description:
       "Gereksiz eklentileri kaldırıp performans odaklı bir yapı kurarak siteyi yaklaşık 10 kat hızlandırdık.",
+    industry: "Vinç & İmalat Sanayi",
     tags: ["Web Performansı", "Core Web Vitals"],
     narrative: {
       challenge:

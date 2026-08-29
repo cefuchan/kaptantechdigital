@@ -2,6 +2,49 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { site, socialProfiles } from '../data/site';
 
+/** Alt menü sütunları — her sayfadan tüm hizmet ve bölge sayfalarına statik link. */
+const footerNav = [
+  {
+    title: 'Hizmetler',
+    links: [
+      { label: 'SEO', path: '/hizmetler/seo' },
+      { label: 'GEO / Yapay Zekâ Aramaları', path: '/hizmetler/geo' },
+      { label: 'Web Tasarım', path: '/hizmetler/web-tasarim' },
+      { label: 'Google & Meta Reklam', path: '/hizmetler/reklam' },
+      { label: 'Video Prodüksiyon', path: '/hizmetler/video-produksiyon' }
+    ]
+  },
+  {
+    title: 'Bölge & Sektör',
+    links: [
+      { label: 'Ankara SEO', path: '/ankara-seo' },
+      { label: 'Ankara Web Tasarım', path: '/ankara-web-tasarim' },
+      { label: 'Ankara Video Prodüksiyon', path: '/ankara-video-produksiyon' },
+      { label: 'OSTİM & İvedik OSB', path: '/ostim-ivedik' },
+      { label: 'Siteler', path: '/siteler' },
+      { label: 'Sağlık Turizmi SEO', path: '/saglik-turizmi-seo' }
+    ]
+  },
+  {
+    title: 'Kurumsal',
+    links: [
+      { label: 'Hakkımızda', path: '/hakkimizda' },
+      { label: 'Vaka Çalışmaları', path: '/vaka-calismalari' },
+      { label: 'Referanslar', path: '/referanslar' },
+      { label: 'İçgörüler & Blog', path: '/blog' },
+      { label: 'İletişim', path: '/iletisim' }
+    ]
+  },
+  {
+    title: 'Araçlar',
+    links: [
+      { label: 'İş Talebi Oluştur', path: '/is-talebi' },
+      { label: 'Altındağ Garaj', path: '/ankara-gizli-ozellik' },
+      { label: 'Batarya SoH Testi', path: '/ankara-gizli-ozellik/ev-batarya-soh' }
+    ]
+  }
+];
+
 export function Footer() {
   /**
    * Profil bağlantıları site.ts'ten gelir; aynı liste JSON-LD'deki sameAs
@@ -45,6 +88,37 @@ export function Footer() {
             <div className="absolute inset-0 opacity-0 group-hover:opacity-10 accent-gradient transition-opacity" />
             Bize Ulaşın
           </a>
+
+          {/*
+            Alt menü — hizmet ve bölge sayfalarına statik bağlantı.
+            Navbar'daki hizmet menüsü yalnızca fare üzerine gelince açıldığı için
+            o bağlantılar ön render edilmiş HTML'de bulunmuyor; tarayıcı botları
+            ve dil modelleri sayfalara buradan ulaşıyor.
+          */}
+          <nav
+            aria-label="Alt menü"
+            className="w-full grid grid-cols-2 md:grid-cols-4 gap-8 text-left border-t border-white/10 pt-12 mb-16"
+          >
+            {footerNav.map((column) => (
+              <div key={column.title}>
+                <h2 className="text-xs font-mono uppercase tracking-widest text-gold mb-4">
+                  {column.title}
+                </h2>
+                <ul className="space-y-2.5">
+                  {column.links.map((link) => (
+                    <li key={link.path}>
+                      <Link
+                        to={link.path}
+                        className="text-sm text-muted hover:text-text-primary transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
 
           {/* Footer Lockup */}
           <div className="w-full flex flex-col md:flex-row justify-between items-end border-t border-white/10 pt-12">
