@@ -51,6 +51,7 @@ export function Navbar() {
     { name: 'Referanslar', path: '/referanslar' },
     { name: 'Vaka Çalışmaları', path: '/vaka-calismalari' },
     { name: 'Hakkımızda', path: '/hakkimizda' },
+    { name: 'KaloHeal', path: '/kaloheal', isProduct: true },
     { name: 'Blog', path: '/blog' },
     { name: 'İletişim', path: '/iletisim' },
   ];
@@ -129,12 +130,19 @@ export function Navbar() {
               ) : (
                 <Link
                   to={link.path}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors block ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-1.5 ${
                     location.pathname === link.path
                       ? 'text-text-primary bg-stroke/50'
                       : 'text-muted hover:text-text-primary hover:bg-stroke/50'
                   }`}
                 >
+                  {/* Kendi ürünümüz — hizmet bağlantılarından ayrışsın */}
+                  {link.isProduct && (
+                    <span
+                      aria-hidden="true"
+                      className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#30D158] to-[#0A84FF]"
+                    />
+                  )}
                   {link.name}
                 </Link>
               )}

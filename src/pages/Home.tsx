@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SEO } from '../components/SEO';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Sparkles } from 'lucide-react';
 import { graph, localBusinessSchema, organizationSchema, personSchema, webSiteSchema } from '../data/schema';
 
 /** Ana sayfa şeması: kurum kimliği + yerel işletme + site içi arama kutusu. */
@@ -119,6 +119,71 @@ export default function Home() {
               </div>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Kendi Ürünümüz — KaloHeal */}
+      <section className="py-24 relative bg-bg">
+        <VerticalLine />
+        <div className="max-w-7xl mx-auto px-6">
+          <HorizontalLine />
+          <p className="text-xs text-gold uppercase tracking-[0.25em] mb-4 font-medium">
+            KENDİ ÜRÜNÜMÜZ
+          </p>
+          <h2 className="text-3xl md:text-5xl font-display font-semibold mb-12">
+            Sadece hizmet vermiyoruz, ürün de geliştiriyoruz.
+          </h2>
+
+          <Link
+            to="/kaloheal"
+            className="group relative block overflow-hidden rounded-3xl border border-white/10 bg-[#0B0D11] p-8 md:p-14 transition-colors hover:border-[#30D158]/40"
+          >
+            {/* KaloHeal'in kendi paleti — ürünü temsil etmesi için bilinçli */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(48,209,88,0.16),rgba(10,132,255,0.14),transparent_70%)] blur-3xl transition-opacity duration-700 group-hover:opacity-150"
+            />
+
+            <div className="relative grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center">
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[11px] tracking-[0.12em] text-white/60">
+                  <Sparkles className="w-3 h-3 text-[#30D158]" />
+                  YAPAY ZEKÂ DESTEKLİ BESLENME ASİSTANI
+                </span>
+
+                <h3 className="mt-6 text-4xl md:text-6xl font-light tracking-tight text-white">
+                  KaloHeal
+                </h3>
+
+                <p className="mt-5 text-xl md:text-2xl font-light text-white/85 leading-snug">
+                  Tahmin etmeyi bırak, yaşamaya başla.
+                </p>
+
+                <p className="mt-5 max-w-xl text-muted leading-relaxed">
+                  Türk mutfağına özel eğitilmiş ilk sessiz yapay zekâ. Fotoğraftan tabak
+                  analizi, kaçamak kalkanı ve akıllı menü asistanı — suçluluk üretmeden.
+                </p>
+
+                <span className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#30D158] to-[#0A84FF] px-6 py-3 text-sm font-medium text-[#05070A]">
+                  Ürünü inceleyin
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </div>
+
+              <ul className="space-y-3 md:border-l md:border-white/10 md:pl-10">
+                {[
+                  'Fotoğraftan tabak analizi',
+                  'Kaçamak Kalkanı',
+                  'Akıllı menü asistanı'
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-white/70">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-[#30D158] to-[#0A84FF]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Link>
         </div>
       </section>
 
