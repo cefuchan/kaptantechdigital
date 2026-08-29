@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ReactNode } from 'react';
+import { useState, type FormEvent } from 'react';
 import {
   Apple,
   ArrowRight,
@@ -8,20 +8,19 @@ import {
   Shield,
   Sparkles,
   Trophy,
-  UtensilsCrossed,
   Scan,
   HeartHandshake,
-  Lock,
   Share2,
   CheckCircle2,
-  X
+  X,
+  Smartphone,
+  DownloadCloud
 } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { absoluteUrl, site } from '../data/site';
 import {
   kalohealFaqs,
   kalohealFeatures,
-  kalohealPricing,
   kalohealStore,
   kalohealTrophies,
   philosophyRows,
@@ -45,6 +44,7 @@ const schema = {
       description:
         'Devrimsel yapay zekâ klinik beslenme platformu. Fotoğraftan Türk mutfağı tabak analizi, kaçamak kalkanı ve sıfır suçluluk felsefesi.',
       url: absoluteUrl(PATH),
+      image: absoluteUrl('/kaloheal-logo.jpg'),
       publisher: { '@id': `${site.url}/#organization` },
       offers: {
         '@type': 'Offer',
@@ -73,6 +73,53 @@ const schema = {
   ]
 };
 
+/** Mağaza kartı bileşeni — Yakında durumu */
+function StoreCard({
+  platform,
+  osVersion,
+  status = 'Çok Yakında',
+  icon
+}: {
+  platform: string;
+  osVersion: string;
+  status?: string;
+  icon: React.ReactNode;
+}) {
+  return (
+    <div className="group relative flex flex-col justify-between rounded-[2.5rem] border border-white/[0.09] bg-white/[0.025] p-8 md:p-10 backdrop-blur-2xl transition-all duration-300 hover:border-[#30D158]/40 hover:bg-white/[0.04] hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)]">
+      <div>
+        <div className="flex items-center justify-between">
+          <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-white shadow-lg group-hover:text-[#30D158] transition-colors">
+            {icon}
+          </span>
+          <span className="rounded-full border border-[#30D158]/30 bg-[#30D158]/10 px-3.5 py-1 text-[11px] font-medium tracking-wider text-[#30D158] uppercase">
+            {status}
+          </span>
+        </div>
+
+        <h3 className="mt-6 text-[24px] font-light tracking-tight text-white group-hover:text-[#F5F5F7]">
+          {platform}
+        </h3>
+        <p className="mt-1 text-[13.5px] text-[#A1A1A6]">
+          {osVersion}
+        </p>
+
+        <p className="mt-4 text-[14px] leading-relaxed text-white/50">
+          Uygulama mağazada yayınlandığı anda bildirim almak için erken erişim listesine katılabilirsiniz.
+        </p>
+      </div>
+
+      <a
+        href="#erken-erisim"
+        className="mt-8 inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.03] py-4 text-[14px] font-medium text-white transition-all hover:border-[#30D158] hover:bg-[#30D158]/10 hover:text-[#30D158]"
+      >
+        <DownloadCloud className="h-4 w-4" />
+        <span>Erken Erişim Listesine Katıl</span>
+      </a>
+    </div>
+  );
+}
+
 /** Titanyum telefon arayüzü mockup'ı */
 function PhoneMockup() {
   return (
@@ -90,8 +137,12 @@ function PhoneMockup() {
           {/* Üst Durum & Tarih */}
           <div className="mb-4 flex items-center justify-between border-b border-white/[0.06] pb-3">
             <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#30D158] shadow-[0_0_8px_#30D158]" />
-              <span className="text-[11px] font-medium tracking-wider text-white/50 uppercase">Klinik AI Aktif</span>
+              <img
+                src="/kaloheal-logo.jpg"
+                alt="KaloHeal Logo"
+                className="h-5 w-5 rounded-full object-cover ring-1 ring-white/20"
+              />
+              <span className="text-[11px] font-medium tracking-wider text-white/70 uppercase">KaloHeal AI</span>
             </div>
             <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-[10px] text-white/60">
               Bugün
@@ -203,10 +254,12 @@ export default function KaloHeal() {
         {/* --------------------------------------------------- Header -- */}
         <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#0A0A0B]/85 backdrop-blur-2xl">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-            <a href="#top" className="flex items-center gap-2.5 group">
-              <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-[#30D158] shadow-[0_0_15px_-3px_rgba(48,209,88,0.3)] transition-colors group-hover:border-[#30D158]/40">
-                <Sparkles className="h-4 w-4" />
-              </span>
+            <a href="#top" className="flex items-center gap-3 group">
+              <img
+                src="/kaloheal-logo.jpg"
+                alt="KaloHeal"
+                className="h-8 w-8 rounded-xl object-cover ring-1 ring-white/15 shadow-[0_0_15px_-3px_rgba(48,209,88,0.3)] transition-transform group-hover:scale-105"
+              />
               <span className="text-[17px] font-light tracking-tight text-white">
                 Kalo<span className="font-normal text-[#30D158]">Heal</span>
               </span>
@@ -216,7 +269,7 @@ export default function KaloHeal() {
               <a href="#ozellikler" className="transition-colors hover:text-white">Sistemler</a>
               <a href="#felsefe" className="transition-colors hover:text-white">Felsefe</a>
               <a href="#kupalar" className="transition-colors hover:text-white">Koleksiyon</a>
-              <a href="#fiyatlandirma" className="transition-colors hover:text-white">Planlar</a>
+              <a href="#magazalar" className="transition-colors hover:text-white">Uygulama Mağazaları</a>
               <a href="#sss" className="transition-colors hover:text-white">Merak Edilenler</a>
             </nav>
 
@@ -225,7 +278,7 @@ export default function KaloHeal() {
                 href="#erken-erisim"
                 className="relative inline-flex items-center justify-center rounded-full border border-[#30D158]/40 bg-white/[0.04] px-5 py-2.5 text-[13px] font-medium text-white shadow-[0_0_20px_-5px_rgba(48,209,88,0.25)] backdrop-blur-xl transition-all hover:border-[#30D158] hover:bg-[#30D158]/10 hover:shadow-[0_0_25px_-3px_rgba(48,209,88,0.4)]"
               >
-                Ücretsiz Başla
+                Erken Erişim
               </a>
             </div>
           </div>
@@ -241,7 +294,7 @@ export default function KaloHeal() {
 
           <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.15fr_0.85fr]">
             <div className="reveal text-center lg:text-left">
-              <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 text-[11.5px] font-medium tracking-[0.14em] text-[#30D158] backdrop-blur-2xl">
+              <p className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 text-[11.5px] font-medium tracking-[0.14em] text-[#30D158] backdrop-blur-2xl">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#30D158] animate-pulse" />
                 KLİNİK YAPAY ZEKA · QUIET LUXURY FELSEFESİ
               </p>
@@ -286,7 +339,7 @@ export default function KaloHeal() {
                   <CheckCircle2 className="h-3.5 w-3.5 text-[#30D158]" /> Türk Mutfağı Uzmanı
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-[#30D158]" /> 7 Gün Ücretsiz Deneme
+                  <CheckCircle2 className="h-3.5 w-3.5 text-[#30D158]" /> Erken Erişim Ücretsiz
                 </span>
               </div>
             </div>
@@ -482,75 +535,45 @@ export default function KaloHeal() {
           </div>
         </section>
 
-        {/* ---------------------------------------------------- Pricing -- */}
-        <section id="fiyatlandirma" className="scroll-mt-20 border-b border-white/[0.07] px-6 py-28 md:py-36">
-          <div className="mx-auto max-w-7xl">
+        {/* -------------------------------------- Stores / Downloads (Replaces Pricing) -- */}
+        <section id="magazalar" className="scroll-mt-20 border-b border-white/[0.07] px-6 py-28 md:py-36">
+          <div className="mx-auto max-w-6xl">
             <div className="reveal mx-auto mb-20 max-w-2xl text-center">
               <p className="mb-3 text-[11px] font-semibold tracking-[0.2em] text-[#30D158] uppercase">
-                ŞEFFAF VE ŞIK SEÇENEKLER
+                MOBİL UYGULAMA MAĞAZALARI
               </p>
               <h2 className="text-[36px] font-light tracking-tight text-[#F5F5F7] md:text-[46px]">
-                Sağlığınıza layık <span className="font-normal text-white">sessiz lüks</span>.
+                Çok yakında <span className="font-normal text-white">cebinizde</span>.
               </h2>
               <p className="mt-4 text-[15.5px] leading-relaxed text-[#A1A1A6]">
-                İlk 7 gün tüm klinik özellikler ücretsizdir. Gizli maliyet yok.
+                App Store ve Google Play yayınları için son hazırlıklar tamamlanıyor. Erken erişim listesine katılarak ilk deneyenlerden olun.
               </p>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-3">
-              {kalohealPricing.map((plan) => (
-                <div
-                  key={plan.id}
-                  className={`relative flex flex-col justify-between rounded-[2.5rem] border p-8 md:p-10 backdrop-blur-2xl transition-all duration-300 ${
-                    plan.recommended
-                      ? 'border-[#30D158]/50 bg-gradient-to-b from-[#30D158]/[0.08] via-white/[0.03] to-white/[0.01] shadow-[0_0_50px_-15px_rgba(48,209,88,0.25)] ring-1 ring-[#30D158]/30'
-                      : 'border-white/[0.08] bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]'
-                  }`}
-                >
-                  {plan.recommended && (
-                    <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full border border-[#30D158] bg-[#30D158] px-4 py-1 text-[11px] font-semibold uppercase tracking-wider text-black shadow-[0_0_15px_#30D158]">
-                      En Çok Tercih Edilen
-                    </span>
-                  )}
-
-                  <div>
-                    <h3 className="text-[22px] font-medium text-white">{plan.name}</h3>
-                    <p className="mt-1 text-[13px] text-white/50">{plan.tagline}</p>
-
-                    <div className="mt-6 flex items-baseline gap-1.5 border-b border-white/[0.08] pb-6">
-                      <span className="text-[40px] font-light tracking-tight text-white">{plan.price}</span>
-                      <span className="text-[13px] text-white/45">{plan.period}</span>
-                    </div>
-
-                    <ul className="mt-6 space-y-3.5 text-[14px] text-white/80">
-                      {plan.features.map((feat, fidx) => (
-                        <li key={fidx} className="flex items-start gap-3">
-                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#30D158]" />
-                          <span>{feat}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <a
-                    href="#erken-erisim"
-                    className={`mt-10 inline-flex items-center justify-center rounded-full py-4 text-[14px] font-medium transition-all ${
-                      plan.recommended
-                        ? 'bg-[#30D158] text-black hover:bg-[#34e260] shadow-[0_0_25px_-5px_#30D158]'
-                        : 'border border-white/15 bg-white/[0.04] text-white hover:border-white/30 hover:bg-white/[0.08]'
-                    }`}
-                  >
-                    {plan.cta}
-                  </a>
-                </div>
-              ))}
+            <div className="grid gap-8 sm:grid-cols-2">
+              <StoreCard
+                platform="Apple App Store"
+                osVersion="iOS 17+ ve iPadOS için özel tasarlandı"
+                status="Çok Yakında"
+                icon={<Apple className="h-8 w-8" />}
+              />
+              <StoreCard
+                platform="Google Play Store"
+                osVersion="Android 14+ cihazlar için optimize edildi"
+                status="Çok Yakında"
+                icon={
+                  <svg viewBox="0 0 24 24" className="h-7 w-7 fill-current" aria-hidden="true">
+                    <path d="M3.6 1.8a1 1 0 0 0-.5.9v18.6a1 1 0 0 0 .5.9l10.1-10.2L3.6 1.8Zm11.5 8.6 2.9-2.9-11-6.2 8.1 9.1Zm0 3.2-8.1 9.1 11-6.2-2.9-2.9Zm4.3-4.4-2.4 2.4 2.4 2.4 2.5-1.4a1.2 1.2 0 0 0 0-2l-2.5-1.4Z" />
+                  </svg>
+                }
+              />
             </div>
 
             {/* Viral Loop Badge */}
             <div className="mt-12 text-center">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-[12.5px] text-[#A1A1A6]">
-                <Share2 className="h-3.5 w-3.5 text-[#30D158]" />
-                Arkadaşını davet et, ikiniz de <span className="font-semibold text-white">+5 AI Tarama Hakkı</span> kazanın.
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-6 py-2.5 text-[13px] text-[#A1A1A6]">
+                <Share2 className="h-4 w-4 text-[#30D158]" />
+                Arkadaşını erken erişime davet et, uygulama açıldığında <span className="font-semibold text-white">+5 AI Tarama Hakkı</span> kazan.
               </span>
             </div>
           </div>
@@ -596,6 +619,14 @@ export default function KaloHeal() {
             />
 
             <div className="relative">
+              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/20 bg-white/5 shadow-[0_0_30px_-5px_rgba(48,209,88,0.4)]">
+                <img
+                  src="/kaloheal-logo.jpg"
+                  alt="KaloHeal"
+                  className="h-14 w-14 rounded-xl object-cover"
+                />
+              </div>
+
               <span className="inline-flex items-center gap-2 rounded-full border border-[#30D158]/30 bg-[#30D158]/10 px-4 py-1.5 text-[11px] font-medium tracking-wider text-[#30D158] uppercase">
                 <Sparkles className="h-3.5 w-3.5" />
                 ERKEN ERİŞİM DAVETİ
@@ -605,7 +636,7 @@ export default function KaloHeal() {
                 Sağlıklı yaşamın <span className="font-normal text-white">en sakin haliyle</span> tanışın.
               </h2>
               <p className="mt-4 text-[16px] text-[#A1A1A6]">
-                İlk 7 gün tüm klinik özellikler sınırsız ve ücretsizdir.
+                Yayın öncesi erken erişim listesine katılarak ilk 30 gün sınırsız klinik AI deneyimi kazanın.
               </p>
 
               {state === 'done' ? (
@@ -628,7 +659,7 @@ export default function KaloHeal() {
                     disabled={state === 'sending'}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-[#30D158] px-8 py-4 text-[14.5px] font-semibold text-black transition-all hover:bg-[#34e260] hover:shadow-[0_0_25px_-5px_#30D158] disabled:opacity-50"
                   >
-                    {state === 'sending' ? 'Gönderiliyor…' : 'Başla'}
+                    {state === 'sending' ? 'Gönderiliyor…' : 'Katıl'}
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </form>
@@ -646,7 +677,12 @@ export default function KaloHeal() {
         {/* ---------------------------------------------------- Footer -- */}
         <footer className="border-t border-white/[0.07] px-6 py-14">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 text-[13px] text-white/40 sm:flex-row">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
+              <img
+                src="/kaloheal-logo.jpg"
+                alt="KaloHeal Logo"
+                className="h-5 w-5 rounded-md object-cover ring-1 ring-white/15"
+              />
               <span className="font-medium text-white/80">KaloHeal</span>
               <span>— Sessiz Lüks &amp; Klinik Beslenme</span>
             </div>
@@ -654,7 +690,7 @@ export default function KaloHeal() {
             <div className="flex items-center gap-6">
               <a href="#ozellikler" className="hover:text-white transition-colors">Sistemler</a>
               <a href="#felsefe" className="hover:text-white transition-colors">Felsefe</a>
-              <a href="#fiyatlandirma" className="hover:text-white transition-colors">Planlar</a>
+              <a href="#magazalar" className="hover:text-white transition-colors">Mağazalar</a>
               <a href="#sss" className="hover:text-white transition-colors">SSS</a>
             </div>
 
