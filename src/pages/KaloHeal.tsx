@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, type ReactNode } from 'react';
 import {
   Apple,
   ArrowRight,
@@ -83,7 +83,7 @@ function StoreCard({
   platform: string;
   osVersion: string;
   status?: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }) {
   return (
     <div className="group relative flex flex-col justify-between rounded-[2.5rem] border border-white/[0.09] bg-white/[0.025] p-8 md:p-10 backdrop-blur-2xl transition-all duration-300 hover:border-[#30D158]/40 hover:bg-white/[0.04] hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)]">

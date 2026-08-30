@@ -15,7 +15,15 @@ export interface RouteEntry {
   changefreq: 'daily' | 'weekly' | 'monthly' | 'yearly';
   /** sitemap.xml <priority> */
   priority: number;
-  /** sitemap.xml <lastmod>. Verilmezse üretim tarihi kullanılır. */
+  /**
+   * sitemap.xml <lastmod> — sayfanın en son ne zaman DEĞİŞTİĞİ.
+   *
+   * Yayın tarihiyle karıştırılmamalı: bir yazı 2023 tarihli olsa da bu siteye
+   * 2026'da eklendiyse lastmod 2026 olmalıdır. Aksi halde Google sayfayı
+   * "yıllardır değişmemiş" sayıp tarama önceliğini düşürür.
+   *
+   * Verilmezse sitemap üreteci git geçmişinden gerçek değişiklik tarihini alır.
+   */
   lastmod?: string;
   /**
    * Sayfa arama motorlarına sunuluyor mu?
@@ -74,8 +82,8 @@ export function allRoutes(): RouteEntry[] {
       (post): RouteEntry => ({
         path: `/blog/${post.slug}`,
         changefreq: 'monthly',
-        priority: 0.7,
-        lastmod: post.datePublished
+        priority: 0.7
+        // lastmod: sitemap üreteci git geçmişinden hesaplar (yayın tarihi değil)
       })
     )
   ];
