@@ -25,7 +25,7 @@ const schema = graph(
     operatingSystem: 'Web',
     inLanguage: site.language,
     description:
-      'Aradığınız hizmeti tarif edin, talebiniz doğrudan KAPTAN ekibine ulaşsın. Üyelik yok, ilan ücreti yok, komisyon yok.',
+      'Aradığınız hizmeti tarif edin, talebiniz hizmet veren ağımıza iletilsin, teklifleri karşılaştırın. Üyelik yok, ilan ücreti yok, komisyon yok.',
     publisher: { '@id': `${site.url}/#organization` },
     isAccessibleForFree: true,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'TRY' }
@@ -33,8 +33,9 @@ const schema = graph(
   {
     '@type': 'HowTo',
     '@id': `${pageUrl}#howto`,
-    name: 'Ücretsiz iş ve hizmet talebi nasıl oluşturulur?',
-    description: 'Formu doldurup talebinizi iletmeniz ve geri dönüş almanız üç adım sürer.',
+    name: 'Ücretsiz iş ve hizmet talebi oluşturup teklif nasıl alınır?',
+    description:
+      'Talebinizi yazmanızdan hizmet verenlerin tekliflerini karşılaştırmanıza kadar dört adım.',
     inLanguage: site.language,
     totalTime: 'PT3M',
     estimatedCost: { '@type': 'MonetaryAmount', currency: 'TRY', value: '0' },
@@ -53,18 +54,18 @@ const schema = graph(
 const guarantees = [
   {
     icon: CheckCircle2,
-    title: 'Ücretsiz',
-    text: 'İlan ücreti, üyelik ücreti ya da teklif başına komisyon yok.'
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Üyelik yok',
-    text: 'Kayıt, şifre veya e-posta doğrulaması istemiyoruz.'
+    title: 'İki taraf da ücret ödemez',
+    text: 'İlan ücreti, üyelik ücreti ya da iş başına komisyon yok.'
   },
   {
     icon: MessageCircle,
-    title: 'Doğrudan iletişim',
-    text: 'Talebiniz bize düşer, WhatsApp veya telefondan geri döneriz.'
+    title: 'Birden fazla teklif',
+    text: 'Talebiniz kategorisine uyan hizmet veren ağımızda paylaşılır.'
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Numaranız gizli',
+    text: 'Ağa giden metinde telefonunuz yer almaz; üyelik de istenmez.'
   }
 ];
 
@@ -80,8 +81,8 @@ export default function JobPost() {
   return (
     <>
       <SEO
-        title="Ücretsiz İş ve Hizmet Talebi Oluştur | KAPTAN"
-        description="İhtiyacınız olan hizmeti tarif edin, ücretsiz talep oluşturun. Üyelik yok, ilan ücreti yok, komisyon yok — talebiniz doğrudan bize ulaşır, WhatsApp üzerinden geri döneriz."
+        title="Ücretsiz Teklif Al — İş ve Hizmet Talebi Oluştur | KAPTAN"
+        description="İhtiyacınız olan işi yazın, hizmet veren ağımızdan ücretsiz teklif alın. Üyelik yok, ilan ücreti yok, komisyon yok. Telefon numaranız ustalarla paylaşılmaz."
         url="/is-talebi"
         schema={schema}
       />
@@ -94,22 +95,25 @@ export default function JobPost() {
 
           <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Ücretsiz talep formu</p>
           <h1 className="text-4xl md:text-6xl font-display font-semibold max-w-3xl mb-6">
-            Ücretsiz iş ve hizmet talebi oluşturun.
+            Talebinizi yazın, ücretsiz teklif alın.
           </h1>
           <p className="text-muted text-lg leading-relaxed max-w-2xl mb-8">
             Yazılımdan tadilata, nakliyattan temizliğe kadar ihtiyacınız olan işi
-            aşağıdaki forma yazın. Talebiniz doğrudan bize ulaşır; inceleyip WhatsApp
-            veya telefon üzerinden size döneriz.
+            aşağıdaki forma yazın. Talebinizi kategorisine uyan hizmet veren ağımıza
+            iletelim, gelen teklifleri size ulaştıralım. Ne siz ne de hizmet veren
+            bunun için ücret ödüyor.
           </p>
 
           {/* Yapay zekâ araçlarının ve öne çıkan sonuçların doğrudan
               alıntılayabileceği kısa cevap bloğu. */}
           <div className="bg-surface border border-gold/20 rounded-2xl p-6 md:p-7 mb-10">
             <p className="text-text-primary leading-relaxed">
-              <strong className="text-gold">Kısaca:</strong> Bu sayfadaki form üzerinden iş
-              veya hizmet talebi oluşturmak tamamen ücretsizdir. Üyelik, ilan ücreti ve
-              komisyon yoktur. Talebiniz herkese açık bir ilan panosunda yayınlanmaz;
-              Ankara merkezli ekibimize ulaşır ve size doğrudan geri dönüş yapılır.
+              <strong className="text-gold">Kısaca:</strong> Talep oluşturmak ve teklif almak
+              tamamen ücretsizdir; üyelik, ilan ücreti ve komisyon yoktur. Talebiniz
+              herkese açık bir ilan panosunda yayınlanmaz, yalnızca kategorisine uyan
+              hizmet verenlerden oluşan WhatsApp ağımızda paylaşılır. Bu paylaşımda
+              telefon numaranız yer almaz; iletişim bilgileriniz ancak bir teklifle
+              ilerlemeye karar verdiğinizde paylaşılır.
             </p>
           </div>
 
@@ -129,7 +133,7 @@ export default function JobPost() {
           <section className="mt-24" aria-labelledby="nasil-calisir">
             <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Nasıl çalışır</p>
             <h2 id="nasil-calisir" className="text-3xl md:text-4xl font-display font-semibold mb-8">
-              Talep oluşturmak üç adım sürüyor.
+              Talepten teklife dört adım.
             </h2>
             <ol className="space-y-4">
               {jobSteps.map((step, index) => (
@@ -178,12 +182,14 @@ export default function JobPost() {
           <section className="mt-24" aria-labelledby="ipuclari">
             <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Talep yazma rehberi</p>
             <h2 id="ipuclari" className="text-3xl md:text-4xl font-display font-semibold mb-4">
-              Doğru fiyatı almanızı sağlayan 5 kural.
+              Daha çok teklif almanızı sağlayan 5 kural.
             </h2>
             <p className="text-muted leading-relaxed max-w-2xl mb-8">
               Aynı iş için gelen fiyatların birbirinden çok farklı çıkmasının sebebi
-              genellikle işin kendisi değil, talebin nasıl anlatıldığıdır. Aşağıdaki beş
-              nokta, aldığımız taleplerde farkı en çok yaratanlar.
+              genellikle işin kendisi değil, talebin nasıl anlatıldığıdır. Eksik yazılmış
+              bir talebe hizmet verenler ya hiç fiyat vermez ya da kendini garantiye alan
+              yüksek bir rakam verir. Aşağıdaki beş nokta, aldığımız taleplerde farkı en
+              çok yaratanlar.
             </p>
             <div className="space-y-4">
               {jobTips.map((tip, index) => (
@@ -214,6 +220,39 @@ export default function JobPost() {
                   <p className="text-muted leading-relaxed">{faq.answer}</p>
                 </article>
               ))}
+            </div>
+          </section>
+
+          {/* ------------------------------------------- hizmet veren tarafı -- */}
+          <section className="mt-24" aria-labelledby="hizmet-veren">
+            <div className="bg-surface border border-gold/20 rounded-2xl p-8 md:p-10">
+              <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">
+                Hizmet verenler için
+              </p>
+              <h2
+                id="hizmet-veren"
+                className="text-3xl md:text-4xl font-display font-semibold mb-4"
+              >
+                Usta veya hizmet veren misiniz?
+              </h2>
+              <p className="text-muted leading-relaxed max-w-2xl mb-6">
+                Boyacı, elektrikçi, nakliyeci, temizlik ekibi, tasarımcı ya da
+                yazılımcıysanız ağımıza katılabilirsiniz. Uzmanlık alanınıza ve
+                çalıştığınız ilçelere uyan talepler geldiğinde sizinle paylaşıyoruz;
+                fiyatınızı verip vermemek size kalıyor. <strong>Katılmak ve teklif
+                vermek ücretsiz, işi aldığınızda da komisyon almıyoruz.</strong>
+              </p>
+              <a
+                href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
+                  'Merhaba, hizmet veren ağınıza katılmak istiyorum. Uzmanlık alanım: '
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-medium text-bg hover:bg-gold-light transition-colors"
+              >
+                <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                WhatsApp&apos;tan yazın
+              </a>
             </div>
           </section>
 

@@ -61,25 +61,31 @@ function formatPhoneForDisplay(raw: string): string {
   return `0${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 8)} ${digits.slice(8)}`;
 }
 
-/** Google Sheets'e kopyalanmaya hazır formatlı WhatsApp metni üretir. */
+/**
+ * Hizmet veren ağına (WhatsApp grubuna) yapıştırılacak ilan metni.
+ *
+ * ÖNEMLİ: Bu metin talep sahibinin adını ve telefonunu İÇERMEZ. Sayfada
+ * "numaranız ağa giden metinde yer almaz" sözü veriliyor; iletişim bilgisi
+ * yalnızca tabloda ayrı sütunlarda tutulur ve anlaşma aşamasında paylaşılır.
+ * Buraya isim/telefon eklemek o sözü bozar.
+ */
 export function buildWhatsAppMessage(values: FormValues): string {
   const fallback = (value: string) => value.trim() || 'Belirtilmedi';
 
   return [
-    '📢 *YENİ İŞ TALEBİ / İLANI*',
+    '📢 *YENİ İŞ TALEBİ*',
     DIVIDER,
-    `📌 *İş Tanımı:* ${values.title.trim()}`,
+    `📌 *İş:* ${values.title.trim()}`,
     `🏷️ *Kategori:* ${values.category}`,
     `📍 *Konum:* ${fallback(values.location)}`,
     `💰 *Bütçe:* ${fallback(values.budget)}`,
     '',
     '📝 *Detaylar:*',
     values.details.trim(),
-    '',
-    `👤 *İletişim:* ${values.name.trim()}`,
-    `📞 *WhatsApp:* https://wa.me/${normalizePhone(values.phone)}`,
     DIVIDER,
-    '_Teklif komisyonu yok. Doğrudan iletişime geçebilirsiniz._'
+    '_Teklif vermek için bu mesajı yanıtlayın: fiyatınız ve ne zaman başlayabileceğiniz._',
+    '_Talep sahibinin iletişim bilgisi, anlaşma sağlandığında paylaşılır._',
+    '_Katılım ve teklif vermek ücretsizdir, komisyon alınmaz._'
   ].join('\n');
 }
 
@@ -195,7 +201,7 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
           Talebiniz Başarıyla Alındı!
         </h3>
         <p className="text-muted text-base leading-relaxed mb-8">
-          İş / hizmet talebiniz ekibimize iletilmiştir. En kısa sürede inceleyip WhatsApp veya telefon numaranız üzerinden sizinle iletişime geçeceğiz.
+          Talebinizi, kategorisine uyan hizmet veren ağımızla paylaşıyoruz. Gelen teklifleri derleyip WhatsApp veya telefon numaranız üzerinden size iletiyoruz. Telefon numaranız ağa gönderilen metinde yer almaz.
         </p>
         <button
           type="button"
@@ -220,7 +226,7 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
             İş / Hizmet Talebi Oluştur
           </h2>
           <p className="text-muted text-sm leading-relaxed">
-            İhtiyacınız olan hizmetin detaylarını girin, talebinizi hemen işleme alalım.
+            İhtiyacınız olan hizmetin detaylarını girin, teklif toplamaya hemen başlayalım.
           </p>
         </div>
 
