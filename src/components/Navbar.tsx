@@ -51,7 +51,8 @@ export function Navbar() {
     { name: 'Referanslar', path: '/referanslar' },
     { name: 'Vaka Çalışmaları', path: '/vaka-calismalari' },
     { name: 'Hakkımızda', path: '/hakkimizda' },
-    { name: 'KaloHeal', path: '/kaloheal', isProduct: true },
+    // KaloHeal geçici olarak menüden çıkarıldı; footer bağlantısı duruyor.
+    { name: 'İş Talebi', path: '/is-talebi', isProduct: true },
     { name: 'Blog', path: '/blog' },
     { name: 'İletişim', path: '/iletisim' },
   ];
@@ -136,12 +137,9 @@ export function Navbar() {
                       : 'text-muted hover:text-text-primary hover:bg-stroke/50'
                   }`}
                 >
-                  {/* Kendi ürünümüz — hizmet bağlantılarından ayrışsın */}
+                  {/* Kendi aracımız — hizmet bağlantılarından ayrışsın */}
                   {link.isProduct && (
-                    <span
-                      aria-hidden="true"
-                      className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#30D158] to-[#0A84FF]"
-                    />
+                    <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-gold" />
                   )}
                   {link.name}
                 </Link>

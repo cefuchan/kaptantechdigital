@@ -1,38 +1,87 @@
+import { Link } from 'react-router-dom';
+import { CheckCircle2, MessageCircle, ShieldCheck } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import JobPostForm from '../components/JobPostForm';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
-import { breadcrumbSchema, graph } from '../data/schema';
+import { breadcrumbSchema, faqSchema, graph } from '../data/schema';
 import { absoluteUrl, site } from '../data/site';
+import { jobCategories, jobFaqs, jobSteps, jobTips } from '../data/jobPost';
 
 const crumbs = [
   { name: 'Ana Sayfa', path: '/' },
-  { name: 'İş Talebi Oluştur', path: '/is-talebi' }
+  { name: 'İş ve Hizmet Talebi', path: '/is-talebi' }
 ];
+
+const pageUrl = absoluteUrl('/is-talebi');
 
 const schema = graph(
   {
     '@type': 'WebApplication',
-    '@id': `${absoluteUrl('/is-talebi')}#tool`,
-    name: 'İş ve Hizmet Talebi Oluşturucu',
-    url: absoluteUrl('/is-talebi'),
+    '@id': `${pageUrl}#tool`,
+    name: 'Ücretsiz İş ve Hizmet Talebi Formu',
+    url: pageUrl,
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     inLanguage: site.language,
     description:
-      'Hizmet veya iş talebinizi doldurun; WhatsApp’ta paylaşmaya hazır, biçimlendirilmiş ilan metnini anında oluşturun.',
+      'Aradığınız hizmeti tarif edin, talebiniz doğrudan KAPTAN ekibine ulaşsın. Üyelik yok, ilan ücreti yok, komisyon yok.',
     publisher: { '@id': `${site.url}/#organization` },
+    isAccessibleForFree: true,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'TRY' }
   },
+  {
+    '@type': 'HowTo',
+    '@id': `${pageUrl}#howto`,
+    name: 'Ücretsiz iş ve hizmet talebi nasıl oluşturulur?',
+    description: 'Formu doldurup talebinizi iletmeniz ve geri dönüş almanız üç adım sürer.',
+    inLanguage: site.language,
+    totalTime: 'PT3M',
+    estimatedCost: { '@type': 'MonetaryAmount', currency: 'TRY', value: '0' },
+    step: jobSteps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.title,
+      text: step.body,
+      url: `${pageUrl}#adim-${index + 1}`
+    }))
+  },
+  faqSchema(jobFaqs),
   breadcrumbSchema(crumbs)
 );
+
+const guarantees = [
+  {
+    icon: CheckCircle2,
+    title: 'Ücretsiz',
+    text: 'İlan ücreti, üyelik ücreti ya da teklif başına komisyon yok.'
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Üyelik yok',
+    text: 'Kayıt, şifre veya e-posta doğrulaması istemiyoruz.'
+  },
+  {
+    icon: MessageCircle,
+    title: 'Doğrudan iletişim',
+    text: 'Talebiniz bize düşer, WhatsApp veya telefondan geri döneriz.'
+  }
+];
+
+const relatedLinks = [
+  { label: 'Tüm hizmetlerimiz', path: '/hizmetler' },
+  { label: 'Ankara web tasarım', path: '/ankara-web-tasarim' },
+  { label: 'Ankara SEO', path: '/ankara-seo' },
+  { label: 'Vaka çalışmaları', path: '/vaka-calismalari' },
+  { label: 'İletişim', path: '/iletisim' }
+];
 
 export default function JobPost() {
   return (
     <>
       <SEO
-        title="İş ve Hizmet Talebi Oluştur | KAPTAN"
-        description="Hizmet veya iş talebinizi oluşturun, WhatsApp'ta tek tıkla paylaşmaya hazır ilan metnini hemen alın. Ücretsiz, komisyonsuz."
+        title="Ücretsiz İş ve Hizmet Talebi Oluştur | KAPTAN"
+        description="İhtiyacınız olan hizmeti tarif edin, ücretsiz talep oluşturun. Üyelik yok, ilan ücreti yok, komisyon yok — talebiniz doğrudan bize ulaşır, WhatsApp üzerinden geri döneriz."
         url="/is-talebi"
         schema={schema}
       />
@@ -43,17 +92,153 @@ export default function JobPost() {
           <HorizontalLine />
           <Breadcrumbs items={crumbs} />
 
+          <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Ücretsiz talep formu</p>
           <h1 className="text-4xl md:text-6xl font-display font-semibold max-w-3xl mb-6">
-            İlanınızı yazmayın, oluşturun.
+            Ücretsiz iş ve hizmet talebi oluşturun.
           </h1>
-          <p className="text-muted text-lg leading-relaxed max-w-2xl mb-12">
-            Aradığınız hizmeti veya vermek istediğiniz işi aşağıdaki forma girin;
-            WhatsApp gruplarında doğrudan paylaşabileceğiniz düzenli bir ilan
-            metnini saniyeler içinde hazırlayalım. Komisyon yok, aracı yok —
-            talep sahibiyle doğrudan iletişime geçilir.
+          <p className="text-muted text-lg leading-relaxed max-w-2xl mb-8">
+            Yazılımdan tadilata, nakliyattan temizliğe kadar ihtiyacınız olan işi
+            aşağıdaki forma yazın. Talebiniz doğrudan bize ulaşır; inceleyip WhatsApp
+            veya telefon üzerinden size döneriz.
           </p>
 
+          {/* Yapay zekâ araçlarının ve öne çıkan sonuçların doğrudan
+              alıntılayabileceği kısa cevap bloğu. */}
+          <div className="bg-surface border border-gold/20 rounded-2xl p-6 md:p-7 mb-10">
+            <p className="text-text-primary leading-relaxed">
+              <strong className="text-gold">Kısaca:</strong> Bu sayfadaki form üzerinden iş
+              veya hizmet talebi oluşturmak tamamen ücretsizdir. Üyelik, ilan ücreti ve
+              komisyon yoktur. Talebiniz herkese açık bir ilan panosunda yayınlanmaz;
+              Ankara merkezli ekibimize ulaşır ve size doğrudan geri dönüş yapılır.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-14">
+            {guarantees.map(({ icon: Icon, title, text }) => (
+              <div key={title} className="bg-surface p-5 rounded-2xl border border-white/5">
+                <Icon className="w-5 h-5 text-gold mb-3" aria-hidden="true" />
+                <p className="font-medium mb-1">{title}</p>
+                <p className="text-muted text-sm leading-relaxed">{text}</p>
+              </div>
+            ))}
+          </div>
+
           <JobPostForm />
+
+          {/* ------------------------------------------------- nasıl çalışır -- */}
+          <section className="mt-24" aria-labelledby="nasil-calisir">
+            <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Nasıl çalışır</p>
+            <h2 id="nasil-calisir" className="text-3xl md:text-4xl font-display font-semibold mb-8">
+              Talep oluşturmak üç adım sürüyor.
+            </h2>
+            <ol className="space-y-4">
+              {jobSteps.map((step, index) => (
+                <li
+                  key={step.title}
+                  id={`adim-${index + 1}`}
+                  className="bg-surface p-7 rounded-2xl border border-white/5 flex gap-5"
+                >
+                  <span className="text-gold font-mono text-xs pt-1.5 shrink-0">0{index + 1}</span>
+                  <div>
+                    <h3 className="text-xl font-display font-semibold mb-2">{step.title}</h3>
+                    <p className="text-muted leading-relaxed">{step.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          {/* ---------------------------------------------------- kategoriler -- */}
+          <section className="mt-24" aria-labelledby="kategoriler">
+            <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Kategoriler</p>
+            <h2 id="kategoriler" className="text-3xl md:text-4xl font-display font-semibold mb-8">
+              Hangi işler için talep oluşturabilirsiniz?
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {jobCategories.map((category) => (
+                <article key={category.id} className="bg-surface p-7 rounded-2xl border border-white/5">
+                  <h3 className="text-xl font-display font-semibold mb-3">{category.name}</h3>
+                  <p className="text-muted leading-relaxed mb-4">{category.description}</p>
+                  <ul className="flex flex-wrap gap-2">
+                    {category.examples.map((example) => (
+                      <li
+                        key={example}
+                        className="text-xs text-muted border border-white/10 rounded-full px-3 py-1"
+                      >
+                        {example}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* ------------------------------------------------------- ipuçları -- */}
+          <section className="mt-24" aria-labelledby="ipuclari">
+            <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Talep yazma rehberi</p>
+            <h2 id="ipuclari" className="text-3xl md:text-4xl font-display font-semibold mb-4">
+              Doğru fiyatı almanızı sağlayan 5 kural.
+            </h2>
+            <p className="text-muted leading-relaxed max-w-2xl mb-8">
+              Aynı iş için gelen fiyatların birbirinden çok farklı çıkmasının sebebi
+              genellikle işin kendisi değil, talebin nasıl anlatıldığıdır. Aşağıdaki beş
+              nokta, aldığımız taleplerde farkı en çok yaratanlar.
+            </p>
+            <div className="space-y-4">
+              {jobTips.map((tip, index) => (
+                <article
+                  key={tip.title}
+                  className="bg-surface p-7 rounded-2xl border border-white/5 flex gap-5"
+                >
+                  <span className="text-gold font-mono text-xs pt-1.5 shrink-0">0{index + 1}</span>
+                  <div>
+                    <h3 className="text-xl font-display font-semibold mb-2">{tip.title}</h3>
+                    <p className="text-muted leading-relaxed">{tip.body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* ------------------------------------------------------------- SSS -- */}
+          <section className="mt-24" aria-labelledby="sss">
+            <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Sık sorulanlar</p>
+            <h2 id="sss" className="text-3xl md:text-4xl font-display font-semibold mb-8">
+              İş talebi hakkında sık sorulan sorular
+            </h2>
+            <div className="space-y-4">
+              {jobFaqs.map((faq) => (
+                <article key={faq.question} className="bg-surface p-7 rounded-2xl border border-white/5">
+                  <h3 className="text-xl font-display font-semibold mb-3">{faq.question}</h3>
+                  <p className="text-muted leading-relaxed">{faq.answer}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* -------------------------------------------------- iç bağlantılar -- */}
+          <section className="mt-24" aria-labelledby="devami">
+            <h2 id="devami" className="text-2xl md:text-3xl font-display font-semibold mb-6">
+              Dijital bir iş için mi geldiniz?
+            </h2>
+            <p className="text-muted leading-relaxed max-w-2xl mb-6">
+              Web sitesi, e-ticaret, SEO ve reklam tarafı bizim kendi işimiz. Neyi nasıl
+              yaptığımızı önce görmek isterseniz:
+            </p>
+            <ul className="flex flex-wrap gap-3">
+              {relatedLinks.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    to={item.path}
+                    className="inline-flex items-center rounded-full border border-white/10 px-5 py-2.5 text-sm text-muted hover:text-text-primary hover:border-gold transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         </div>
       </div>
     </>
