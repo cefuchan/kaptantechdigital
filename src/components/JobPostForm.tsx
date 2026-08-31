@@ -134,25 +134,34 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
 
     const formattedMessage = buildWhatsAppMessage(values);
 
+    /**
+     * DİKKAT — bu anahtarlar Google Sheet'teki başlık satırıyla BİREBİR
+     * aynı olmak zorundadır. SheetDB gelen anahtarı sütun adıyla harfi
+     * harfine eşler; eşleşmeyen anahtar sessizce atılır, sütun boş kalır
+     * ve kullanıcı yine "talebiniz alındı" görür.
+     *
+     * "Kategori " sonundaki boşluk kasıtlı değil, tablodaki başlıkta öyle.
+     * Sheet başlığını düzeltirsen buradaki anahtarı da düzeltmen gerekir.
+     */
     const payload = JSON.stringify({
       data: [
         {
-          Tarih: new Date().toLocaleString('tr-TR', {
+          'Tarih': new Date().toLocaleString('tr-TR', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
           }),
-          Baslik: values.title.trim(),
-          Kategori: values.category,
-          Musteri: values.name.trim(),
-          Telefon: formatPhoneForDisplay(values.phone),
-          WhatsApp: `https://wa.me/${normalizePhone(values.phone)}`,
-          Butce: values.budget.trim() || 'Belirtilmedi',
-          Konum: values.location.trim() || 'Belirtilmedi',
-          Detaylar: values.details.trim(),
-          Ilan_Metni: formattedMessage
+          'Başlık': values.title.trim(),
+          'Kategori ': values.category,
+          'Müşteri': values.name.trim(),
+          'Telefon': formatPhoneForDisplay(values.phone),
+          'Whatsapp': `https://wa.me/${normalizePhone(values.phone)}`,
+          'Bütçe': values.budget.trim() || 'Belirtilmedi',
+          'Konum': values.location.trim() || 'Belirtilmedi',
+          'Detaylar': values.details.trim(),
+          'İlan_Metni': formattedMessage
         }
       ]
     });

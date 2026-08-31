@@ -1,0 +1,72 @@
+<!--
+  MÜŞTERİ SİTESİ FOOTER KÜNYESİ
+  ================================================================
+  Bu snippet, KAPTAN'ın yaptığı müşteri sitelerinin footer'ına eklenir.
+  Amaç: yeni alan adının dış otorite sinyali kazanması.
+
+  UYGULAMA KURALLARI — hepsi önemli:
+
+  1. ANCHOR METNİ MARKA ADI OLMALI.
+     Doğru : "KAPTAN Dijital Büyüme Stüdyosu"
+     Yanlış: "Ankara SEO", "Ankara web tasarım firması"
+
+     Birden fazla müşteri sitesine anahtar kelimeli anchor koymak link
+     şeması sayılır ve ceza riski taşır. Marka adı anchor'ı doğaldır,
+     ajans künyesi olarak beklenen kullanımdır.
+
+  2. rel="nofollow" KOYMA. Künye organik bir bağlantıdır.
+     (Ücretli yerleşim olsaydı nofollow/sponsored gerekirdi — bu değil.)
+
+  3. HER SİTEDE AYNI METNİ KULLANMA.
+     Aşağıda üç varyasyon var. Müşteriye göre birini seç, ya da
+     sektöre uygun şekilde yeniden yaz. Birebir aynı cümlenin onlarca
+     sitede tekrarlanması yapay görünür.
+
+  4. Müşteriden İZİN AL. Habersiz eklenen künye kaldırılır ve
+     ilişkiye zarar verir.
+  ================================================================
+-->
+
+<!-- VARYASYON 1 — sade, en yaygın kullanım -->
+<p class="site-credit">
+  Tasarım ve geliştirme:
+  <a href="https://kaptantechdigital.com" target="_blank" rel="noopener">
+    KAPTAN Dijital Büyüme Stüdyosu
+  </a>
+</p>
+
+<!-- VARYASYON 2 — hizmet vurgulu, ama anchor yine marka adı -->
+<p class="site-credit">
+  Bu site
+  <a href="https://kaptantechdigital.com" target="_blank" rel="noopener">
+    KAPTAN Dijital Büyüme Stüdyosu
+  </a>
+  tarafından tasarlandı ve geliştirildi.
+</p>
+
+<!-- VARYASYON 3 — yalın imza -->
+<p class="site-credit">
+  <a href="https://kaptantechdigital.com" target="_blank" rel="noopener">
+    KAPTAN
+  </a>
+  yapımıdır.
+</p>
+
+
+<style>
+  /* Footer'ın geri kalanıyla uyumlu, dikkat çekmeyen künye. */
+  .site-credit {
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    opacity: 0.7;
+    margin: 0;
+  }
+  .site-credit a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+  }
+  .site-credit a:hover {
+    opacity: 1;
+  }
+</style>

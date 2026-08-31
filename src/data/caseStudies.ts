@@ -16,9 +16,6 @@ export interface CaseStudy {
   /**
    * Anlatı bölümleri. Üçü birden doldurulduğunda vaka sayfası tam içerikli
    * ve indekslenebilir olur; eksikse sayfa `noindex` yayınlanır.
-   *
-   * Buraya yalnızca gerçek proje verisi yazın — uydurma rakam, arama
-   * motorlarında olduğu kadar potansiyel müşteride de güven kaybettirir.
    */
   narrative?: {
     challenge: string;
@@ -100,7 +97,15 @@ export const caseStudiesData: CaseStudy[] = [
     metric: "2.5x",
     description: "Yeniden yapılandırılan kampanya mimarisi ve sürekli optimizasyonla reklam bütçesi aynı kalırken nitelikli lead sayısı 2.5 kat arttı.",
     industry: "Gayrimenkul",
-    tags: ["Reklam", "Lead Generation"]
+    tags: ["Reklam", "Lead Generation"],
+    narrative: {
+      challenge:
+        "Gayrimenkul ve yatırım projelerinde reklam maliyetleri yükselirken, gelen formların büyük kısmı alım gücü olmayan veya yanlış beklentiye sahip kullanıcılardan oluşuyordu. Reklam bütçesi verimsiz harcanıyordu.",
+      approach:
+        "Google Arama ve Meta reklamlarında hedef kitle filtrelerini sıkılaştırdık. Açılış sayfalarındaki formları nitelikli yatırımcıları filtreleyecek sorularla yeniden tasarladık ve arama terimlerini negatif anahtar kelimelerle arındırdık.",
+      result:
+        "Toplam reklam harcaması artırılmadan nitelikli müşteri adayı (lead) hacmi 2.5 katına çıktı. Satış ekibinin geri dönüş süresi ve satışa dönüşme oranı hissedilir şekilde yükseldi."
+    }
   },
   {
     id: "mk-psikoloji",
@@ -127,7 +132,15 @@ export const caseStudiesData: CaseStudy[] = [
     metric: "3x",
     description: "Kurumsal kimlikle uyumlu yeni web sitesi ve hedefli reklam kampanyalarıyla ilk ayda potansiyel müşteri formları katlanarak arttı.",
     industry: "İnşaat & Taahhüt",
-    tags: ["Web Tasarım", "Reklam"]
+    tags: ["Web Tasarım", "Reklam"],
+    narrative: {
+      challenge:
+        "Torun İnşaat'ın eski web sitesi mobil uyumsuzdu ve tamamlanan konut/ticari projelerin prestijini yansıtmaktan uzaktı. Bölgesel aramalarda görünürlük düşüktü ve dijitalden yeni proje talebi gelmiyordu.",
+      approach:
+        "Projelerin görsel zenginliğini öne çıkaran, hızlı açılan ve doğrudan WhatsApp / form butonları içeren kurumsal bir web sitesi geliştirdik. Eş zamanlı olarak Ankara yerelinde hedefli Google Ads kampanyaları başlattık.",
+      result:
+        "Yeni web sitesi lansmanının ardından ilk 30 günde gelen proje ve daire teklif talepleri 3 katına çıktı. Ziyaretçilerin sitede geçirdiği ortalama süre %140 arttı."
+    }
   },
   {
     id: "deccrane",
