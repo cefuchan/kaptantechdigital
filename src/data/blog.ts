@@ -14,6 +14,18 @@ export interface BlogPostMeta {
   datePublished: string;
   readTime: string;
   excerpt: string;
+  /**
+   * Yazı arama motorlarına sunuluyor mu?
+   *
+   * false olan yazılar sitede kalır ve blog listesinden okunabilir; yalnızca
+   * `noindex` alır ve sitemap dışında tutulur. Bunlar, konusunu kendi hizmet
+   * sayfasının çok daha iyi karşıladığı kısa yazılar. Yeni bir alan adında
+   * bu sayfaları indekse sunmak, taranmayı hak eden sayfaların tarama
+   * bütçesini bölüyor.
+   *
+   * İçerik genişletilirse bu satır silinerek yazı indekse geri alınır.
+   */
+  index?: boolean;
 }
 
 export const blogPosts: BlogPostMeta[] = [
@@ -24,7 +36,9 @@ export const blogPosts: BlogPostMeta[] = [
     date: "27 Ağustos 2026",
     datePublished: "2026-08-27",
     readTime: "3 dk okuma",
-    excerpt: "Google AI Overviews (SGE) yapay zekâ özetlerinde markanızı kaynak kartı olarak öne çıkarmanın ve organik görünürlüğü artırmanın stratejileri."
+    excerpt: "Google AI Overviews (SGE) yapay zekâ özetlerinde markanızı kaynak kartı olarak öne çıkarmanın ve organik görünürlüğü artırmanın stratejileri.",
+    // 334 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "llm-seo-yapay-zeka-aramalarinda-marka-tavsiyesi",
@@ -42,50 +56,60 @@ export const blogPosts: BlogPostMeta[] = [
     date: "27 Ağustos 2026",
     datePublished: "2026-08-27",
     readTime: "3 dk okuma",
-    excerpt: "JSON-LD ve Schema.org mimarisiyle web sitenizi hem Google zengin sonuçlarına hem de yapay zekâ botlarına tam uyumlu hale getirin."
+    excerpt: "JSON-LD ve Schema.org mimarisiyle web sitenizi hem Google zengin sonuçlarına hem de yapay zekâ botlarına tam uyumlu hale getirin.",
+    // 336 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "geo-nedir-neden-onemli",
     title: "GEO nedir, neden önemli?",
     category: "GEO",
-    date: "12 Kasım 2023",
-    datePublished: "2023-11-12",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "1 dk okuma",
-    excerpt: "Yapay zekâ destekli arama motorlarında markanızın görünürlüğünü nasıl sağlarsınız? Generative Engine Optimization rehberi."
+    excerpt: "Yapay zekâ destekli arama motorlarında markanızın görünürlüğünü nasıl sağlarsınız? Generative Engine Optimization rehberi.",
+    // 297 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "google-ads-butce-optimizasyonu",
     title: "Google Ads'te bütçe optimizasyonu nasıl yapılır?",
     category: "Reklam",
-    date: "28 Ekim 2023",
-    datePublished: "2023-10-28",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "2 dk okuma",
-    excerpt: "Reklam harcamalarınızı kısmadan dönüşüm oranlarınızı ve kârlılığınızı artırmanın kanıtlanmış yolları."
+    excerpt: "Reklam harcamalarınızı kısmadan dönüşüm oranlarınızı ve kârlılığınızı artırmanın kanıtlanmış yolları.",
+    // 315 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "yerel-seo-ile-isletme-gorunurlugu",
     title: "Yerel SEO ile işletme görünürlüğü nasıl artırılır?",
     category: "SEO",
-    date: "15 Ekim 2023",
-    datePublished: "2023-10-15",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "1 dk okuma",
-    excerpt: "Google Haritalar'da üst sıralara çıkmak ve çevrenizdeki potansiyel müşterileri mağazanıza çekmek için ipuçları."
+    excerpt: "Google Haritalar'da üst sıralara çıkmak ve çevrenizdeki potansiyel müşterileri mağazanıza çekmek için ipuçları.",
+    // 291 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "video-reklamda-ilk-3-saniye",
     title: "Video reklamda ilk 3 saniye kuralı",
     category: "Video",
-    date: "02 Ekim 2023",
-    datePublished: "2023-10-02",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "1 dk okuma",
-    excerpt: "Kullanıcıların dikkatini anında yakalamak ve videonuzun izlenme oranlarını dramatik şekilde artırmak için stratejiler."
+    excerpt: "Kullanıcıların dikkatini anında yakalamak ve videonuzun izlenme oranlarını dramatik şekilde artırmak için stratejiler.",
+    // 272 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "yapay-zeka-aramalarinda-marka-gorunurlugu",
     title: "Yapay zekâ tabanlı aramalarda (ChatGPT, Gemini) marka görünürlüğü",
     category: "GEO",
-    date: "18 Eylül 2023",
-    datePublished: "2023-09-18",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "2 dk okuma",
     excerpt: "Büyük dil modellerinin markanızı tavsiye etmesini sağlamak için uygulamanız gereken semantik stratejiler."
   },
@@ -93,8 +117,8 @@ export const blogPosts: BlogPostMeta[] = [
     slug: "ankara-dijital-pazarlama-egitimi-ve-kursu",
     title: "Ankara Dijital Pazarlama Eğitimi ve Sertifikalı Kursları",
     category: "Eğitim",
-    date: "10 Ağustos 2024",
-    datePublished: "2024-08-10",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "2 dk okuma",
     excerpt: "Dijital pazarlama kursu, digital marketing eğitimi ve pazarlama sertifikası almak isteyenler için Ankara dijital pazarlama eğitim rehberi."
   },
@@ -102,46 +126,56 @@ export const blogPosts: BlogPostMeta[] = [
     slug: "kurumsal-web-tasarim-ankara-ajans",
     title: "Ankara Kurumsal Web Tasarım, Yazılım ve Site Tasarımı",
     category: "Web",
-    date: "15 Ağustos 2024",
-    datePublished: "2024-08-15",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "2 dk okuma",
-    excerpt: "Ankara web tasarım firmaları arasında öne çıkan çözümlerimizle web sitesi tasarımı, internet sitesi tasarımı ve ankara web yazılım hizmetleri."
+    excerpt: "Ankara web tasarım firmaları arasında öne çıkan çözümlerimizle web sitesi tasarımı, internet sitesi tasarımı ve ankara web yazılım hizmetleri.",
+    // 329 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "seo-merkezi-ankara-google-ads",
     title: "Ankara SEO Merkezi, Web Tasarım SEO ve Google Ads",
     category: "SEO",
-    date: "20 Ağustos 2024",
-    datePublished: "2024-08-20",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "2 dk okuma",
-    excerpt: "Site web seo, seo marketing digital, adwords ads ve marketing google ads stratejileriyle ankara web tasarımı ve seo hizmeti."
+    excerpt: "Site web seo, seo marketing digital, adwords ads ve marketing google ads stratejileriyle ankara web tasarımı ve seo hizmeti.",
+    // 321 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "sosyal-medya-ve-dijital-pazar-satis",
     title: "Sosyal Medya ve Dijital Pazarlama: Satışları Artırmak",
     category: "Pazarlama",
-    date: "25 Ağustos 2024",
-    datePublished: "2024-08-25",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "2 dk okuma",
-    excerpt: "Dijital medya ve pazarlama, dijital pazar, dijital pazarlama ve satış ile pazarlama eğitimleri sayesinde markanızı büyütün."
+    excerpt: "Dijital medya ve pazarlama, dijital pazar, dijital pazarlama ve satış ile pazarlama eğitimleri sayesinde markanızı büyütün.",
+    // 323 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "web-tasarim-fiyatlari-ankara-siteler",
     title: "Web Sitesi Fiyatları Ankara: Siteler ve Altındağ Web Tasarım",
     category: "Web",
-    date: "28 Ağustos 2024",
-    datePublished: "2024-08-28",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "2 dk okuma",
-    excerpt: "Ankara siteler web tasarım, ankara altındağ web tasarım ve web sayfası tasarımı fiyatlandırmaları hakkında detaylı yazılımcılık rehberi."
+    excerpt: "Ankara siteler web tasarım, ankara altındağ web tasarım ve web sayfası tasarımı fiyatlandırmaları hakkında detaylı yazılımcılık rehberi.",
+    // 315 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "ankara-siteler-web-tasarim-ajansi",
     title: "Ankara Siteler Web Tasarım ve Mobilya Sektörü Çözümleri",
     category: "Web",
-    date: "01 Eylül 2024",
-    datePublished: "2024-09-01",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "1 dk okuma",
-    excerpt: "Ankara Siteler web tasarım ihtiyaçlarınız için mobilya sektörüne özel, yüksek dönüşüm sağlayan kurumsal web sitesi tasarımları."
+    excerpt: "Ankara Siteler web tasarım ihtiyaçlarınız için mobilya sektörüne özel, yüksek dönüşüm sağlayan kurumsal web sitesi tasarımları.",
+    // 181 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "ankara-siteler-dijital-pazarlama",
@@ -150,7 +184,9 @@ export const blogPosts: BlogPostMeta[] = [
     date: "05 Ağustos 2026",
     datePublished: "2026-08-05",
     readTime: "1 dk okuma",
-    excerpt: "Ankara Siteler dijital pazarlama stratejisinde SEO, reklam ve içerik kanallarını ortak bir büyüme hedefinde birleştirin."
+    excerpt: "Ankara Siteler dijital pazarlama stratejisinde SEO, reklam ve içerik kanallarını ortak bir büyüme hedefinde birleştirin.",
+    // 151 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "ankara-siteler-reklam-ajansi",
@@ -159,14 +195,16 @@ export const blogPosts: BlogPostMeta[] = [
     date: "05 Ağustos 2026",
     datePublished: "2026-08-05",
     readTime: "1 dk okuma",
-    excerpt: "Ankara Siteler reklam ajansı seçiminde yaratıcı fikirleri, ölçülebilir performansı ve marka stratejisini birlikte değerlendirin."
+    excerpt: "Ankara Siteler reklam ajansı seçiminde yaratıcı fikirleri, ölçülebilir performansı ve marka stratejisini birlikte değerlendirin.",
+    // 148 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "ankara-saglik-turizmi-seo-hizmetleri",
     title: "Ankara Sağlık Turizmi SEO Stratejileri ile Hasta Çekin",
     category: "SEO",
-    date: "05 Eylül 2024",
-    datePublished: "2024-09-05",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "2 dk okuma",
     excerpt: "Klinik ve hastaneler için Ankara Sağlık Turizmi SEO çalışmaları ile yurt dışından ve yurt içinden potansiyel hastaları hedefleyin."
   },
@@ -174,19 +212,23 @@ export const blogPosts: BlogPostMeta[] = [
     slug: "ankara-seo-uzmani-ve-danismanligi",
     title: "Ankara SEO Danışmanlığı: Organik Trafiğinizi Katlayın",
     category: "SEO",
-    date: "10 Eylül 2024",
-    datePublished: "2024-09-10",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "1 dk okuma",
-    excerpt: "Profesyonel Ankara SEO hizmetleri ve veri odaklı stratejilerle Google sıralamalarınızı kalıcı olarak zirveye taşıyın."
+    excerpt: "Profesyonel Ankara SEO hizmetleri ve veri odaklı stratejilerle Google sıralamalarınızı kalıcı olarak zirveye taşıyın.",
+    // 298 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "ankara-geo-yapay-zeka-optimizasyonu",
     title: "Ankara GEO: Yapay Zekâ Aramalarında Öne Çıkın",
     category: "GEO",
-    date: "15 Eylül 2024",
-    datePublished: "2024-09-15",
+    date: "26 Ağustos 2026",
+    datePublished: "2026-08-26",
     readTime: "2 dk okuma",
-    excerpt: "Ankara GEO (Generative Engine Optimization) ajansı olarak yapay zekâ destekli arama motorlarında markanızı geleceğe hazırlıyoruz."
+    excerpt: "Ankara GEO (Generative Engine Optimization) ajansı olarak yapay zekâ destekli arama motorlarında markanızı geleceğe hazırlıyoruz.",
+    // 302 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "ankara-seo-firmalari-ile-dijitalde-zirveye-giden-yol",
@@ -222,7 +264,9 @@ export const blogPosts: BlogPostMeta[] = [
     date: "23 Temmuz 2026",
     datePublished: "2026-07-23",
     readTime: "2 dk okuma",
-    excerpt: "Ankara'da kurumsal web sitesi yaptırmak isteyen işletmeler için web tasarım firmaları, SEO uyumlu site özellikleri ve 2026 web tasarım fiyatları rehberi."
+    excerpt: "Ankara'da kurumsal web sitesi yaptırmak isteyen işletmeler için web tasarım firmaları, SEO uyumlu site özellikleri ve 2026 web tasarım fiyatları rehberi.",
+    // 302 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "ankara-seo-firmalari-ve-web-tasarim-rehberi-2026-dijital-buyume-ve-seo-fiyatlari",
@@ -303,7 +347,9 @@ export const blogPosts: BlogPostMeta[] = [
     date: "28 Temmuz 2026",
     datePublished: "2026-07-28",
     readTime: "1 dk okuma",
-    excerpt: "Ankara video çekim hizmetlerimiz hakkında detaylı bilgi alın."
+    excerpt: "Ankara video çekim hizmetlerimiz hakkında detaylı bilgi alın.",
+    // 133 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "ankara-reels-cekimi-ile-sosyal-medyada-one-cikin",
@@ -312,7 +358,9 @@ export const blogPosts: BlogPostMeta[] = [
     date: "28 Temmuz 2026",
     datePublished: "2026-07-28",
     readTime: "1 dk okuma",
-    excerpt: "Ankara reels çekim hizmetlerimizle Instagram ve TikTok'ta markanızın erişimini artırın. Trend içerikler ve profesyonel kurgu çözümleri."
+    excerpt: "Ankara reels çekim hizmetlerimizle Instagram ve TikTok'ta markanızın erişimini artırın. Trend içerikler ve profesyonel kurgu çözümleri.",
+    // 147 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "ankara-video-produksiyon-hizmetleri-ve-kurumsal-cozumler",
@@ -321,7 +369,9 @@ export const blogPosts: BlogPostMeta[] = [
     date: "28 Temmuz 2026",
     datePublished: "2026-07-28",
     readTime: "1 dk okuma",
-    excerpt: "Ankara video prodüksiyon hizmetlerimizle markanızın hikayesini yüksek kaliteli sinematik içeriklere dönüştürün. Profesyonel ekipman ve uzman kurgu çözümleri."
+    excerpt: "Ankara video prodüksiyon hizmetlerimizle markanızın hikayesini yüksek kaliteli sinematik içeriklere dönüştürün. Profesyonel ekipman ve uzman kurgu çözümleri.",
+    // 164 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   },
   {
     slug: "ankara-kurumsal-tanitim-filmi-cekimi-ile-markanizi-buyutun",
@@ -330,7 +380,9 @@ export const blogPosts: BlogPostMeta[] = [
     date: "28 Temmuz 2026",
     datePublished: "2026-07-28",
     readTime: "1 dk okuma",
-    excerpt: "Ankara kurumsal tanıtım filmi çekimi hizmetlerimizle şirketinizin vizyonunu, tesislerini ve hizmetlerini profesyonel sinematik çekimlerle anlatın."
+    excerpt: "Ankara kurumsal tanıtım filmi çekimi hizmetlerimizle şirketinizin vizyonunu, tesislerini ve hizmetlerini profesyonel sinematik çekimlerle anlatın.",
+    // 141 kelime — indekslenmeye yetmiyor, konuyu güçlü kardeş sayfa karşılıyor
+    index: false
   }
 ];
 
@@ -355,4 +407,9 @@ export function relatedBlogPosts(slug: string, limit = 3): BlogPostMeta[] {
     (post) => post.slug !== slug && post.category !== current.category
   );
   return [...sameCategory, ...others].slice(0, limit);
+}
+
+/** Yazı arama motorlarına sunuluyor mu? (`index: false` verilmemişse evet) */
+export function isBlogPostIndexable(post: BlogPostMeta): boolean {
+  return post.index !== false;
 }

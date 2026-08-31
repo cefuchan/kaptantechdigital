@@ -5,7 +5,7 @@
  * böylece yeni bir blog yazısı veya hizmet eklendiğinde iki dosyayı ayrı ayrı
  * güncellemek gerekmez.
  */
-import { blogPosts } from './blog';
+import { blogPosts, isBlogPostIndexable } from './blog';
 import { caseStudiesData, isCaseStudyComplete } from './caseStudies';
 import { serviceSlugs } from './services';
 
@@ -78,11 +78,15 @@ export function allRoutes(): RouteEntry[] {
         index: isCaseStudyComplete(study)
       })
     ),
+    // İçeriği kendi hizmet sayfasının daha iyi karşıladığı kısa yazılar
+    // noindex yayınlanır ve site haritasına girmez; sayfa yine ön render edilip
+    // blog listesinden okunabilir kalır.
     ...blogPosts.map(
       (post): RouteEntry => ({
         path: `/blog/${post.slug}`,
         changefreq: 'monthly',
-        priority: 0.7
+        priority: 0.7,
+        index: isBlogPostIndexable(post)
         // lastmod: sitemap üreteci git geçmişinden hesaplar (yayın tarihi değil)
       })
     )

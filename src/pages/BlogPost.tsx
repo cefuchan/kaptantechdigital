@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
-import { findBlogPost, relatedBlogPosts } from '../data/blog';
+import { findBlogPost, isBlogPostIndexable, relatedBlogPosts } from '../data/blog';
 import { getCachedBlogContent, loadBlogContent } from '../content/blog';
 import { blogPostingSchema, breadcrumbSchema, graph, personSchema } from '../data/schema';
 import { founder, site } from '../data/site';
@@ -89,6 +89,7 @@ export default function BlogPost() {
         description={post.excerpt}
         url={path}
         type="article"
+        noindex={!isBlogPostIndexable(post)}
         article={{
           publishedTime: post.datePublished,
           author: founder.name || site.name,
