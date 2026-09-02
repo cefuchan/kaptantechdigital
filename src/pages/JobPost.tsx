@@ -129,13 +129,13 @@ export default function JobPost() {
                 girilenler iş <em>talep eden</em> kayıtlardır. Siz ağımıza katılın, size
                 uygun işler geldikçe paylaşalım.
               </p>
-              <a
-                href="#hizmet-veren"
+              <Link
+                to="/hizmet-veren"
                 className="inline-flex items-center gap-2 text-sm text-gold hover:text-white transition-colors"
               >
                 Hizmet veren olarak katıl
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -277,17 +277,26 @@ export default function JobPost() {
                 fiyatınızı verip vermemek size kalıyor. <strong>Katılmak ve teklif
                 vermek ücretsiz, işi aldığınızda da komisyon almıyoruz.</strong>
               </p>
-              <a
-                href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
-                  'Merhaba, hizmet veren ağınıza katılmak istiyorum. Uzmanlık alanım: '
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-medium text-bg hover:bg-gold-light transition-colors"
-              >
-                <MessageCircle className="w-4 h-4" aria-hidden="true" />
-                WhatsApp&apos;tan yazın
-              </a>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  to="/hizmet-veren"
+                  className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-medium text-bg hover:bg-gold-light transition-colors"
+                >
+                  Nasıl çalıştığını okuyun
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+                <a
+                  href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
+                    'Merhaba, hizmet veren ağınıza katılmak istiyorum. Uzmanlık alanım: '
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/10 px-7 py-3.5 text-sm font-medium text-muted hover:text-text-primary hover:border-gold transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                  WhatsApp&apos;tan yazın
+                </a>
+              </div>
             </div>
           </section>
 

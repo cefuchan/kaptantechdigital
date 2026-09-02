@@ -334,9 +334,9 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
             <p className="text-muted leading-relaxed">
               Bu form, <strong>iş yaptırmak</strong> isteyenler için. Usta, freelancer veya
               hizmet verenseniz buradan değil,{' '}
-              <a href="#hizmet-veren" className="text-gold hover:text-white transition-colors">
+              <Link to="/hizmet-veren" className="text-gold hover:text-white transition-colors">
                 hizmet veren ağına katılarak
-              </a>{' '}
+              </Link>{' '}
               ilerlemeniz gerekiyor — işler size oradan ulaşıyor.
             </p>
           </div>

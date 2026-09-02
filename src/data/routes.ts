@@ -56,7 +56,8 @@ const staticRoutes: RouteEntry[] = [
   { path: '/ankara-gizli-ozellik/chery-multimedya', changefreq: 'monthly', priority: 0.8 },
   { path: '/ankara-gizli-ozellik/ev-batarya-soh', changefreq: 'monthly', priority: 0.8 },
   { path: '/is-talebi', changefreq: 'monthly', priority: 0.8 },
-  { path: '/kvkk', changefreq: 'yearly', priority: 0.3 }
+  { path: '/kvkk', changefreq: 'yearly', priority: 0.3 },
+  { path: '/hizmet-veren', changefreq: 'monthly', priority: 0.7 }
 ];
 
 export function allRoutes(): RouteEntry[] {

@@ -34,6 +34,7 @@ export const pageLoaders = {
   Contact: () => import('./pages/Contact'),
   JobPost: () => import('./pages/JobPost'),
   Kvkk: () => import('./pages/Kvkk'),
+  HizmetVeren: () => import('./pages/HizmetVeren'),
   NotFound: () => import('./pages/NotFound')
 } as const;
 
@@ -84,6 +85,7 @@ export const routeTable: Array<{ path: string; page: PageName }> = [
   { path: '/iletisim', page: 'Contact' },
   { path: '/is-talebi', page: 'JobPost' },
   { path: '/kvkk', page: 'Kvkk' },
+  { path: '/hizmet-veren', page: 'HizmetVeren' },
   { path: '*', page: 'NotFound' }
 ];
 

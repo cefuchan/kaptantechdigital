@@ -41,6 +41,7 @@ const footerNav = [
     links: [
       { label: 'KaloHeal', path: '/kaloheal' },
       { label: 'İş Ver — Ücretsiz Teklif Al', path: '/is-talebi' },
+      { label: 'Hizmet Veren Ağı', path: '/hizmet-veren' },
       { label: 'Altındağ Garaj', path: '/ankara-gizli-ozellik' },
       { label: 'Batarya SoH Testi', path: '/ankara-gizli-ozellik/ev-batarya-soh' }
     ]
