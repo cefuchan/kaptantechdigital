@@ -16,4 +16,4 @@ compatibility_date = "2026-09-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "kaptan-isler"
-database_id = "00000000-0000-4000-8000-000000000000"  # <-- WRANGLER CIKTISINDAKI GERCEK ID ILE DEGISTIR
+database_id = "5f1f866e-d2ea-495b-be37-c5c911158c30"
