@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 import { CheckCircle2 } from 'lucide-react';
 
 /**
@@ -24,6 +25,17 @@ interface FormValues {
   details: string;
   name: string;
   phone: string;
+  /** KVKK aydınlatma metni okundu onayı — zorunlu. */
+  kvkkOnay: boolean;
+  /**
+   * İsim ve telefonun hizmet verenlerle paylaşılmasına açık rıza.
+   *
+   * Varsayılan KAPALI. Kapalıyken ağa giden metinde iletişim bilgisi
+   * bulunmaz; teklifler talep sahibine iletilir ve ilk teması o kurar.
+   * Bu, sayfada ve KVKK metninde verilen sözün kod karşılığıdır —
+   * varsayılanı açık yapmak o sözü bozar.
+   */
+  iletisimPaylasim: boolean;
 }
 
 const EMPTY_FORM: FormValues = {
@@ -33,7 +45,9 @@ const EMPTY_FORM: FormValues = {
   budget: '',
   details: '',
   name: '',
-  phone: ''
+  phone: '',
+  kvkkOnay: false,
+  iletisimPaylasim: false
 };
 
 /* ------------------------------------------------------------- yardımcılar -- */
@@ -72,6 +86,16 @@ function formatPhoneForDisplay(raw: string): string {
 export function buildWhatsAppMessage(values: FormValues): string {
   const fallback = (value: string) => value.trim() || 'Belirtilmedi';
 
+  // İletişim bilgisi YALNIZCA talep sahibi açıkça onay verdiyse eklenir.
+  const iletisim = values.iletisimPaylasim
+    ? [
+        '',
+        `👤 *İletişim:* ${values.name.trim()}`,
+        `📞 *WhatsApp:* https://wa.me/${normalizePhone(values.phone)}`,
+        '_Talep sahibi iletişim bilgisinin paylaşılmasına onay verdi._'
+      ]
+    : ['', '_Talep sahibi iletişim bilgisini paylaşmamayı seçti; teklifler üzerinden kendisi ulaşacak._'];
+
   return [
     '📢 *YENİ İŞ TALEBİ*',
     DIVIDER,
@@ -82,9 +106,9 @@ export function buildWhatsAppMessage(values: FormValues): string {
     '',
     '📝 *Detaylar:*',
     values.details.trim(),
+    ...iletisim,
     DIVIDER,
     '_Teklif vermek için bu mesajı yanıtlayın: fiyatınız ve ne zaman başlayabileceğiniz._',
-    '_Talep sahibinin iletişim bilgisi, anlaşma sağlandığında paylaşılır._',
     '_Katılım ve teklif vermek ücretsizdir, komisyon alınmaz._'
   ].join('\n');
 }
@@ -111,6 +135,15 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
     setErrors((current) => ({ ...current, [field]: undefined }));
   };
 
+  /** Onay kutuları için ayrı işleyici: değer `value` değil `checked`. */
+  const toggle = (field: 'kvkkOnay' | 'iletisimPaylasim') => (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const { checked } = event.target;
+    setValues((current) => ({ ...current, [field]: checked }));
+    setErrors((current) => ({ ...current, [field]: undefined }));
+  };
+
   function validate(): boolean {
     const found: Partial<Record<keyof FormValues, string>> = {};
 
@@ -120,6 +153,7 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
     if (!values.name.trim()) found.name = 'İsim veya şirket adı zorunludur.';
     if (!values.phone.trim()) found.phone = 'Telefon numarası zorunludur.';
     else if (!isValidPhone(values.phone)) found.phone = 'Geçerli bir cep numarası girin (örn. 0551 136 76 34).';
+    if (!values.kvkkOnay) found.kvkkOnay = 'Devam etmek için aydınlatma metnini onaylamanız gerekiyor.';
 
     setErrors(found);
     return Object.keys(found).length === 0;
@@ -147,7 +181,10 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
      *
      * Tablodaki başlık satırı tam olarak şu olmalı:
      *   Tarih | Baslik | Kategori | Musteri | Telefon | WhatsApp | Butce |
-     *   Konum | Detaylar | Ilan_Metni
+     *   Konum | Detaylar | Ilan_Metni | Paylasim_Onayi | KVKK_Onayi
+     *
+     * Son iki sütun KVKK açık rıza kaydıdır. Tabloda yoksa onaylar
+     * kaydedilmez — rızanın ispatı ortadan kalkar.
      */
     const payload = JSON.stringify({
       data: [
@@ -167,7 +204,9 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
           Butce: values.budget.trim() || 'Belirtilmedi',
           Konum: values.location.trim() || 'Belirtilmedi',
           Detaylar: values.details.trim(),
-          Ilan_Metni: formattedMessage
+          Ilan_Metni: formattedMessage,
+          Paylasim_Onayi: values.iletisimPaylasim ? 'Evet' : 'Hayir',
+          KVKK_Onayi: values.kvkkOnay ? 'Evet' : 'Hayir'
         }
       ]
     });
@@ -397,6 +436,58 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
               </p>
             )}
           </div>
+        </div>
+
+        {/* ------------------------------------------------ KVKK onayları -- */}
+        <div className="space-y-4 pt-2 border-t border-white/5">
+          <div className="space-y-2 pt-5">
+            <label htmlFor="jp-kvkk" className="flex gap-3 cursor-pointer group">
+              <input
+                id="jp-kvkk"
+                type="checkbox"
+                checked={values.kvkkOnay}
+                onChange={toggle('kvkkOnay')}
+                aria-describedby={errors.kvkkOnay ? 'jp-kvkk-error' : undefined}
+                aria-invalid={errors.kvkkOnay ? true : undefined}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-gold cursor-pointer"
+              />
+              <span className="text-sm text-muted leading-relaxed group-hover:text-text-primary transition-colors">
+                <Link
+                  to="/kvkk"
+                  target="_blank"
+                  onClick={(event) => event.stopPropagation()}
+                  className="text-gold hover:text-white transition-colors"
+                >
+                  KVKK aydınlatma metnini
+                </Link>{' '}
+                okudum ve verilerimin talebimi iletmek amacıyla işlenmesini kabul ediyorum.{' '}
+                <span className="text-gold">*</span>
+              </span>
+            </label>
+            {errors.kvkkOnay && (
+              <p id="jp-kvkk-error" className={`${errorClass} ml-7`}>
+                {errors.kvkkOnay}
+              </p>
+            )}
+          </div>
+
+          <label htmlFor="jp-paylasim" className="flex gap-3 cursor-pointer group">
+            <input
+              id="jp-paylasim"
+              type="checkbox"
+              checked={values.iletisimPaylasim}
+              onChange={toggle('iletisimPaylasim')}
+              className="mt-0.5 h-4 w-4 shrink-0 accent-gold cursor-pointer"
+            />
+            <span className="text-sm text-muted leading-relaxed group-hover:text-text-primary transition-colors">
+              İsmim ve telefon numaram hizmet verenlerle paylaşılabilir, doğrudan bana
+              ulaşabilirler.
+              <span className="block text-xs text-muted/70 mt-1">
+                İşaretlemezseniz bilgileriniz kimseyle paylaşılmaz; gelen teklifleri size
+                biz iletiriz ve kiminle görüşeceğinize siz karar verirsiniz.
+              </span>
+            </span>
+          </label>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 pt-2">

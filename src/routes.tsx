@@ -33,6 +33,7 @@ export const pageLoaders = {
   AnkaraWebTasarim: () => import('./pages/AnkaraWebTasarim'),
   Contact: () => import('./pages/Contact'),
   JobPost: () => import('./pages/JobPost'),
+  Kvkk: () => import('./pages/Kvkk'),
   NotFound: () => import('./pages/NotFound')
 } as const;
 
@@ -82,6 +83,7 @@ export const routeTable: Array<{ path: string; page: PageName }> = [
   { path: '/ankara-web-tasarim', page: 'AnkaraWebTasarim' },
   { path: '/iletisim', page: 'Contact' },
   { path: '/is-talebi', page: 'JobPost' },
+  { path: '/kvkk', page: 'Kvkk' },
   { path: '*', page: 'NotFound' }
 ];
 

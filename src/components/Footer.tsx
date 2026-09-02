@@ -32,7 +32,8 @@ const footerNav = [
       { label: 'Vaka Çalışmaları', path: '/vaka-calismalari' },
       { label: 'Referanslar', path: '/referanslar' },
       { label: 'İçgörüler & Blog', path: '/blog' },
-      { label: 'İletişim', path: '/iletisim' }
+      { label: 'İletişim', path: '/iletisim' },
+      { label: 'KVKK Aydınlatma Metni', path: '/kvkk' }
     ]
   },
   {
