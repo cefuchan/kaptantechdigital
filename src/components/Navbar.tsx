@@ -52,7 +52,8 @@ export function Navbar() {
     { name: 'Vaka Çalışmaları', path: '/vaka-calismalari' },
     { name: 'Hakkımızda', path: '/hakkimizda' },
     // KaloHeal geçici olarak menüden çıkarıldı; footer bağlantısı duruyor.
-    { name: 'İş Talebi', path: '/is-talebi', isProduct: true },
+    // "İş Talebi" iki yönlü okunuyordu; iş arayanlar da formu dolduruyordu.
+    { name: 'İş Ver', path: '/is-talebi', isProduct: true },
     { name: 'Blog', path: '/blog' },
     { name: 'İletişim', path: '/iletisim' },
   ];

@@ -161,6 +161,11 @@ export const jobFaqs: Array<{ question: string; answer: string }> = [
       'Merkezimiz Ankara’da; tadilat, nakliyat ve temizlik gibi yerinde yapılan işlerde Ankara ve çevresine odaklanıyoruz. Web sitesi, e-ticaret, SEO ve tasarım gibi dijital işleri Türkiye’nin her yerinden uzaktan yürütebiliyoruz.'
   },
   {
+    question: 'İş arıyorum, bu formu doldurup başvurabilir miyim?',
+    answer:
+      'Hayır, bu form yanlış taraf. Buradaki form iş yaptırmak isteyenler içindir; doldurduğunuzda size iş gelmez, sizden iş isteyen kişiler aranır. İş arıyorsanız hizmet veren ağımıza katılmanız gerekiyor — işler size oradan ulaşır ve katılım ücretsizdir.'
+  },
+  {
     question: 'Usta veya hizmet veren olarak teklif vermek istiyorum, nasıl katılırım?',
     answer:
       'WhatsApp üzerinden bize yazmanız yeterli. Uzmanlık alanınızı ve çalıştığınız ilçeleri iletin, kategorinize uyan talepler geldiğinde sizinle paylaşalım. Ağa katılmak ve teklif vermek ücretsizdir; işi aldığınızda da sizden komisyon almıyoruz.'

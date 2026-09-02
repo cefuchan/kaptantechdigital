@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CheckCircle2, MessageCircle, ShieldCheck } from 'lucide-react';
+import { ArrowRight, CheckCircle2, MessageCircle, ShieldCheck } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import JobPostForm from '../components/JobPostForm';
 import { Breadcrumbs } from '../components/Breadcrumbs';
@@ -82,7 +82,7 @@ export default function JobPost() {
     <>
       <SEO
         title="Ücretsiz Teklif Al — İş ve Hizmet Talebi Oluştur | KAPTAN"
-        description="İhtiyacınız olan işi yazın, hizmet veren ağımızdan ücretsiz teklif alın. Üyelik yok, ilan ücreti yok, komisyon yok. Telefon numaranız ustalarla paylaşılmaz."
+        description="İş yaptıracaklar için: yaptırmak istediğiniz işi yazın, hizmet veren ağımızdan ücretsiz teklif alın. Üyelik yok, komisyon yok. (İş arıyorsanız ağa katılın.)"
         url="/is-talebi"
         schema={schema}
       />
@@ -93,16 +93,51 @@ export default function JobPost() {
           <HorizontalLine />
           <Breadcrumbs items={crumbs} />
 
-          <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">Ücretsiz talep formu</p>
+          <p className="text-gold font-mono text-sm mb-4 uppercase tracking-wider">İş verenler için</p>
           <h1 className="text-4xl md:text-6xl font-display font-semibold max-w-3xl mb-6">
-            Talebinizi yazın, ücretsiz teklif alın.
+            Yaptıracağınız işi anlatın, ücretsiz teklif alın.
           </h1>
           <p className="text-muted text-lg leading-relaxed max-w-2xl mb-8">
-            Yazılımdan tadilata, nakliyattan temizliğe kadar ihtiyacınız olan işi
-            aşağıdaki forma yazın. Talebinizi kategorisine uyan hizmet veren ağımıza
-            iletelim, gelen teklifleri size ulaştıralım. Ne siz ne de hizmet veren
-            bunun için ücret ödüyor.
+            Yazılımdan tadilata, nakliyattan temizliğe kadar <strong>yaptırmak
+            istediğiniz</strong> işi aşağıdaki forma yazın. Talebinizi kategorisine uyan
+            hizmet veren ağımıza iletelim, gelen teklifleri size ulaştıralım. Ne siz ne de
+            hizmet veren bunun için ücret ödüyor.
           </p>
+
+          {/* Yön ayrımı — sayfaya iki farklı niyetle geliniyor ve "iş talebi"
+              ifadesi Türkçede iki yönlü okunduğu için iş arayanlar da formu
+              dolduruyordu. Ayrımı en başta, formdan önce yapmak gerekiyor. */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+            <div className="bg-surface border border-gold/30 rounded-2xl p-6">
+              <p className="text-gold font-mono text-xs uppercase tracking-wider mb-3">
+                Doğru yerdesiniz
+              </p>
+              <p className="font-medium mb-2">İş yaptıracağım</p>
+              <p className="text-muted text-sm leading-relaxed">
+                Bir ustaya, ekibe veya uzmana iş yaptırmak istiyorsanız aşağıdaki formu
+                doldurun. Teklifleri size iletelim.
+              </p>
+            </div>
+
+            <div className="bg-bg border border-white/10 rounded-2xl p-6">
+              <p className="text-muted/70 font-mono text-xs uppercase tracking-wider mb-3">
+                Bu form size göre değil
+              </p>
+              <p className="font-medium mb-2">İş arıyorum</p>
+              <p className="text-muted text-sm leading-relaxed mb-4">
+                Usta, freelancer veya hizmet verenseniz bu formu doldurmayın — buraya
+                girilenler iş <em>talep eden</em> kayıtlardır. Siz ağımıza katılın, size
+                uygun işler geldikçe paylaşalım.
+              </p>
+              <a
+                href="#hizmet-veren"
+                className="inline-flex items-center gap-2 text-sm text-gold hover:text-white transition-colors"
+              >
+                Hizmet veren olarak katıl
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
 
           {/* Yapay zekâ araçlarının ve öne çıkan sonuçların doğrudan
               alıntılayabileceği kısa cevap bloğu. */}

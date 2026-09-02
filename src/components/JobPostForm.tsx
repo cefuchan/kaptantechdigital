@@ -76,6 +76,40 @@ function formatPhoneForDisplay(raw: string): string {
 }
 
 /**
+ * Metin iş ARAYAN birine mi ait?
+ *
+ * "İş talebi" Türkçede iki yönlü okunuyor: işveren "yaptıracağım iş", iş
+ * arayan "iş başvurusu" diye anlıyor. Sayfa freelancer ağına duyurulduğu için
+ * hizmet verenler de formu doldurmaya başladı.
+ *
+ * Kalıplar dar tutuldu; "web sitesi yaptıracağım, freelancer arıyorum" gibi
+ * gerçek işveren cümlelerinde eşleşmemesi için "freelancer" veya "usta" gibi
+ * tek kelimeler kasıtlı olarak listede yok — yalnızca birinci tekil şahıs
+ * hizmet sunma kalıpları var.
+ */
+const JOB_SEEKER_PATTERNS = [
+  /iş\s*ar[ıi]yorum/i,
+  /is\s*ariyorum/i,
+  /iş\s*aray[ıi]ş/i,
+  /çal[ıi]şmak\s*istiyorum/i,
+  /calismak\s*istiyorum/i,
+  // "hizmet" ekiyle gelebilir ("boya hizmeti veriyorum"). Birinci tekil şahıs
+  // şart: "iş vermek istiyorum" bir İŞVERENDİR, eşleşmemeli — bu yüzden kalıp
+  // "hizmet" kelimesine bağlı.
+  /hizmet\w*\s+ver(iyorum|ebilirim|mekteyim|mek\s*istiyorum)/i,
+  /özgeçmiş|ozgecmis/i,
+  /\bcv\b/i,
+  /başvur(mak|uyorum)/i,
+  /basvur(mak|uyorum)/i,
+  /kendimi\s*tan[ıi]tmak/i,
+  /part\s*[- ]?time\s*iş/i
+];
+
+export function looksLikeJobSeeker(text: string): boolean {
+  return JOB_SEEKER_PATTERNS.some((pattern) => pattern.test(text));
+}
+
+/**
  * Hizmet veren ağına (WhatsApp grubuna) yapıştırılacak ilan metni.
  *
  * ÖNEMLİ: Bu metin talep sahibinin adını ve telefonunu İÇERMEZ. Sayfada
@@ -277,10 +311,11 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
       >
         <div>
           <h2 className="text-2xl md:text-3xl font-display font-semibold mb-2">
-            İş / Hizmet Talebi Oluştur
+            Yaptıracağınız İşi Anlatın
           </h2>
           <p className="text-muted text-sm leading-relaxed">
-            İhtiyacınız olan hizmetin detaylarını girin, teklif toplamaya hemen başlayalım.
+            Yaptırmak istediğiniz işin detaylarını girin, teklif toplamaya hemen başlayalım.
+            Bu form <strong>iş verenler</strong> içindir.
           </p>
         </div>
 
@@ -290,9 +325,26 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
           </div>
         )}
 
+        {/* Yanlış tarafa düşenler için uyarı. Gönderimi ENGELLEMİYOR: kalıplar
+            yanlış eşleşebilir ve gerçek bir işvereni durdurmak, birkaç hatalı
+            kayıttan daha pahalıya mal olur. */}
+        {looksLikeJobSeeker(`${values.title} ${values.details}`) && (
+          <div className="p-4 rounded-xl bg-gold/10 border border-gold/30 text-sm">
+            <p className="text-text-primary font-medium mb-1">İş mi arıyorsunuz?</p>
+            <p className="text-muted leading-relaxed">
+              Bu form, <strong>iş yaptırmak</strong> isteyenler için. Usta, freelancer veya
+              hizmet verenseniz buradan değil,{' '}
+              <a href="#hizmet-veren" className="text-gold hover:text-white transition-colors">
+                hizmet veren ağına katılarak
+              </a>{' '}
+              ilerlemeniz gerekiyor — işler size oradan ulaşıyor.
+            </p>
+          </div>
+        )}
+
         <div className="space-y-2">
           <label htmlFor="jp-title" className={labelClass}>
-            Hizmet / İş Başlığı <span className="text-gold">*</span>
+            Yaptıracağınız iş <span className="text-gold">*</span>
           </label>
           <input
             id="jp-title"
@@ -300,7 +352,7 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
             type="text"
             value={values.title}
             onChange={update('title')}
-            placeholder="Örn: 3+1 Ev Boyama veya Web Sitesi Geliştirme"
+            placeholder="Örn: 3+1 daire boyanacak — Çankaya"
             aria-invalid={Boolean(errors.title)}
             aria-describedby={errors.title ? 'jp-title-error' : undefined}
             className={fieldClass}
