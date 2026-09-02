@@ -35,6 +35,9 @@ export const pageLoaders = {
   JobPost: () => import('./pages/JobPost'),
   Kvkk: () => import('./pages/Kvkk'),
   HizmetVeren: () => import('./pages/HizmetVeren'),
+  AppShell: () => import('./pages/AppShell'),
+  JobDetail: () => import('./pages/JobDetail'),
+  JobOwner: () => import('./pages/JobOwner'),
   NotFound: () => import('./pages/NotFound')
 } as const;
 
@@ -86,6 +89,9 @@ export const routeTable: Array<{ path: string; page: PageName }> = [
   { path: '/is-talebi', page: 'JobPost' },
   { path: '/kvkk', page: 'Kvkk' },
   { path: '/hizmet-veren', page: 'HizmetVeren' },
+  { path: '/uygulama', page: 'AppShell' },
+  { path: '/is/:publicId', page: 'JobDetail' },
+  { path: '/talep/:token', page: 'JobOwner' },
   { path: '*', page: 'NotFound' }
 ];
 

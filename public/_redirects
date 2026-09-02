@@ -1,11 +1,13 @@
-# Statik bir dosyayla eşleşmeyen adresler GERÇEK 404 döner.
+# Bu dosyada kural YOK ve olmamali.
+#
+# 404: Cloudflare Pages, hicbir dosyayla eslesmeyen adreslerde dist/404.html
+# dosyasini zaten 404 KODUYLA sunar. Ayrica kural yazmak gerekmiyor.
+#
+# /is/* ve /talep/* adresleri functions/is/[[path]].ts ve
+# functions/talep/[[path]].ts tarafindan sunuluyor. _redirects ile
+# denenmisti ama Cloudflare "200 rewrite" kuralini 308 yonlendirmeye
+# ceviriyor; adres degisince React Router gercek yolu goremiyor.
 #
 # Buraya "/*  /index.html  200" YAZMAYIN. O kural olmayan her adrese ana
-# sayfayı 200 ile döndürür ve Google bunu soft 404 sayar. Sitede bir kez
-# yaşanıp düzeltilen hata buydu.
-#
-# Bu siteye SPA fallback gerekmiyor: her rota build sırasında kendi HTML
-# dosyası olarak üretiliyor (npm run build -> prerender).
-#
-# Netlify ve Cloudflare Pages bu dosyayı aynı biçimde okur.
-/*    /404.html    404
+# sayfayi 200 ile dondurur ve Google bunu soft 404 sayar. Sitede bir kez
+# yasanip duzeltilen hata buydu.

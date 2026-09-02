@@ -1,0 +1,19 @@
+# Cloudflare Pages yapılandırması.
+#
+# D1 veritabanini baglamak icin (bir kez):
+#   npx wrangler d1 create kaptan-isler
+# komutu bir database_id verir; asagiya yapistir. Ardindan semayi kur:
+#   npx wrangler d1 execute kaptan-isler --remote --file=./schema.sql
+#
+# Ayni baglantiyi Cloudflare panelinden de tanimlamak gerekir:
+#   Pages projesi -> Settings -> Functions -> D1 database bindings
+#   Variable name: DB   |   D1 database: kaptan-isler
+
+name = "kaptantechdigital"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "kaptan-isler"
+database_id = "00000000-0000-4000-8000-000000000000"  # <-- WRANGLER CIKTISINDAKI GERCEK ID ILE DEGISTIR

@@ -25,6 +25,8 @@ interface FormValues {
   details: string;
   name: string;
   phone: string;
+  /** İsteğe bağlı — teklif bildirimi ve link kurtarma için. */
+  email: string;
   /** KVKK aydınlatma metni okundu onayı — zorunlu. */
   kvkkOnay: boolean;
   /**
@@ -46,6 +48,7 @@ const EMPTY_FORM: FormValues = {
   details: '',
   name: '',
   phone: '',
+  email: '',
   kvkkOnay: false,
   iletisimPaylasim: false
 };
@@ -109,6 +112,45 @@ export function looksLikeJobSeeker(text: string): boolean {
   return JOB_SEEKER_PATTERNS.some((pattern) => pattern.test(text));
 }
 
+/* --------------------------------------------- talep sahibinin linkleri -- */
+
+const STORAGE_KEY = 'kaptan.talepler';
+
+export interface SavedRequest {
+  baslik: string;
+  url: string;
+  tarih: string;
+}
+
+/**
+ * Talep sahibinin özel linki yalnızca gönderim anında bir kez döner.
+ * Sekme kapanırsa kaybolmasın diye tarayıcıya da yazılır.
+ *
+ * Bu yalnızca bir kolaylık: kayıt aynı cihaz ve tarayıcıda kalır, başka yere
+ * gitmez. Asıl kurtarma yolu, talep sahibinin bize yazıp linki yeniden
+ * istemesidir.
+ */
+export function readSavedRequests(): SavedRequest[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const list = raw ? JSON.parse(raw) : [];
+    return Array.isArray(list) ? list.slice(0, 10) : [];
+  } catch {
+    return [];
+  }
+}
+
+function rememberRequest(baslik: string, url?: string): void {
+  if (!url) return;
+  try {
+    const list = readSavedRequests().filter((item) => item.url !== url);
+    list.unshift({ baslik, url, tarih: new Date().toISOString().slice(0, 10) });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 10)));
+  } catch {
+    // Gizli sekmede veya depolama kapalıysa sessizce geç.
+  }
+}
+
 /**
  * Hizmet veren ağına (WhatsApp grubuna) yapıştırılacak ilan metni.
  *
@@ -159,6 +201,8 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [ownerUrl, setOwnerUrl] = useState<string | null>(null);
+  const [linkKopyalandi, setLinkKopyalandi] = useState(false);
 
   const update = (field: keyof FormValues) => (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -246,20 +290,43 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
     });
 
     try {
-      const response = await fetch(endpoint, {
+      // Kayıt önce kendi veritabanımıza yazılır; teklif akışının kaynağı burasıdır.
+      const response = await fetch('/api/jobs', {
         method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: payload
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          baslik: values.title.trim(),
+          kategori: values.category,
+          konum: values.location.trim(),
+          butce: values.budget.trim(),
+          detaylar: values.details.trim(),
+          musteri: values.name.trim(),
+          telefon: values.phone,
+          eposta: values.email.trim(),
+          paylasimOnayi: values.iletisimPaylasim,
+          kvkkOnay: values.kvkkOnay
+        })
       });
 
-      if (response.ok) {
-        setIsSubmitted(true);
-      } else {
-        setSubmitError('Bir bağlantı hatası oluştu. Lütfen tekrar deneyin.');
+      const sonuc = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        setSubmitError(sonuc.hata ?? 'Bir bağlantı hatası oluştu. Lütfen tekrar deneyin.');
+        return;
       }
+
+      setOwnerUrl(sonuc.ownerUrl ?? null);
+      rememberRequest(values.title.trim(), sonuc.ownerUrl);
+
+      // Google Sheet aynası: senin alışık olduğun tablo görünümü bozulmasın diye.
+      // Başarısız olursa talep yine de geçerlidir; bu yüzden beklenmiyor.
+      void fetch(endpoint, {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: payload
+      }).catch(() => undefined);
+
+      setIsSubmitted(true);
     } catch {
       setSubmitError('Gönderim sırasında bir hata oluştu. Lütfen bağlantınızı kontrol edin.');
     } finally {
@@ -272,6 +339,7 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
     setErrors({});
     setIsSubmitted(false);
     setSubmitError(null);
+    setOwnerUrl(null);
   }
 
   const fieldClass =
@@ -289,14 +357,55 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
           Talebiniz Başarıyla Alındı!
         </h3>
         <p className="text-muted text-base leading-relaxed mb-8">
-          Talebinizi, kategorisine uyan hizmet veren ağımızla paylaşıyoruz. Gelen teklifleri derleyip WhatsApp veya telefon numaranız üzerinden size iletiyoruz. Telefon numaranız ağa gönderilen metinde yer almaz.
+          Talebinizi, kategorisine uyan hizmet veren ağımızla paylaşıyoruz. Telefon
+          numaranız ağa gönderilen metinde yer almaz.
         </p>
+
+        {ownerUrl && (
+          <div className="bg-bg border border-gold/30 rounded-2xl p-6 mb-8 text-left">
+            <p className="text-text-primary font-medium mb-2">Teklifleri buradan takip edin</p>
+            <p className="text-muted text-sm leading-relaxed mb-4">
+              Bu adres size özeldir — gelen teklifler burada birikir. <strong>Kaydedin;</strong>{' '}
+              sayfayı kapatırsanız yeniden üretilemez, bize yazıp istemeniz gerekir.
+            </p>
+
+            <code className="block bg-surface border border-white/10 rounded-lg px-4 py-3 text-xs text-gold break-all mb-4">
+              {typeof window !== 'undefined' ? window.location.origin : ''}
+              {ownerUrl}
+            </code>
+
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={ownerUrl}
+                className="px-6 py-3 rounded-full bg-gold text-bg font-medium hover:bg-gold-light transition-colors text-sm"
+              >
+                Teklifleri görüntüle
+              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard
+                    .writeText(`${window.location.origin}${ownerUrl}`)
+                    .then(() => {
+                      setLinkKopyalandi(true);
+                      setTimeout(() => setLinkKopyalandi(false), 2000);
+                    })
+                    .catch(() => undefined);
+                }}
+                className="px-6 py-3 rounded-full border border-white/10 text-muted hover:text-text-primary hover:border-gold transition-colors text-sm"
+              >
+                {linkKopyalandi ? 'Kopyalandı!' : 'Linki kopyala'}
+              </button>
+            </div>
+          </div>
+        )}
+
         <button
           type="button"
           onClick={handleReset}
-          className="px-8 py-3.5 rounded-full bg-gold text-bg font-medium hover:bg-gold-light transition-colors text-sm"
+          className="text-sm text-muted hover:text-text-primary transition-colors underline underline-offset-4"
         >
-          Yeni Talep Gönder
+          Yeni talep gönder
         </button>
       </div>
     );
@@ -488,6 +597,26 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
               </p>
             )}
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="jp-email" className={labelClass}>
+            E-posta <span className="text-muted/60">(isteğe bağlı)</span>
+          </label>
+          <input
+            id="jp-email"
+            name="email"
+            type="email"
+            value={values.email}
+            onChange={update('email')}
+            placeholder="ornek@firma.com"
+            aria-describedby="jp-email-hint"
+            className={fieldClass}
+          />
+          <p id="jp-email-hint" className="text-xs text-muted/70">
+            Teklif takip linkinizi kaybederseniz e-postanızla bulabiliriz. Vermezseniz de
+            talebiniz sorunsuz işler.
+          </p>
         </div>
 
         {/* ------------------------------------------------ KVKK onayları -- */}

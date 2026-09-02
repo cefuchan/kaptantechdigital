@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Wrangler yerel durumu (yerel D1 veritabani dahil)
+.wrangler/

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, MessageCircle, ShieldCheck } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import JobPostForm from '../components/JobPostForm';
+import { SavedRequests } from '../components/SavedRequests';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { breadcrumbSchema, faqSchema, graph } from '../data/schema';
@@ -163,6 +164,8 @@ export default function JobPost() {
           </div>
 
           <JobPostForm />
+
+          <SavedRequests />
 
           {/* ------------------------------------------------- nasıl çalışır -- */}
           <section className="mt-24" aria-labelledby="nasil-calisir">
