@@ -20,6 +20,10 @@ import {
   randomId,
   tooManyRecent
 } from '../_lib';
+import { buildIlanMetni, sheetAynasi } from '../_ilan';
+
+/** SHEETDB_URL ortam degiskeni tanimli degilse kullanilir. Gizli bilgi degil. */
+const SHEETDB_FALLBACK = 'https://sheetdb.io/api/v1/4fptt41pnlx4a';
 
 const KATEGORILER = [
   'Yazılım & Tasarım',
@@ -29,7 +33,7 @@ const KATEGORILER = [
   'Diğer'
 ];
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export const onRequestPost: PagesFunction<Env> = async ({ request, env, waitUntil }) => {
   let body: Record<string, unknown>;
   try {
     body = await request.json();
@@ -104,6 +108,48 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       plusDays(RETENTION_DAYS)
     )
     .run();
+
+  // Google Sheet aynası: tablo, günlük işleyişte kullanılan panel. Yanıtı
+  // geciktirmemesi için waitUntil ile arka planda gönderiliyor.
+  const origin = new URL(request.url).origin;
+  const ilanMetni = buildIlanMetni({
+    baslik,
+    kategori,
+    konum,
+    butce,
+    detaylar,
+    musteri,
+    telefon,
+    paylasimOnayi: body.paylasimOnayi === true,
+    publicId,
+    origin
+  });
+
+  waitUntil(
+    sheetAynasi(env.SHEETDB_URL ?? SHEETDB_FALLBACK, {
+      Tarih: new Date().toLocaleString('tr-TR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Europe/Istanbul'
+      }),
+      Baslik: baslik,
+      Kategori: kategori,
+      Musteri: musteri,
+      Telefon: telefon.replace(/^90/, '0'),
+      WhatsApp: `https://wa.me/${telefon}`,
+      Butce: butce || 'Belirtilmedi',
+      Konum: konum || 'Belirtilmedi',
+      Detaylar: detaylar,
+      Ilan_Metni: ilanMetni,
+      Paylasim_Onayi: body.paylasimOnayi === true ? 'Evet' : 'Hayir',
+      KVKK_Onayi: 'Evet',
+      Ilan_Linki: `${origin}/is/${publicId}`,
+      Panel_Linki: `${origin}/talep/${ownerToken}`
+    })
+  );
 
   return json({ publicId, ownerToken, ownerUrl: `/talep/${ownerToken}`, ilanUrl: `/is/${publicId}` }, 201);
 };

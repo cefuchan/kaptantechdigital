@@ -2,11 +2,6 @@ import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2 } from 'lucide-react';
 
-/**
- * SheetDB API adresi (Google Sheets Entegrasyonu).
- */
-const DEFAULT_ENDPOINT = 'https://sheetdb.io/api/v1/4fptt41pnlx4a';
-
 const CATEGORIES = [
   'Yazılım & Tasarım',
   'Ev Tadilat & Usta',
@@ -14,8 +9,6 @@ const CATEGORIES = [
   'Temizlik',
   'Diğer'
 ] as const;
-
-const DIVIDER = '━━━━━━━━━━━━━━━━━━━';
 
 interface FormValues {
   title: string;
@@ -69,13 +62,6 @@ export function normalizePhone(raw: string): string {
 function isValidPhone(raw: string): boolean {
   const normalized = normalizePhone(raw);
   return normalized.length === 12 && normalized.startsWith('905');
-}
-
-/** Ekranda okunaklı gösterim: 0551 136 76 34 */
-function formatPhoneForDisplay(raw: string): string {
-  const digits = normalizePhone(raw).slice(2);
-  if (digits.length !== 10) return raw;
-  return `0${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 8)} ${digits.slice(8)}`;
 }
 
 /**
@@ -151,51 +137,9 @@ function rememberRequest(baslik: string, url?: string): void {
   }
 }
 
-/**
- * Hizmet veren ağına (WhatsApp grubuna) yapıştırılacak ilan metni.
- *
- * ÖNEMLİ: Bu metin talep sahibinin adını ve telefonunu İÇERMEZ. Sayfada
- * "numaranız ağa giden metinde yer almaz" sözü veriliyor; iletişim bilgisi
- * yalnızca tabloda ayrı sütunlarda tutulur ve anlaşma aşamasında paylaşılır.
- * Buraya isim/telefon eklemek o sözü bozar.
- */
-export function buildWhatsAppMessage(values: FormValues): string {
-  const fallback = (value: string) => value.trim() || 'Belirtilmedi';
-
-  // İletişim bilgisi YALNIZCA talep sahibi açıkça onay verdiyse eklenir.
-  const iletisim = values.iletisimPaylasim
-    ? [
-        '',
-        `👤 *İletişim:* ${values.name.trim()}`,
-        `📞 *WhatsApp:* https://wa.me/${normalizePhone(values.phone)}`,
-        '_Talep sahibi iletişim bilgisinin paylaşılmasına onay verdi._'
-      ]
-    : ['', '_Talep sahibi iletişim bilgisini paylaşmamayı seçti; teklifler üzerinden kendisi ulaşacak._'];
-
-  return [
-    '📢 *YENİ İŞ TALEBİ*',
-    DIVIDER,
-    `📌 *İş:* ${values.title.trim()}`,
-    `🏷️ *Kategori:* ${values.category}`,
-    `📍 *Konum:* ${fallback(values.location)}`,
-    `💰 *Bütçe:* ${fallback(values.budget)}`,
-    '',
-    '📝 *Detaylar:*',
-    values.details.trim(),
-    ...iletisim,
-    DIVIDER,
-    '_Teklif vermek için bu mesajı yanıtlayın: fiyatınız ve ne zaman başlayabileceğiniz._',
-    '_Katılım ve teklif vermek ücretsizdir, komisyon alınmaz._'
-  ].join('\n');
-}
-
 /* --------------------------------------------------------------- ana form -- */
 
-export interface JobPostFormProps {
-  endpoint?: string;
-}
-
-export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostFormProps) {
+export default function JobPostForm() {
   const [values, setValues] = useState<FormValues>(EMPTY_FORM);
   const [errors, setErrors] = useState<Partial<Record<keyof FormValues, string>>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -244,51 +188,6 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
     setIsSubmitting(true);
     setSubmitError(null);
 
-    const formattedMessage = buildWhatsAppMessage(values);
-
-    /**
-     * DİKKAT — bu anahtarlar Google Sheet'teki başlık satırıyla BİREBİR
-     * aynı olmak zorundadır. SheetDB gelen anahtarı sütun adıyla harfi
-     * harfine eşler; eşleşmeyen anahtar sessizce atılır, sütun boş kalır
-     * ve kullanıcı yine "talebiniz alındı" görür. Yani uyumsuzluk hiçbir
-     * hata üretmez, sadece yarım kayıt bırakır.
-     *
-     * Bu yüzden başlıklar ASCII tutuluyor: Türkçe karakter (İ/ı/ş/ü),
-     * büyük-küçük harf farkı ve görünmeyen sondaki boşluk, geçmişte altı
-     * sütunun boş düşmesine yol açtı.
-     *
-     * Tablodaki başlık satırı tam olarak şu olmalı:
-     *   Tarih | Baslik | Kategori | Musteri | Telefon | WhatsApp | Butce |
-     *   Konum | Detaylar | Ilan_Metni | Paylasim_Onayi | KVKK_Onayi
-     *
-     * Son iki sütun KVKK açık rıza kaydıdır. Tabloda yoksa onaylar
-     * kaydedilmez — rızanın ispatı ortadan kalkar.
-     */
-    const payload = JSON.stringify({
-      data: [
-        {
-          Tarih: new Date().toLocaleString('tr-TR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          }),
-          Baslik: values.title.trim(),
-          Kategori: values.category,
-          Musteri: values.name.trim(),
-          Telefon: formatPhoneForDisplay(values.phone),
-          WhatsApp: `https://wa.me/${normalizePhone(values.phone)}`,
-          Butce: values.budget.trim() || 'Belirtilmedi',
-          Konum: values.location.trim() || 'Belirtilmedi',
-          Detaylar: values.details.trim(),
-          Ilan_Metni: formattedMessage,
-          Paylasim_Onayi: values.iletisimPaylasim ? 'Evet' : 'Hayir',
-          KVKK_Onayi: values.kvkkOnay ? 'Evet' : 'Hayir'
-        }
-      ]
-    });
-
     try {
       // Kayıt önce kendi veritabanımıza yazılır; teklif akışının kaynağı burasıdır.
       const response = await fetch('/api/jobs', {
@@ -317,14 +216,6 @@ export default function JobPostForm({ endpoint = DEFAULT_ENDPOINT }: JobPostForm
 
       setOwnerUrl(sonuc.ownerUrl ?? null);
       rememberRequest(values.title.trim(), sonuc.ownerUrl);
-
-      // Google Sheet aynası: senin alışık olduğun tablo görünümü bozulmasın diye.
-      // Başarısız olursa talep yine de geçerlidir; bu yüzden beklenmiyor.
-      void fetch(endpoint, {
-        method: 'POST',
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: payload
-      }).catch(() => undefined);
 
       setIsSubmitted(true);
     } catch {
