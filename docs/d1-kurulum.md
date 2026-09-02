@@ -42,8 +42,12 @@ Veritabanı boş oluştu; içine tabloları koymamız lazım.
 Alt tarafta her komut için `success` görmelisin. Toplam 7 komut çalışır
 (3 tablo + 4 indeks).
 
-> Konsol "birden fazla komut çalıştıramıyorum" derse, `schema.sql` içindeki
-> `CREATE TABLE` ve `CREATE INDEX` bloklarını tek tek yapıştırıp çalıştır.
+> **`schema.sql` dosyasına yorum satırı EKLEME.** SQL'de `--` işareti satır
+> sonuna kadar her şeyi yorum yapar. Metin bir yere yapıştırılırken satır
+> sonları kaybolursa ilk `--` işaretinden sonraki tüm dosya yoruma dönüşür ve
+> konsol *"Requests without any query are not supported"* hatası verir — yani
+> çalıştırılacak komut kalmaz. Dosya bu yüzden bilerek yorumsuz tutuluyor;
+> tasarım notları aşağıdaki "Şema notları" bölümünde.
 
 ### Adım 3 — Database ID'yi kopyala
 
@@ -154,6 +158,55 @@ satır açılmaz, mevcut teklif güncellenir.
 **Deploy başarılı ama `/is/...` sayfası 404**
 `functions/` klasörünün repoda olduğundan emin ol. Cloudflare bu klasörü
 otomatik tanır; yoksa API ve ilan sayfaları çalışmaz.
+
+---
+
+## Şema notları
+
+`schema.sql` yorumsuz tutulduğu için tasarım gerekçeleri burada.
+
+### Neden her işin iki anahtarı var
+
+```
+public_id   (12 karakter) -> /is/<id>        hizmet verenlere giden ilan
+owner_token (32 karakter) -> /talep/<token>  talep sahibinin teklif paneli
+```
+
+İkisi de rastgele ve tahmin edilemez. Sıralı bir id (`/is/1`, `/is/2`)
+kullanılsaydı biri sayarak bütün talepleri dökebilirdi — "kimse toplu iş
+göremesin" kuralı tam olarak bunu yasaklıyor. Aynı sebeple bütün işleri
+listeleyen bir API ucu da yok.
+
+### Kişisel veri hangi sütunlarda
+
+`musteri`, `telefon`, `eposta`. İmha sırasında **yalnızca bu üçü** boşaltılır.
+`baslik`, `kategori`, `konum`, `butce` kalır: kimseyle ilişkilendirilemedikleri
+için artık kişisel veri değiller ve ileride kategori sayfalarındaki gerçek
+fiyat aralıkları için tek kaynağın olacaklar.
+
+### `paylasim_onayi`
+
+`1` ise talep sahibinin adı ve telefonu ilan sayfasında görünür, `0` ise
+görünmez. Varsayılan `0`. Kararı API katmanı verir; şema sadece veriyi tutar.
+
+### `secildi`
+
+Talep sahibi "Bu teklifle ilerle" dediğinde `1` olur. Hizmet verenin numarası
+ancak bundan sonra açılır. Komisyon alınmadığı için hangi işin tuttuğunu
+öğrenebildiğin tek kayıt da budur.
+
+### `expires_at` ve `purged_at`
+
+`expires_at`, KVKK metninde ve gruba verilen sözde geçen 30 günlük saklama
+süresidir. Cloudflare Pages'te cron olmadığı için temizlik her yeni talep
+oluşturulduğunda çalışır: süresi dolmuş kayıtların kişisel sütunları boşaltılır,
+teklifleri silinir ve `purged_at` damgalanır.
+
+### `UNIQUE (job_id, telefon)`
+
+Aynı numara bir işe ikinci kez teklif verirse yeni satır açılmaz, mevcut teklif
+güncellenir. Bu yüzden `UNIQUE constraint failed` hatası görürsen panik yapma —
+tasarım gereği.
 
 ---
 
