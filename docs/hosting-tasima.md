@@ -127,8 +127,9 @@ sunar — yani taşındığında bu tutarsızlık kendiliğinden düzelir. Yeni 
   Mevcut kurulum köke (`kaptantechdigital.com`) göre, canonical'lar da öyle yazılı.
 - HTTPS zorunlu, HTTP'den 301.
 - Alan adını taşırken `googleb95800e25762d92d.html` dosyasının yayında kaldığından
-  emin ol — Search Console doğrulaması ona bağlı. Dosya `public/` içinde, otomatik
-  kopyalanıyor.
+  emin ol — Search Console'un HTML dosyası yöntemiyle doğrulaması buna bağlı.
+  Dosya `public/` içinde olmalı; repo kökünde durursa `dist/`e kopyalanmaz ve
+  adres 404 döner. (Taşıma sırasında bu hata bulunup düzeltildi.)
 
 ---
 
