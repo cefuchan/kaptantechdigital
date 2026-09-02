@@ -16,6 +16,7 @@ import {
   json,
   normalizePhone,
   now,
+  phoneForSheet,
   plusDays,
   randomId,
   tooManyRecent
@@ -138,7 +139,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env, waitUnti
       Baslik: baslik,
       Kategori: kategori,
       Musteri: musteri,
-      Telefon: telefon.replace(/^90/, '0'),
+      Telefon: phoneForSheet(telefon),
       WhatsApp: `https://wa.me/${telefon}`,
       Butce: butce || 'Belirtilmedi',
       Konum: konum || 'Belirtilmedi',

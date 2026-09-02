@@ -39,6 +39,19 @@ export function normalizePhone(raw: string): string {
   return digits.length === 10 && digits.startsWith('5') ? `90${digits}` : '';
 }
 
+/**
+ * Tabloda gösterilecek okunaklı biçim: "905001112233" -> "0500 111 22 33".
+ *
+ * Boşluklar şart: "05001112233" gibi bitişik yazılırsa Google Sheets değeri
+ * sayı sanıp baştaki sıfırı kırpıyor ve numara "5001112233" olarak kalıyor.
+ * Boşluk içeren değeri metin olarak saklıyor.
+ */
+export function phoneForSheet(normalized: string): string {
+  const d = normalized.replace(/^90/, '');
+  if (d.length !== 10) return normalized;
+  return `0${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6, 8)} ${d.slice(8)}`;
+}
+
 export function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,
