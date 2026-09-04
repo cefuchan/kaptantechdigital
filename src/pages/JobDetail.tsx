@@ -28,6 +28,7 @@ export default function JobDetail() {
   const [hata, setHata] = useState<string | null>(null);
   const [yukleniyor, setYukleniyor] = useState(true);
 
+  const [ad, setAd] = useState('');
   const [telefon, setTelefon] = useState('');
   const [fiyat, setFiyat] = useState('');
   const [baslama, setBaslama] = useState('');
@@ -60,7 +61,7 @@ export default function JobDetail() {
       const res = await fetch('/api/bids', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ publicId, telefon, fiyat, baslama, not: notMetni })
+        body: JSON.stringify({ publicId, ad, telefon, fiyat, baslama, not: notMetni })
       });
       const veri = await res.json();
       if (res.ok) setGonderildi(true);
@@ -186,27 +187,39 @@ export default function JobDetail() {
                     </div>
                   )}
 
-                  <div className="space-y-2">
-                    <label htmlFor="bid-tel" className="text-sm font-medium text-muted">
-                      Telefonunuz <span className="text-gold">*</span>
-                    </label>
-                    <input
-                      id="bid-tel"
-                      type="tel"
-                      required
-                      value={telefon}
-                      onChange={(e) => setTelefon(e.target.value)}
-                      placeholder="0551 136 76 34"
-                      className={kutu}
-                    />
-                    <p className="text-xs text-muted/70">
-                      Ağa kayıtlı numaranız. Kayıtlı değilse önce{' '}
-                      <Link to="/hizmet-veren" className="text-gold hover:text-white transition-colors">
-                        ağa katılmanız
-                      </Link>{' '}
-                      gerekiyor.
-                    </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label htmlFor="bid-ad" className="text-sm font-medium text-muted">
+                        Adınız / firma adınız <span className="text-gold">*</span>
+                      </label>
+                      <input
+                        id="bid-ad"
+                        required
+                        value={ad}
+                        onChange={(e) => setAd(e.target.value)}
+                        placeholder="Örn: Murat K."
+                        className={kutu}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="bid-tel" className="text-sm font-medium text-muted">
+                        Telefonunuz <span className="text-gold">*</span>
+                      </label>
+                      <input
+                        id="bid-tel"
+                        type="tel"
+                        required
+                        value={telefon}
+                        onChange={(e) => setTelefon(e.target.value)}
+                        placeholder="0551 136 76 34"
+                        className={kutu}
+                      />
+                    </div>
                   </div>
+                  <p className="text-xs text-muted/70 -mt-2">
+                    Numaranız talep sahibine, ancak sizinle ilerlemeye karar verdiğinde
+                    gösterilir. Diğer hizmet verenler teklifinizi görmez.
+                  </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">

@@ -8,6 +8,12 @@ export interface Env {
   DB: D1Database;
   /** Opsiyonel: talepler ayrıca Google Sheet'e de yazılsın diye. */
   SHEETDB_URL?: string;
+  /**
+   * "acik" ise yalnizca providers tablosundaki numaralar teklif verebilir.
+   * Tanimsizsa allowlist KAPALIDIR; ag yeni kurulurken herkesi engellememesi
+   * icin varsayilan bu.
+   */
+  TEKLIF_ALLOWLIST?: string;
 }
 
 /** Saklama süresi — src/data/kvkk.ts içindeki RETENTION_DAYS ile aynı olmalı. */
