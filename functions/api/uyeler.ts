@@ -9,7 +9,7 @@
  * durumda listede yer almaz — üye kendi kartında göstermeyi seçse bile liste
  * ucundan sızmamalı.
  */
-import { type Env, bad, clean, json, normalizePhone, now, tooManyRecent } from '../_lib';
+import { type Env, bad, clean, json, normalizePhone, now, tooManyRecent, guard } from '../_lib';
 
 const KATEGORILER = [
   'Yazılım & Tasarım',
@@ -68,7 +68,7 @@ function webLinki(raw: unknown): string | null {
   }
 }
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export const onRequestPost: PagesFunction<Env> = guard(async ({ request, env }) => {
   let body: Record<string, unknown>;
   try {
     body = await request.json();
@@ -158,9 +158,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   return json({ slug, kartUrl: `/kart/${slug}`, guncellendi: Boolean(mevcut) }, 201);
-};
+});
 
-export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
+export const onRequestGet: PagesFunction<Env> = guard(async ({ env }) => {
   const { results } = await env.DB.prepare(
     `SELECT slug, ad, firma, kategori, hizmetler, linkedin, instagram, behance, websitesi
        FROM providers
@@ -169,4 +169,4 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   ).all();
 
   return json({ toplam: results?.length ?? 0, uyeler: results ?? [] });
-};
+});

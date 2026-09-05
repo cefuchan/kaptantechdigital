@@ -19,8 +19,7 @@ import {
   phoneForSheet,
   plusDays,
   randomId,
-  tooManyRecent
-} from '../_lib';
+  tooManyRecent, guard } from '../_lib';
 import { buildIlanMetni, sheetAynasi } from '../_ilan';
 
 /** SHEETDB_URL ortam degiskeni tanimli degilse kullanilir. Gizli bilgi degil. */
@@ -34,7 +33,7 @@ const KATEGORILER = [
   'Diğer'
 ];
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env, waitUntil }) => {
+export const onRequestPost: PagesFunction<Env> = guard(async ({ request, env, waitUntil }) => {
   let body: Record<string, unknown>;
   try {
     body = await request.json();
@@ -153,4 +152,4 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env, waitUnti
   );
 
   return json({ publicId, ownerToken, ownerUrl: `/talep/${ownerToken}`, ilanUrl: `/is/${publicId}` }, 201);
-};
+});

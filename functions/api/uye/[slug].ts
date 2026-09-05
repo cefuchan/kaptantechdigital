@@ -5,9 +5,9 @@
  * üyenin iletişim bilgisini oraya koymak, onu istemediği bir teşhire açar.
  * Kartta yalnızca kendi paylaştığı profil bağlantıları yer alır.
  */
-import { type Env, json } from '../../_lib';
+import { type Env, json, guard } from '../../_lib';
 
-export const onRequestGet: PagesFunction<Env> = async ({ params, env }) => {
+export const onRequestGet: PagesFunction<Env> = guard(async ({ params, env }) => {
   const slug = String(params.slug ?? '');
   if (!/^[a-z0-9-]{1,60}$/.test(slug)) return json({ hata: 'Bulunamadı.' }, 404);
 
@@ -20,4 +20,4 @@ export const onRequestGet: PagesFunction<Env> = async ({ params, env }) => {
 
   if (!uye) return json({ hata: 'Bulunamadı.' }, 404);
   return json(uye);
-};
+});

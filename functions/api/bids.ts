@@ -8,9 +8,9 @@
  * Aynı numara aynı işe ikinci kez teklif verirse yeni satır açılmaz,
  * mevcut teklif güncellenir (UNIQUE(job_id, telefon)).
  */
-import { type Env, bad, clean, json, normalizePhone, now, tooManyRecent } from '../_lib';
+import { type Env, bad, clean, json, normalizePhone, now, tooManyRecent, guard } from '../_lib';
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export const onRequestPost: PagesFunction<Env> = guard(async ({ request, env }) => {
   let body: Record<string, unknown>;
   try {
     body = await request.json();
@@ -91,4 +91,4 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     .run();
 
   return json({ tamam: true }, 201);
-};
+});

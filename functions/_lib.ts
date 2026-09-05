@@ -37,9 +37,23 @@ export function randomId(length: number): string {
   return out;
 }
 
-/** "0551 136 76 34" -> "905511367634". Boş dönerse numara geçersizdir. */
+/**
+ * "0551 136 76 34" -> "905511367634". Boş dönerse numara geçersizdir.
+ * Yabancı numaralar için "+49 152..." -> "49152..."
+ */
 export function normalizePhone(raw: string): string {
-  let digits = String(raw ?? '').replace(/\D/g, '');
+  const str = String(raw ?? '').trim();
+  const hasPlus = str.startsWith('+');
+  let digits = str.replace(/\D/g, '');
+
+  if (hasPlus) {
+    if (digits.startsWith('90')) {
+      const local = digits.slice(2);
+      return local.length === 10 && local.startsWith('5') ? `90${local}` : '';
+    }
+    return digits.length >= 7 ? digits : '';
+  }
+
   if (digits.startsWith('90')) digits = digits.slice(2);
   if (digits.startsWith('0')) digits = digits.slice(1);
   return digits.length === 10 && digits.startsWith('5') ? `90${digits}` : '';
@@ -73,6 +87,33 @@ export function json(data: unknown, status = 200): Response {
 
 export function bad(message: string, status = 400): Response {
   return json({ hata: message }, status);
+}
+
+/**
+ * Beklenmedik hataları JSON'a çevirir.
+ *
+ * Bunsuz, bir D1 hatası (örneğin şema güncellenmemişse "no such column")
+ * Worker'ı düşürüyor ve Cloudflare düz metin "error code: 1101" döndürüyor.
+ * İstemci bunu JSON olarak ayrıştıramadığı için kullanıcıya "Bağlantı hatası"
+ * yazıyor — yani gerçek sebep hem kullanıcıdan hem bizden gizleniyor.
+ *
+ * Hatanın kendisi istemciye gönderilmez (sızıntı olmasın), Cloudflare
+ * kayıtlarına yazılır.
+ */
+export function guard<E>(
+  handler: PagesFunction<E>
+): PagesFunction<E> {
+  return async (context) => {
+    try {
+      return await handler(context);
+    } catch (error) {
+      console.error('İşlenmeyen hata:', error);
+      return json(
+        { hata: 'Sunucu tarafında bir sorun oluştu. Lütfen daha sonra tekrar deneyin.' },
+        500
+      );
+    }
+  };
 }
 
 /** Girdi metnini kırpar ve üst sınırı uygular. */

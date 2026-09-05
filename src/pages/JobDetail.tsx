@@ -30,6 +30,7 @@ export default function JobDetail() {
 
   const [ad, setAd] = useState('');
   const [telefon, setTelefon] = useState('');
+  const [ulkeKodu, setUlkeKodu] = useState('+90');
   const [fiyat, setFiyat] = useState('');
   const [baslama, setBaslama] = useState('');
   const [notMetni, setNotMetni] = useState('');
@@ -61,7 +62,7 @@ export default function JobDetail() {
       const res = await fetch('/api/bids', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ publicId, ad, telefon, fiyat, baslama, not: notMetni })
+        body: JSON.stringify({ publicId, ad, telefon: ulkeKodu + telefon, fiyat, baslama, not: notMetni })
       });
       const veri = await res.json();
       if (res.ok) setGonderildi(true);
@@ -205,15 +206,34 @@ export default function JobDetail() {
                       <label htmlFor="bid-tel" className="text-sm font-medium text-muted">
                         Telefonunuz <span className="text-gold">*</span>
                       </label>
-                      <input
-                        id="bid-tel"
-                        type="tel"
-                        required
-                        value={telefon}
-                        onChange={(e) => setTelefon(e.target.value)}
-                        placeholder="0551 136 76 34"
-                        className={kutu}
-                      />
+                      <div className="flex gap-2">
+                        <select
+                          value={ulkeKodu}
+                          onChange={(e) => setUlkeKodu(e.target.value)}
+                          className={`${kutu} w-[100px] px-2 appearance-none bg-no-repeat bg-right text-sm`}
+                          style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%23a1a1aa\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundSize: '1rem', backgroundPosition: 'right 0.5rem center' }}
+                        >
+                          <option value="+90">TR (+90)</option>
+                          <option value="+1">US (+1)</option>
+                          <option value="+44">UK (+44)</option>
+                          <option value="+49">DE (+49)</option>
+                          <option value="+33">FR (+33)</option>
+                          <option value="+31">NL (+31)</option>
+                          <option value="+32">BE (+32)</option>
+                          <option value="+43">AT (+43)</option>
+                          <option value="+41">CH (+41)</option>
+                          <option value="+994">AZ (+994)</option>
+                        </select>
+                        <input
+                          id="bid-tel"
+                          type="tel"
+                          required
+                          value={telefon}
+                          onChange={(e) => setTelefon(e.target.value)}
+                          placeholder="551 136 76 34"
+                          className={`${kutu} flex-1`}
+                        />
+                      </div>
                     </div>
                   </div>
                   <p className="text-xs text-muted/70 -mt-2">

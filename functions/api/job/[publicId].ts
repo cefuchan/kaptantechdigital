@@ -9,7 +9,7 @@
  * Rakip fiyatlarını görmek teklifleri aşağı çeker ve hizmet verenin
  * güvenini bozar.
  */
-import { type Env, json } from '../../_lib';
+import { type Env, json, guard } from '../../_lib';
 
 interface JobRow {
   id: number;
@@ -28,7 +28,7 @@ interface JobRow {
   purged_at: string | null;
 }
 
-export const onRequestGet: PagesFunction<Env> = async ({ params, env }) => {
+export const onRequestGet: PagesFunction<Env> = guard(async ({ params, env }) => {
   const publicId = String(params.publicId ?? '');
   if (!/^[A-Za-z0-9]{12}$/.test(publicId)) return json({ hata: 'Bulunamadı.' }, 404);
 
@@ -63,4 +63,4 @@ export const onRequestGet: PagesFunction<Env> = async ({ params, env }) => {
     // Yalnızca açık rıza varsa:
     iletisim: paylasiliyor ? { ad: job.musteri, telefon: job.telefon } : null
   });
-};
+});

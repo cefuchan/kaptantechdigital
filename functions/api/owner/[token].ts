@@ -10,7 +10,7 @@
  * paylaşılır". Seçim kaydı aynı zamanda tek geri besleme kanalıdır —
  * komisyon alınmadığı için hangi işin tuttuğu başka yerden öğrenilemiyor.
  */
-import { type Env, bad, json } from '../../_lib';
+import { type Env, bad, json, guard } from '../../_lib';
 
 interface JobRow {
   id: number;
@@ -38,7 +38,7 @@ async function loadJob(env: Env, token: string): Promise<JobRow | null> {
     .first<JobRow>();
 }
 
-export const onRequestGet: PagesFunction<Env> = async ({ params, env }) => {
+export const onRequestGet: PagesFunction<Env> = guard(async ({ params, env }) => {
   const job = await loadJob(env, String(params.token ?? ''));
   if (!job) return json({ hata: 'Bulunamadı.' }, 404);
 
@@ -82,9 +82,9 @@ export const onRequestGet: PagesFunction<Env> = async ({ params, env }) => {
       telefon: bid.secildi === 1 ? bid.telefon : null
     }))
   });
-};
+});
 
-export const onRequestPost: PagesFunction<Env> = async ({ params, request, env }) => {
+export const onRequestPost: PagesFunction<Env> = guard(async ({ params, request, env }) => {
   const job = await loadJob(env, String(params.token ?? ''));
   if (!job) return json({ hata: 'Bulunamadı.' }, 404);
 
@@ -120,4 +120,4 @@ export const onRequestPost: PagesFunction<Env> = async ({ params, request, env }
   }
 
   return bad('Bilinmeyen işlem.');
-};
+});
