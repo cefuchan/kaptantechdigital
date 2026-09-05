@@ -211,8 +211,8 @@ export default function JobDetail() {
                         <select
                           value={ulkeKodu}
                           onChange={(e) => setUlkeKodu(e.target.value)}
-                          className={`${kutu} w-[100px] px-2 appearance-none bg-no-repeat bg-right text-sm`}
-                          style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%23a1a1aa\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundSize: '1rem', backgroundPosition: 'right 0.5rem center' }}
+                          className={`${kutu} w-[75px] pl-2 pr-6 appearance-none bg-no-repeat bg-right text-sm`}
+                          style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%23a1a1aa\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundSize: '1rem', backgroundPosition: 'right 0.25rem center' }}
                         >
                           {countryCodes.map((c) => (
                             <option key={c.code} value={c.code}>
