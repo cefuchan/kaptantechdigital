@@ -15,7 +15,7 @@ export default function AppShell() {
     <>
       <SEO title="Yükleniyor | KAPTAN" description="Sayfa hazırlanıyor." url="/uygulama" noindex />
       <div className="pt-32 pb-24 bg-bg min-h-screen">
-        <p className="text-muted text-center">Yükleniyor…</p>
+        <h1 className="text-muted text-center text-base font-normal">Yükleniyor…</h1>
       </div>
     </>
   );

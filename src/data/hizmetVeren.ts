@@ -7,8 +7,7 @@
  *     o formu kendini tanıtmak için dolduruyordu
  *  3. Veri politikasını özetler ve /kvkk sayfasına bağlar
  *
- * Metinler bugün gerçekten yapılabilen işi anlatır. Teklif formu, panel veya
- * otomatik eşleştirme YOK; teklifler WhatsApp üzerinden alınıyor.
+ * Metinler bugün gerçekten yapılabilen işi anlatır.
  */
 import { RETENTION_DAYS } from './kvkk';
 
@@ -21,7 +20,7 @@ export const providerSteps: ProviderStep[] = [
   {
     title: 'Ağa katılın',
     body:
-      'WhatsApp’tan yazın; uzmanlık alanınızı ve çalıştığınız ilçeleri iletin. Kayıt formu, üyelik ücreti veya sözleşme yok. Kategorinize uyan talepler geldiğinde sizinle paylaşılır.'
+      'Katılım formunu doldurun: adınız, verdiğiniz hizmetler ve varsa profil bağlantılarınız. Üyelik ücreti veya sözleşme yok. Form tamamlanınca paylaşabileceğiniz bir kartınız oluşur.'
   },
   {
     title: 'Talepleri görün',
@@ -31,7 +30,7 @@ export const providerSteps: ProviderStep[] = [
   {
     title: 'İlgilendiğinize teklif verin',
     body:
-      'Fiyatınızı ve ne zaman başlayabileceğinizi yazıp mesajı yanıtlayın. Teklif vermek zorunlu değil; ilgilenmediğiniz işi geçersiniz. Teklif başına ücret alınmaz.'
+      'İlan sayfasındaki formdan fiyatınızı ve ne zaman başlayabileceğinizi yazın. Teklif vermek zorunlu değil; ilgilenmediğiniz işi geçersiniz. Teklif başına ücret alınmaz.'
   },
   {
     title: 'Doğrudan anlaşın',
@@ -49,7 +48,7 @@ export const providerFaqs: Array<{ question: string; answer: string }> = [
   {
     question: 'Sitedeki iş talebi formunu ben de doldurmalı mıyım?',
     answer:
-      'Hayır. O form iş yaptırmak isteyenler içindir; doldurduğunuzda size iş gelmez, sistemde "usta arıyorum" diyen biri olarak görünürsünüz. Hizmet veren olarak ağa katılmanın tek yolu WhatsApp’tan yazmaktır. Formun linkini ise çevrenizde iş yaptıracak kişilere iletebilirsiniz — havuz büyüdükçe hepimize daha çok iş düşer.'
+      'Hayır. O form iş yaptırmak isteyenler içindir; doldurduğunuzda size iş gelmez, sistemde "usta arıyorum" diyen biri olarak görünürsünüz. Hizmet veren olarak ağa katılmak için katılım formunu doldurmanız gerekiyor. İş verme formunun linkini ise çevrenizde iş yaptıracak kişilere iletebilirsiniz — havuz büyüdükçe hepimize daha çok iş düşer.'
   },
   {
     question: 'Talep sahibinin bilgilerini neden göremiyorum?',

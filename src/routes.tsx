@@ -38,6 +38,8 @@ export const pageLoaders = {
   AppShell: () => import('./pages/AppShell'),
   JobDetail: () => import('./pages/JobDetail'),
   JobOwner: () => import('./pages/JobOwner'),
+  Katil: () => import('./pages/Katil'),
+  Kart: () => import('./pages/Kart'),
   NotFound: () => import('./pages/NotFound')
 } as const;
 
@@ -92,6 +94,8 @@ export const routeTable: Array<{ path: string; page: PageName }> = [
   { path: '/uygulama', page: 'AppShell' },
   { path: '/is/:publicId', page: 'JobDetail' },
   { path: '/talep/:token', page: 'JobOwner' },
+  { path: '/katil', page: 'Katil' },
+  { path: '/kart/:slug', page: 'Kart' },
   { path: '*', page: 'NotFound' }
 ];
 

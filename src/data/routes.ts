@@ -58,6 +58,7 @@ const staticRoutes: RouteEntry[] = [
   { path: '/is-talebi', changefreq: 'monthly', priority: 0.8 },
   { path: '/kvkk', changefreq: 'yearly', priority: 0.3 },
   { path: '/hizmet-veren', changefreq: 'monthly', priority: 0.7 },
+  { path: '/katil', changefreq: 'monthly', priority: 0.6 },
   // SPA kabuğu: /is/* ve /talep/* adresleri _redirects ile buraya 200 döner.
   // Ön render edilir ki dosya var olsun; site haritasına girmez.
   //

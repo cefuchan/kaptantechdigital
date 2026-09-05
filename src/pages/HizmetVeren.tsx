@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { AlertTriangle, BadgeCheck, MessageCircle, ShieldCheck, Wallet } from 'lucide-react';
+import { AlertTriangle, BadgeCheck, MessageCircle, ShieldCheck, UserPlus, Wallet } from 'lucide-react';
 import { SEO } from '../components/SEO';
+import { UyeListesi } from '../components/UyeListesi';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { VerticalLine, HorizontalLine } from '../components/Decorations';
 import { breadcrumbSchema, faqSchema, graph } from '../data/schema';
@@ -70,8 +71,8 @@ export default function HizmetVeren() {
           <div className="bg-surface border border-gold/20 rounded-2xl p-6 md:p-7 mb-10">
             <p className="text-text-primary leading-relaxed">
               <strong className="text-gold">Kısaca:</strong> Ağa katılmak ücretsizdir, teklif
-              vermek ücretsizdir, işi aldığınızda da komisyon alınmaz. Üyelik, sözleşme veya
-              kayıt formu yok — WhatsApp’tan yazmanız yeterli. Teklifiniz yalnızca o talebi
+              vermek ücretsizdir, işi aldığınızda da komisyon alınmaz. Üyelik ücreti veya sözleşme
+              yok; katılım formunu doldurmanız yeterli. Teklifiniz yalnızca o talebi
               oluşturan kişiyle paylaşılır, başka hizmet verenler görmez.
             </p>
           </div>
@@ -86,15 +87,24 @@ export default function HizmetVeren() {
             ))}
           </div>
 
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-medium text-bg hover:bg-gold-light transition-colors mb-16"
-          >
-            <MessageCircle className="w-4 h-4" aria-hidden="true" />
-            WhatsApp&apos;tan katılın
-          </a>
+          <div className="flex flex-wrap gap-3 mb-16">
+            <Link
+              to="/katil"
+              className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-medium text-bg hover:bg-gold-light transition-colors"
+            >
+              <UserPlus className="w-4 h-4" aria-hidden="true" />
+              Ağa katıl, kartını oluştur
+            </Link>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-7 py-3.5 text-sm font-medium text-muted hover:text-text-primary hover:border-gold transition-colors"
+            >
+              <MessageCircle className="w-4 h-4" aria-hidden="true" />
+              Önce soru sorun
+            </a>
+          </div>
 
           {/* -------------------------------------------- en sık yapılan hata -- */}
           <section
@@ -114,7 +124,7 @@ export default function HizmetVeren() {
               görünürsünüz.
             </p>
             <p className="text-muted leading-relaxed">
-              Hizmet veren olarak ağa katılmanın tek yolu WhatsApp’tan yazmaktır. Formun
+              Hizmet veren olarak ağa katılmak için <Link to="/katil" className="text-gold hover:text-white transition-colors">katılım formunu</Link> doldurmanız gerekiyor. İş verme formunun
               linkini ise <strong>çevrenizde iş yaptıracak kişilere</strong> iletebilirsiniz;
               havuz büyüdükçe hepimize daha çok iş düşer.
             </p>
@@ -155,6 +165,8 @@ export default function HizmetVeren() {
               ))}
             </ul>
           </section>
+
+          <UyeListesi />
 
           {/* ------------------------------------------------------ veriniz -- */}
           <section className="mt-24" aria-labelledby="veriniz">
