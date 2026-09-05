@@ -9,6 +9,7 @@ import { useParams, Link } from 'react-router-dom';
 import { BadgeCheck, CheckCircle2, Clock, MapPin, Tag, Wallet } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { VerticalLine } from '../components/Decorations';
+import { countryCodes } from '../data/countryCodes';
 
 interface Ilan {
   baslik: string;
@@ -213,16 +214,11 @@ export default function JobDetail() {
                           className={`${kutu} w-[100px] px-2 appearance-none bg-no-repeat bg-right text-sm`}
                           style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%23a1a1aa\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundSize: '1rem', backgroundPosition: 'right 0.5rem center' }}
                         >
-                          <option value="+90">TR (+90)</option>
-                          <option value="+1">US (+1)</option>
-                          <option value="+44">UK (+44)</option>
-                          <option value="+49">DE (+49)</option>
-                          <option value="+33">FR (+33)</option>
-                          <option value="+31">NL (+31)</option>
-                          <option value="+32">BE (+32)</option>
-                          <option value="+43">AT (+43)</option>
-                          <option value="+41">CH (+41)</option>
-                          <option value="+994">AZ (+994)</option>
+                          {countryCodes.map((c) => (
+                            <option key={c.code} value={c.code}>
+                              {c.label}
+                            </option>
+                          ))}
                         </select>
                         <input
                           id="bid-tel"
